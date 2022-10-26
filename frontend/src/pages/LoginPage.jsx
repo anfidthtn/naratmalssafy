@@ -1,5 +1,5 @@
 import React from 'react'
-import KaKaoLogin from 'react-kakao-login'
+import TopNav from '../components/Common/TopNav.jsx'
 
 const LoginPage = () => {
 
@@ -13,6 +13,7 @@ const LoginPage = () => {
 
     return(
         <div>
+            <TopNav/>
             <button onClick={Kakaologin}>kakao</button>
         </div>
     );
