@@ -9,7 +9,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/kakaoLogin" element={<KakaoLogin />} />
+          <Route path="/oauth/callback/kakao" element={<KakaoLogin />} />
         </Routes>
       </BrowserRouter>
     </div>
