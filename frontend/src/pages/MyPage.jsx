@@ -1,4 +1,3 @@
-import TopNav from '../components/Common/TopNav.jsx'
 import MyFont from '../components/Mypage/Cards/Myfont.jsx'
 import MyFavoritesFont from '../components/Mypage/Cards/Myfavoritesfont.jsx'
 import MyDownloadFont from '../components/Mypage/Cards/Mydownloadfont.jsx'
@@ -96,7 +95,6 @@ const MyPage = () => {
     ));
     return(
         <div className='Mypage'>
-            <TopNav/>
             <div className='Mypage__Profile'>
                 <div>{userfullname}</div>
                 <div>{dummyuserinfo.userEmail}</div>

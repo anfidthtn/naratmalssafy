@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import TopNav from '../components/Common/TopNav.jsx';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -40,7 +39,6 @@ const SignUpPage = () => {
     }
     return(
         <div>
-            <TopNav/>
             <div className='Signup'>
             <div>회원가입</div>
             <Box>

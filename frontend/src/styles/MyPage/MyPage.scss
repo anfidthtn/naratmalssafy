@@ -8,13 +8,28 @@
     &__Myfont{
         height:200px;
         overflow: auto;
+        display: flex;
+        flex-flow: row;
+        &__Card{
+            width:150px;
+        }
     }
     &__Myfavoritesfont{
         height:200px;
         overflow: auto;
+        display: flex;
+        flex-flow: row;
+        &__Card{
+            width:150px;
+        }
     }
     &__Mydownloadfont{
         height:200px;
         overflow: auto;
+        display: flex;
+        flex-flow: row;
+        &__Card{
+            width:150px;
+        }
     }
 }
