@@ -33,17 +33,20 @@ const Footer = () => {
         </div>
         <div className="precaution_info_box">
           <div className="custom_m_y_30 precaution_header">주의 사항</div>
-          <div className="custom_m_y_10">
+          <div className="custom_m_y_10 precaution_info">
             "나랏말싸피" 에서 만든 모든 폰트는 프리웨어 입니다.
           </div>
-          <div className="custom_m_y_10">
+          <div className="custom_m_y_10 precaution_info">
             "나랏말싸피"에서 만들어진 모든 폰트는 금전적 거래가 금지됩니다.
           </div>
-          <div className="custom_m_y_10">
+          <div className="custom_m_y_10 precaution_info">
             "나랏말싸피"에서 만들어진 모든 폰트와 관련된 거래에서 발생한 문제는
             일체 책임지지 않습니다.
           </div>
-          <div className="custom_m_y_10" style={{ marginBottom: "30px" }}>
+          <div
+            className="custom_m_y_10 precaution_info"
+            style={{ marginBottom: "30px" }}
+          >
             "나랏말싸피"는 모든 싸피생들의 앞날을 응원합니다.
           </div>
         </div>
