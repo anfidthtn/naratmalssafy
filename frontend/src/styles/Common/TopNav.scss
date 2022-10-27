@@ -1,10 +1,10 @@
-.Navbar{
-    background-color:#F2E9E9;
-    &__Mainicon{
-        height:60px;
-        width: 60px;
-    }
-    &__Link{
-        color:default;
-    }
+.TopNav {
+  background-color: #f2e9e9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  &__Mainicon {
+    height: 60px;
+    width: 60px;
+  }
 }
