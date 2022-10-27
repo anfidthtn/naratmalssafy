@@ -1,13 +1,12 @@
-import React from 'react'
-import TopNav from '../components/Common/TopNav'
+import React from "react";
+import "../styles/MainPage/MainPage.scss";
 
 const MainPage = () => {
   return (
-    <div className='MainPage'>
-      <TopNav />
-      <div className='main_font'>hello world</div>
+    <div className="MainPage">
+      <div className="main_font">hello world</div>
     </div>
-  )
-}
+  );
+};
 
-export default MainPage
+export default MainPage;
