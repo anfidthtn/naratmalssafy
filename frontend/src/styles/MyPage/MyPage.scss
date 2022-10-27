@@ -1,18 +1,20 @@
 .Mypage{
+    height: 100vh;
+
     &__Profile{
         height:100px;
         overflow: auto;
     }
     &__Myfont{
-        height:100px;
+        height:200px;
         overflow: auto;
     }
     &__Myfavoritesfont{
-        height:100px;
+        height:200px;
         overflow: auto;
     }
     &__Mydownloadfont{
-        height:100px;
+        height:200px;
         overflow: auto;
     }
 }

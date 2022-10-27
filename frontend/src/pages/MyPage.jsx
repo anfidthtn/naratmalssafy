@@ -102,17 +102,23 @@ const MyPage = () => {
                 <div>{dummyuserinfo.userEmail}</div>
                 <button onClick={editUserInfo}>프로필 수정하기</button>
             </div>
-            <div className='Mypage__Myfont'>
+            <div>
                 내폰트
+                <div className='Mypage__Myfont'>
                 {MyfontCards}
+                </div>
             </div>
-            <div className='Mypage__Myfavoritesfont'>
+            <div>
                 내가 즐겨찾기한 폰트
+                <div className='Mypage__Myfavoritesfont'>
                 {MyfavoritesfontCards}
+                </div>
             </div>
-            <div className='Mypage__Mydownloadfont'>
+            <div>
                 내가 다운로드한 폰트
+                <div className='Mypage__Mydownloadfont'>
                 {MydownlodfontCards}
+                </div>
             </div>
         </div>
     );

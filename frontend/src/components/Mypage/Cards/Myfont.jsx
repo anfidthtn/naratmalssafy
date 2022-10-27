@@ -2,18 +2,21 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardHeader from '@mui/material/CardHeader';
 import CardMedia from '@mui/material/CardMedia';
-
+import { useNavigate } from 'react-router-dom';
 
 const MyFont = ({key, id, creater, name, path, preview}) => {
-    console.log(creater)
+    const navigate = useNavigate();
+    function FontInfo() {
+        navigate(`/fontinfo/${id}`)
+    }
     return(
-    <Card>
+    <Card onClick={FontInfo}>
       <CardHeader
         title={name}
       />
       <CardMedia
         component="img"
-        height="194"
+        height="150px"
         image={preview}
         alt="musicImg"
       />

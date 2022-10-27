@@ -8,6 +8,7 @@ import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import axios from 'axios'
+import '../styles/Sign/SignUp.scss'
 const SignUpPage = () => {
     const [region, setRegion] = useState('')
     const [name, setName] = useState('')
@@ -40,6 +41,7 @@ const SignUpPage = () => {
     return(
         <div>
             <TopNav/>
+            <div className='Signup'>
             <div>회원가입</div>
             <Box>
                 <FormControl fullWidth>
@@ -68,6 +70,7 @@ const SignUpPage = () => {
                 <p>최종 활동명은 지역, 이름, 닉네임을 합쳐 지역_이름_닉네임 형식으로 만들어드립니다.</p>
                 <button onClick={handleSignup}>회원가입</button>
             </Box>
+        </div>
         </div>
     );
 };

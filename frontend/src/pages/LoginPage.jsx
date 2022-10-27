@@ -1,6 +1,6 @@
 import React from 'react'
 import TopNav from '../components/Common/TopNav.jsx'
-
+import '../styles/Sign/LogIn.scss'
 const LoginPage = () => {
 
     const client_id = process.env.REACT_APP_KAKAO_CLIENT_ID
@@ -14,8 +14,10 @@ const LoginPage = () => {
     return(
         <div>
             <TopNav/>
+            <div className='Login'>
             <div>로그인</div>
             <button onClick={Kakaologin}>kakao</button>
+            </div>
         </div>
     );
 };

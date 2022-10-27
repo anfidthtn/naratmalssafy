@@ -5,8 +5,8 @@ import SignUpPage from "./pages/SignUpPage.jsx";
 import KakaoLogin from "./components/Login/KakaoLogin.jsx";
 import MainPage from "./pages/MainPage.jsx";
 import MyPage from "./pages/MyPage.jsx";
-import UserFontInfo from "./components/Mypage/UserFontInfo"
-import EditUserInfo from "./components/Mypage/EditUserInfo"
+import UserFontInfo from "./components/Mypage/UserFontInfo.jsx"
+import EditUserInfo from "./components/Mypage/EditUserInfo.jsx"
 import "../src/styles/Common/App.scss";
 import TopNav from "./components/Common/TopNav.jsx";
 import Footer from "./components/Common/Footer.jsx";
