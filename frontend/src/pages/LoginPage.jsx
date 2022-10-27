@@ -14,6 +14,7 @@ const LoginPage = () => {
     return(
         <div>
             <TopNav/>
+            <div>로그인</div>
             <button onClick={Kakaologin}>kakao</button>
         </div>
     );

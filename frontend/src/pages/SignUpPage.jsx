@@ -34,6 +34,8 @@ const SignUpPage = () => {
         const Nicknameinfo={
             'nickname' : nickname
         }
+        console.log(Nicknameinfo)
+        // axios.post('url', Nicknameinfo)
     }
     return(
         <div>
