@@ -1,19 +1,23 @@
 .Footer {
   & .brand_name {
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
   }
 
   & .info_name {
-    font-size: 15px;
+    font-size: 10px;
   }
 
   & .brand_info {
-    font-size: 15px;
+    font-size: 10px;
+  }
+
+  & .precaution_info {
+    font-size: 10px;
   }
 
   & .precaution_header {
-    font-size: 35px;
+    font-size: 20px;
     font-weight: bold;
   }
 
