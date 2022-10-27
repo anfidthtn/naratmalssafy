@@ -7,11 +7,14 @@ body {
 .App {
   width: 80%;
   margin: 0 10%;
+  margin-top: 65px;
 }
 
 @media (max-width: 1024px) {
   .App {
     margin: 0 auto;
+    margin-top: 65px;
+    width: 90%;
   }
 }
 
