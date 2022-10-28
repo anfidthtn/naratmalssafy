@@ -16,13 +16,13 @@ import Postbusan from "./components/Padlet/Postbusan.jsx"
 import Postgumi from "./components/Padlet/Postgumi.jsx"
 import Postgwangju from "./components/Padlet/Postgwangju.jsx"
 import Postdaejeon from "./components/Padlet/Postdaejeon.jsx"
-
+import FontSearchPage from "./pages/FontSearchPage.jsx";
 
 function App() {
   return (
     <div className="App">
-      <TopNav />
       <BrowserRouter>
+        <TopNav />
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/oauth/callback/kakao" element={<KakaoLogin />} />
@@ -37,6 +37,7 @@ function App() {
           <Route path="/post/daejeon" element={<Postdaejeon />} />
           <Route path="/post/gwangju" element={<Postgwangju />} />
           <Route path="/post/gumi" element={<Postgumi />} />
+          <Route path="/search" element={<FontSearchPage />} />
         </Routes>
       </BrowserRouter>
       <Footer />
