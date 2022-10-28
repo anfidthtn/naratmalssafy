@@ -27,7 +27,10 @@ const Footer = () => {
               <li>주소: 경북 구미시 3공단3로 302</li>
             </ul>
           </div>
-          <div className="brand_info custom_m_t_30">
+          <div
+            className="brand_info custom_m_t_30"
+            style={{ fontWeight: "bold" }}
+          >
             © 2022 나랏말사피. All Rights Reserved.
           </div>
         </div>
