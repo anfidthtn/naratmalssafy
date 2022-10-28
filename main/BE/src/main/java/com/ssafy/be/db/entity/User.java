@@ -31,8 +31,6 @@ public class User {
 
 
     //password 필요없음
-    @Column(name = "user_password")
-    String userPassword;
 
 
     @Column(name = "user_nickname")

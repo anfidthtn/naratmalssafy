@@ -47,6 +47,27 @@ dependencies {
     implementation'com.google.code.gson:gson:2.10'
 }
 
+
+
+
+
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+def profile = project.hasProperty("profile") ? project.property("profile").toString() : "dev"
+println "profile  : $profile"
+
+sourceSets {
+    main {
+        resources {
+            srcDirs("src/main/resources", "src/main/resources-$profile")
+        }
+    }
+}
+
+tasks {
+    processResources {
+        duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.INCLUDE
+    }
 }

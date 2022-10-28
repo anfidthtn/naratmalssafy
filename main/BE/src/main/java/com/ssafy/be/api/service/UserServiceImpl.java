@@ -1,6 +1,7 @@
 package com.ssafy.be.api.service;
 
 import com.ssafy.be.api.response.UserLoginRes;
+import com.ssafy.be.common.util.JwtTokenUtil;
 import com.ssafy.be.common.util.KakaoLogin;
 import com.ssafy.be.db.entity.User;
 import com.ssafy.be.db.repository.UserRepository;
@@ -43,10 +44,16 @@ public class UserServiceImpl implements UserService {
         }
         else {
             //JWT 토큰 발급 받기
+            String accessToken = JwtTokenUtil.getToken(email);
             return UserLoginRes.builder()
                     .isSignUp(false)
-                    .loginResult("token")
+                    .loginResult(accessToken)
                     .build();
         }
+    }
+
+    @Override
+    public User getUserByUserEmail(String email) {
+        return userRepository.findByUserEmail(email);
     }
 }

@@ -17,6 +17,13 @@ public class UserDetail implements UserDetails {
     boolean credentialNonExpired;
     boolean enabled = false;
     List<GrantedAuthority> roles = new ArrayList<>();
+    public UserDetail(User user){
+        super();
+        this.user = user;
+    }
+    public User getUser() {
+        return this.user;
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
@@ -29,26 +36,26 @@ public class UserDetail implements UserDetails {
 
     @Override
     public String getUsername() {
-        return null;
+        return this.user.getUserName();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return false;
+        return this.accountNonExpired;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return false;
+        return this.accountNonLocked;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return false;
+        return this.credentialNonExpired;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return this.enabled;
     }
 }
