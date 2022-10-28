@@ -39,9 +39,35 @@ dependencies {
     implementation("org.apache.commons:commons-collections4:4.4")
     implementation("org.apache.commons:commons-lang3:3.9")
 //    implementation 'org.springdoc:springdoc-openapi-ui:1.6.6'
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("com.auth0:java-jwt:3.10.3")
+    implementation("com.google.guava:guava:29.0-jre")
+    annotationProcessor("com.google.guava:guava:29.0-jre")
 
+    implementation'com.google.code.gson:gson:2.10'
 }
+
+
+
+
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+def profile = project.hasProperty("profile") ? project.property("profile").toString() : "dev"
+println "profile  : $profile"
+
+sourceSets {
+    main {
+        resources {
+            srcDirs("src/main/resources", "src/main/resources-$profile")
+        }
+    }
+}
+
+tasks {
+    processResources {
+        duplicatesStrategy = org.gradle.api.file.DuplicatesStrategy.INCLUDE
+    }
 }
