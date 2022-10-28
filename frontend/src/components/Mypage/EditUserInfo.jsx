@@ -14,6 +14,7 @@ const EditUserInfo = () => {
         'userLocation' : '구미',
         'userNickname' : '연딱콩'
     }
+// 회원 정보 수정 ######################################################################################## 
     const [region, setRegion] = useState('')
     const [name, setName] = useState('')
     const [nickname, setNickname] = useState('')
@@ -35,6 +36,11 @@ const EditUserInfo = () => {
         console.log(userInfo)
         // axios.post('url', userInfo)
     }
+// #############################################################################################################
+
+
+
+// 닉네임 중복 체크 ################################################################################## 
     const handleNicknameCheck=()=>{
         const Nicknameinfo={
             'nickname' : nickname
@@ -42,6 +48,8 @@ const EditUserInfo = () => {
         console.log(Nicknameinfo)
         // axios.post('url', Nicknameinfo)
     }
+// #############################################################################################################
+    
     return(
         <div>
             <div className='Edituserinfo'>

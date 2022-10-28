@@ -59,10 +59,14 @@ const dummyfontfile=[
 
 
 const MyPage = () => {
+// 회원 정보 변경으로 이동 #######################################################################
     const navigate = useNavigate();
     function editUserInfo() {
         navigate('/userinfo')
     }
+// ###########################################################################################################
+
+// 내폰트, 다운로드폰트, 즐겨찾기폰트에게 정보 전달 ######################################################### 
     const MyfontCards = dummyfontfile.map((e) => (
         <MyFont
           key={e.fontSeq}
@@ -93,6 +97,8 @@ const MyPage = () => {
         preview={e.fontPreview}
       />
     ));
+// ###########################################################################################
+
     return(
         <div className='Mypage'>
             <div className='Mypage__Profile'>
@@ -118,6 +124,7 @@ const MyPage = () => {
                 {MydownlodfontCards}
                 </div>
             </div>
+            <a href="https://www.flaticon.com/kr/free-icons/" title="폰트 아이콘">폰트 아이콘  제작자: surang - Flaticon</a>
         </div>
     );
 };

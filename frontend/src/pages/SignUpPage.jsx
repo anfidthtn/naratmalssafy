@@ -9,6 +9,7 @@ import { Button } from '@mui/material';
 import axios from 'axios'
 import '../styles/Sign/SignUp.scss'
 const SignUpPage = () => {
+// 회원가입 #########################################################################################
     const [region, setRegion] = useState('')
     const [name, setName] = useState('')
     const [nickname, setNickname] = useState('')
@@ -30,6 +31,11 @@ const SignUpPage = () => {
         console.log(userInfo)
         // axios.post('url', userInfo)
     }
+// #############################################################################################################
+
+    
+    
+    // 닉넴 중복 체크 ##############################################################################
     const handleNicknameCheck=()=>{
         const Nicknameinfo={
             'nickname' : nickname
@@ -37,6 +43,9 @@ const SignUpPage = () => {
         console.log(Nicknameinfo)
         // axios.post('url', Nicknameinfo)
     }
+    // #############################################################################################################
+
+
     return(
         <div>
             <div className='Signup'>

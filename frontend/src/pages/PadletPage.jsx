@@ -1,6 +1,9 @@
+import '../styles/Padlet/Board.scss'
+import map from '../assets/map.png'
 const PadletPage = () => {
     return(
-        <div>
+        <div className='Padlet'>
+            <img className='Padlet__main' src={map} alt="map"/>
         </div>
     );
 };

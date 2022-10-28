@@ -1,0 +1,9 @@
+.Padlet{
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    &__main{
+        padding-top: 5%;
+        height: 80%;
+    }
+}

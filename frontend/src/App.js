@@ -10,6 +10,7 @@ import EditUserInfo from "./components/Mypage/EditUserInfo.jsx"
 import "../src/styles/Common/App.scss";
 import TopNav from "./components/Common/TopNav.jsx";
 import Footer from "./components/Common/Footer.jsx";
+import PadletPage from "./pages/PadletPage.jsx"
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/userinfo" element={<EditUserInfo />} />
           <Route path="/fontinfo/:id" element={<UserFontInfo />} />
+          <Route path="/padlet" element={<PadletPage />} />
         </Routes>
       </BrowserRouter>
       <Footer />

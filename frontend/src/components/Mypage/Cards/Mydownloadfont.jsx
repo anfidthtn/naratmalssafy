@@ -5,11 +5,16 @@ import CardMedia from '@mui/material/CardMedia';
 import { useNavigate } from 'react-router-dom';
 
 const MyDownloadFont = ({key, id, creater, name, path, preview}) => {
+
+  // 폰트 상세 정보 페이지로 ####################################################################################### 
     const navigate = useNavigate();
     function FontInfo() {
         navigate(`/fontinfo/${id}`)
     }
-    return(
+// #############################################################################################################
+   
+
+  return(
         <div className='Mypage__Mydownloadfont__Card'>
     <Card onClick={FontInfo}>
       <CardHeader
