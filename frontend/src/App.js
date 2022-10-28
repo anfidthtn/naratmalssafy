@@ -7,17 +7,19 @@ import MainPage from "./pages/MainPage.jsx";
 import "../src/styles/Common/App.scss";
 import TopNav from "./components/Common/TopNav.jsx";
 import Footer from "./components/Common/Footer.jsx";
+import FontSearchPage from "./pages/FontSearchPage.jsx";
 
 function App() {
   return (
     <div className="App">
-      <TopNav />
       <BrowserRouter>
+        <TopNav />
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/oauth/callback/kakao" element={<KakaoLogin />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/" element={<MainPage />} />
+          <Route path="/search" element={<FontSearchPage />} />
         </Routes>
       </BrowserRouter>
       <Footer />
