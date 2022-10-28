@@ -1,7 +1,10 @@
 package com.ssafy.be.db.entity;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +13,9 @@ import javax.persistence.Table;
 
 @Entity
 @Getter
+@AllArgsConstructor
+@Builder
+@NoArgsConstructor
 @Table(name="t_user")
 public class User {
     /*
@@ -28,11 +34,6 @@ public class User {
     long userSeq;
     @Column(name="user_email")
     String userEmail;
-
-
-    //password 필요없음
-
-
     @Column(name = "user_nickname")
     String userNickname;
     @Column(name = "user_name")
