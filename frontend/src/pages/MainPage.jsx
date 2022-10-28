@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import "../styles/MainPage/MainPage.scss";
 import mainLogo from "../assets/mainicon.png";
 import Grid from "@mui/material/Grid";
@@ -11,10 +11,104 @@ import process_1 from "../assets/freeEvent_make_process_1.png";
 import process_2 from "../assets/freeEvent_make_process_2.png";
 import process_3 from "../assets/freeEvent_make_process_3.png";
 
-import { Divider } from "@mui/material";
-import Carousel from "react-material-ui-carousel";
+import { Divider, useMediaQuery } from "@mui/material";
+import Carousel2 from "react-material-ui-carousel";
+import { TiChevronLeftOutline, TiChevronRightOutline } from "react-icons/ti";
+import { useNavigate } from "react-router-dom";
+import font_img_1 from "../assets/font_img/1.png";
+import font_img_2 from "../assets/font_img/2.png";
+import font_img_3 from "../assets/font_img/3.png";
+import font_img_4 from "../assets/font_img/4.png";
+import font_img_5 from "../assets/font_img/5.png";
 
 const MainPage = () => {
+  const isMobile720 = useMediaQuery("(max-width:720px)");
+  const navigate = useNavigate();
+  const CARDS = 10;
+  const MAX_VISIBILITY = 3;
+
+  const Card = ({ index }) => {
+    let current_font_img = null;
+    switch (index) {
+      case 1:
+        current_font_img = font_img_1;
+        break;
+      case 2:
+        current_font_img = font_img_2;
+        break;
+      case 3:
+        current_font_img = font_img_3;
+        break;
+      case 4:
+        current_font_img = font_img_4;
+        break;
+      case 5:
+        current_font_img = font_img_5;
+        break;
+      default:
+        current_font_img = font_img_1;
+        break;
+    }
+
+    return (
+      <div className="card">
+        <img src={current_font_img} alt="" width="100%" />
+      </div>
+    );
+  };
+
+  const Carousel = ({ children }) => {
+    const [active, setActive] = useState(2);
+    const count = React.Children.count(children);
+
+    return (
+      <div className="carousel">
+        {active > 0 && (
+          <button className="nav left" onClick={() => setActive((i) => i - 1)}>
+            <TiChevronLeftOutline />
+          </button>
+        )}
+        {React.Children.map(children, (child, i) => (
+          <div
+            className="card-container"
+            style={{
+              "--active": i === active ? 1 : 0,
+              "--offset": (active - i) / 3,
+              "--direction": Math.sign(active - i),
+              "--abs-offset": Math.abs(active - i) / 3,
+              opacity: Math.abs(active - i) >= MAX_VISIBILITY ? "0" : "1",
+              display: Math.abs(active - i) > MAX_VISIBILITY ? "none" : "block",
+            }}
+          >
+            {child}
+          </div>
+        ))}
+        {active < count - 1 && (
+          <button className="nav right" onClick={() => setActive((i) => i + 1)}>
+            <TiChevronRightOutline />
+          </button>
+        )}
+      </div>
+    );
+  };
+
+  const process = document.getElementsByClassName("font_make_info_process");
+
+  setInterval(() => {
+    for (let index = 0; index < process.length; index++) {
+      const element = process[index];
+      element.classList.remove(`appear${index + 1}`);
+    }
+
+    const addClass = setTimeout(() => {
+      clearTimeout(addClass);
+      for (let index = 0; index < process.length; index++) {
+        const element = process[index];
+        element.classList.add(`appear${index + 1}`);
+      }
+    }, 1);
+  }, 8000);
+
   return (
     <div className="MainPage">
       <div className="main_img_box">
@@ -25,7 +119,7 @@ const MainPage = () => {
           width={"100%"}
         />
       </div>
-
+      <div></div>
       <div className="main_introduce_box">
         <div className="main_introduce_header custom_m_y_30">
           너만의 폰트를{" "}
@@ -99,17 +193,35 @@ const MainPage = () => {
           <div className="font_make_info_text_box">
             <div className="font_make_info_text">
               <ul>
-                <li>1. 12자를 손으로 적어주세요</li>
-                <li>2. 휴대폰으로 찍어주세요</li>
-                <li>3. 업로드 후 글자 선택하면 끝!</li>
+                <li className="font_make_info_process appear1">
+                  <span style={{ fontSize: "20px" }}>1</span>.{" "}
+                  <span style={{ color: "#ffb9b9", fontSize: "28px" }}>
+                    12자
+                  </span>
+                  를 손으로 적어주세요
+                </li>
+                <li className="font_make_info_process appear2">
+                  <span style={{ fontSize: "20px" }}>2</span>.{" "}
+                  <span style={{ color: "#ffb9b9", fontSize: "28px" }}>
+                    휴대폰
+                  </span>
+                  으로 촬영!
+                </li>
+                <li className="font_make_info_process appear3">
+                  <span style={{ fontSize: "20px" }}>3</span>.{" "}
+                  <span style={{ color: "#ffb9b9", fontSize: "28px" }}>
+                    업로드{" "}
+                  </span>
+                  후 개별 글자 선택하면 끝!
+                </li>
               </ul>
             </div>
             <div className="font_make_info_button_box">
-              <button>폰트 제작하기</button>
+              <button className="custom_button">나만의 폰트 제작하기</button>
             </div>
           </div>
           <div className="font_make_info_carousel">
-            <Carousel height={"300px"} autoPlay>
+            <Carousel2 height={"300px"} autoPlay interval={2000}>
               {[
                 <div key={1}>
                   <img src={process_1} alt="" width={"100%"} />
@@ -121,9 +233,42 @@ const MainPage = () => {
                   <img src={process_3} alt="" width={"100%"} />
                 </div>,
               ]}
-            </Carousel>
+            </Carousel2>
           </div>
         </div>
+      </div>
+      <div className="custom_m_y_60">
+        <Divider />
+      </div>
+      <div className="font_extend_header">
+        <h1>어떤 폰트들이 있나요?</h1>
+      </div>
+      {!isMobile720 ? (
+        <>
+          <div className="font_carousel_box">
+            <Carousel>
+              {[...new Array(CARDS)].map((_, i) => (
+                <Card index={i + 1} key={i} />
+              ))}
+            </Carousel>
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="font_make_info_carousel" style={{ margin: "0 auto" }}>
+            <Carousel2 height={"300px"} autoPlay interval={2000}>
+              {[...new Array(5)].map((_, i) => (
+                <Card index={i + 1} />
+              ))}
+            </Carousel2>
+          </div>
+        </>
+      )}
+      <div className="font_extend_button_box">
+        <button className="font_extend_button">폰트 둘러보기</button>
+      </div>
+      <div className="custom_m_t_30">
+        <Divider />
       </div>
     </div>
   );

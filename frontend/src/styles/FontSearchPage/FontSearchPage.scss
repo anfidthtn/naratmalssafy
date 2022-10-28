@@ -1,0 +1,36 @@
+.FontSearchPage {
+  margin-top: 150px;
+
+  & .font_search_header {
+    margin-bottom: 50px;
+    margin-top: 50px;
+    word-break: keep-all;
+  }
+
+  & .font_search_info_text {
+    font-size: 17px;
+    margin-bottom: 3px;
+  }
+
+  & .font_search_dropdown {
+    margin-right: 17px;
+  }
+  & .font_search_box {
+    display: flex;
+    justify-content: center;
+  }
+
+  @media (max-width: 800px) {
+    & .font_search_box {
+      flex-direction: column;
+    }
+  }
+
+  & .font_search_text {
+    display: flex;
+  }
+
+  & .search_icon_box {
+    cursor: pointer;
+  }
+}
