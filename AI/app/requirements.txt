@@ -1,0 +1,5 @@
+uvicorn
+fastapi
+fastapi-sqlalchemy
+pymysql
+pillow
