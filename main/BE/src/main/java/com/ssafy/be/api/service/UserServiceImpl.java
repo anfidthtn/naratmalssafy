@@ -1,5 +1,6 @@
 package com.ssafy.be.api.service;
 
+import com.ssafy.be.api.request.RegistUserReq;
 import com.ssafy.be.api.response.UserLoginRes;
 import com.ssafy.be.common.util.JwtTokenUtil;
 import com.ssafy.be.common.util.KakaoLogin;
@@ -55,5 +56,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUserEmail(String email) {
         return userRepository.findByUserEmail(email);
+    }
+
+    @Override
+    public UserLoginRes registUser(String email, String location, String name, String nickname) {
+        User user = User.builder()
+                .userEmail(email)
+                .userLocation(location)
+                .userName(name)
+                .userNickname(nickname)
+                .build();
+        if(userRepository.findByUserEmail(user.getUserEmail())!=null){
+            return UserLoginRes.builder().loginResult("already_regist").isSignUp(false).build();
+        }
+
+            User registedUser = userRepository.save(user);
+            if(registedUser == null){
+                return UserLoginRes.builder().loginResult("fail_regist").isSignUp(false).build();
+            }
+            String token = JwtTokenUtil.getToken(registedUser.getUserEmail());
+            return UserLoginRes.builder().loginResult(token).isSignUp(false).build();
+
+
+
     }
 }
