@@ -6,4 +6,47 @@
         padding-top: 5%;
         height: 80%;
     }
+    &__West{
+        display: flex;
+        flex-flow: column;
+        &__Seoul{
+            width: 200px;
+            height: 200px;
+        }
+        &__Seoul:hover{
+            transform: scale(1.1);
+        }
+        &__Daejeon{
+            width: 200px;
+            height: 200px;
+        }
+        &__Daejeon:hover{
+            transform: scale(1.1);
+        }
+        &__Gwangju{
+            width: 200px;
+            height: 200px;
+        }
+        &__Gwangju:hover{
+            transform: scale(1.1);
+        }
+    }
+    &__East{
+        display: flex;
+        flex-flow: column;
+        &__Gumi{
+            width: 200px;
+            height: 200px;
+        }
+        &__Gumi:hover{
+            transform: scale(1.1);
+        }
+        &__Busan{
+            width: 200px;
+            height: 200px;
+        }
+        &__Busan:hover{
+            transform: scale(1.1);
+        }
+    }
 }
