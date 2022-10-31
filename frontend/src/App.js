@@ -5,7 +5,6 @@ import SignUpPage from "./pages/SignUpPage.jsx";
 import KakaoLogin from "./components/Login/KakaoLogin.jsx";
 import MainPage from "./pages/MainPage.jsx";
 import MyPage from "./pages/MyPage.jsx";
-import UserFontInfo from "./components/Mypage/UserFontInfo.jsx"
 import EditUserInfo from "./components/Mypage/EditUserInfo.jsx"
 import "../src/styles/Common/App.scss";
 import TopNav from "./components/Common/TopNav.jsx";
@@ -30,7 +29,6 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/userinfo" element={<EditUserInfo />} />
-          <Route path="/fontinfo/:id" element={<UserFontInfo />} />
           <Route path="/padlet" element={<PadletPage />} />
           <Route path="/post/seoul" element={<Postseoul />} />
           <Route path="/post/busan" element={<Postbusan />} />
