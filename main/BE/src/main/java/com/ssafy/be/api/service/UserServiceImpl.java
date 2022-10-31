@@ -2,6 +2,7 @@ package com.ssafy.be.api.service;
 
 import com.ssafy.be.api.request.RegistUserReq;
 import com.ssafy.be.api.response.GetUserInfoRes;
+import com.ssafy.be.api.response.UpdateUserInfoRes;
 import com.ssafy.be.api.response.UserLoginRes;
 import com.ssafy.be.common.util.JwtTokenUtil;
 import com.ssafy.be.common.util.KakaoLogin;
@@ -109,6 +110,24 @@ public class UserServiceImpl implements UserService {
                 .userNickname(user.getUserNickname())
                 .downloadFonts(resDownload)
                 .likeFonts(resLike)
+                .build();
+        return res;
+    }
+
+    @Override
+    public UpdateUserInfoRes updateUserInfo(Long seq,String email, String location, String name, String nickname) {
+        User user = User.builder()
+                .userSeq(seq)
+                .userEmail(email)
+                .userLocation(location)
+                .userName(name)
+                .userNickname(nickname)
+                .build();
+        User updatedUser = userRepository.save(user);
+        UpdateUserInfoRes res = UpdateUserInfoRes.builder()
+                .userName(updatedUser.getUserName())
+                .userLocation(updatedUser.getUserLocation())
+                .userNickname(updatedUser.getUserNickname())
                 .build();
         return res;
     }

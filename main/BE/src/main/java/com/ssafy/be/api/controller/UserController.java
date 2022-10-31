@@ -1,7 +1,9 @@
 package com.ssafy.be.api.controller;
 
 import com.ssafy.be.api.request.RegistUserReq;
+import com.ssafy.be.api.request.UpdateUserInfoReq;
 import com.ssafy.be.api.request.UserLoginReq;
+import com.ssafy.be.api.response.UpdateUserInfoRes;
 import com.ssafy.be.api.response.UserLoginRes;
 import com.ssafy.be.api.response.GetUserInfoRes;
 import com.ssafy.be.api.service.UserService;
@@ -64,10 +66,18 @@ public class UserController {
         return ResponseEntity.status(200).body(res);
     }
 
-    @ResponseBody
-    @GetMapping("/kakao")
-    public void kakaoCallback(@RequestParam String code){
-        System.out.println(code);
+    @PutMapping()
+    public ResponseEntity<UpdateUserInfoRes> updateUserInfo(@ApiIgnore Authentication authentication, @RequestBody UpdateUserInfoReq userInfo){
+        UserDetail userDetails = (UserDetail)authentication.getDetails();
+        User user = userDetails.getUser();
+        UpdateUserInfoRes res = userService.updateUserInfo(
+                user.getUserSeq(),
+                user.getUserEmail(),
+                userInfo.getUserLocation(),
+                userInfo.getUserName(),
+                userInfo.getUserNickname()
+        );
+        return ResponseEntity.status(200).body(res);
     }
 
 
