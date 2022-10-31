@@ -1,37 +1,42 @@
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardHeader from '@mui/material/CardHeader';
-import CardMedia from '@mui/material/CardMedia';
 import { useNavigate } from 'react-router-dom';
-import UserFontInfo from "../UserFontInfo.jsx"
+import React from "react";
+import "../../../styles/MyPage/Card.scss";
+import { BsFillStarFill } from "react-icons/bs";
+import { FiDownload } from "react-icons/fi";
 
-const MyFont = ({key, id, creater, name, path, preview}) => {
-  
-// 폰트 상세 정보 페이지로 #######################################################################################     
-    const navigate = useNavigate();
-    function FontInfo() {
-        navigate(`/fontinfo/${id}`)
-    }
-// #############################################################################################################
+const MyFont = ({key, id, creater, name, path, preview, download, favorite}) => {
 
  
     return(
-    <div className='Mypage__Myfont__Card'>
-        <Card onClick={FontInfo}>
-        <CardHeader
-            title={name}
-        />
-        <CardMedia
-            component="img"
-            height="150px"
-            image={preview}
-            alt="musicImg"
-        />
-        <CardContent>
-        </CardContent>
-        </Card>
-    </div>
+        <div className="fontData">
+        <div className="textarea_box">
+          <textarea className="textarea">안녕하세요 반갑습니다</textarea>
+        </div>
+        <div className="info_box">
+          <div className="font_info">
+            <div className="font_first_row_box">
+              <div className="font_name">{name}</div>
+              <div className="font_favorite_download_info">
+                <div className="favorite_info">
+                  <span className="icon">{BsFillStarFill()}</span>
+                  <span className="num"> {favorite}</span>
+                </div>
+                <div className="download_info">
+                  <span className="icon">{FiDownload()}</span>
+                  <span className="num"> {download}</span>
+                </div>
+              </div>
+            </div>
+            <div className="font_user_info">
+              <span style={{ fontSize: "10px" }}>Designed By.</span>
+              <span style={{ fontWeight: "bold", fontSize: "12px" }}>
+                {creater}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
     );
-};
+  };
 
 export default MyFont;
