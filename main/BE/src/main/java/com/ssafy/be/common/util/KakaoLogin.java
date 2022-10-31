@@ -60,7 +60,7 @@ public class KakaoLogin {
     }
     public String getEmail(String token){
         String reqURL = "https://kapi.kakao.com/v2/user/me";
-        String email = "first";
+        String email = "";
         try{
             URL url = new URL(reqURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();

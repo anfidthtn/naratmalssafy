@@ -1,13 +1,22 @@
 package com.ssafy.be.api.service;
 
 import com.ssafy.be.api.request.RegistUserReq;
+import com.ssafy.be.api.response.GetUserInfoRes;
 import com.ssafy.be.api.response.UserLoginRes;
 import com.ssafy.be.common.util.JwtTokenUtil;
 import com.ssafy.be.common.util.KakaoLogin;
+import com.ssafy.be.db.entity.Font;
+import com.ssafy.be.db.entity.FontDownloadHistory;
 import com.ssafy.be.db.entity.User;
+import com.ssafy.be.db.entity.UserFont;
 import com.ssafy.be.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -52,7 +61,6 @@ public class UserServiceImpl implements UserService {
                     .build();
         }
     }
-
     @Override
     public User getUserByUserEmail(String email) {
         return userRepository.findByUserEmail(email);
@@ -79,5 +87,29 @@ public class UserServiceImpl implements UserService {
 
 
 
+    }
+
+    @Override
+    public GetUserInfoRes getUserInfo(User inputUser) {
+        User user = userRepository.findByUserEmail(inputUser.getUserEmail());
+        List<Font> resLike = new ArrayList<>();
+        List<Font> resDownload = new ArrayList<>();
+        List<UserFont> likeFonts = user.getLikeFonts();
+        List<FontDownloadHistory> downloadFonts = user.getDownloadFonts();
+        for(UserFont e :likeFonts){
+            resLike.add(e.getFont());
+        }
+        for(FontDownloadHistory e :downloadFonts){
+            resDownload.add(e.getDownloadFont());
+        }
+        GetUserInfoRes res = GetUserInfoRes.builder()
+                .userEmail(user.getUserEmail())
+                .userLocation(user.getUserLocation())
+                .userName(user.getUserName())
+                .userNickname(user.getUserNickname())
+                .downloadFonts(resDownload)
+                .likeFonts(resLike)
+                .build();
+        return res;
     }
 }
