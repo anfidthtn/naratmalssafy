@@ -32,5 +32,52 @@
 
   & .search_icon_box {
     cursor: pointer;
+    margin-left: 5px;
+  }
+
+  & .search_icon_box:hover {
+    border: 1px solid gray;
+    border-radius: 10px;
+  }
+
+  & ul {
+    list-style: none;
+  }
+
+  & .font_search_opt ul {
+    display: flex;
+    padding-left: 0;
+    flex-wrap: wrap;
+  }
+
+  & .font_search_opt li {
+    border-right: 1px solid #b9b6b6;
+    padding-right: 30px;
+    padding-left: 30px;
+    cursor: pointer;
+    color: #919191;
+  }
+
+  & .font_search_opt li:first-child {
+    padding-left: 10px;
+  }
+
+  & .font_search_opt li:hover {
+    text-decoration: underline;
+  }
+
+  & .font_search_opt_select {
+    color: #33383e !important;
+  }
+
+  & .font_search_opt {
+    margin-top: 30px;
+  }
+
+  @media (max-width: 600px) {
+    & .font_search_opt {
+      margin-top: 30px;
+      margin-bottom: 10px;
+    }
   }
 }
