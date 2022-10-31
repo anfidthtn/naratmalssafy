@@ -14,17 +14,17 @@ const UserFontInfo = () => {
     }
 
 // 카카오 공유 버튼 ###########################################################################################################################################################
-    useEffect(() => {
-        const script = document.createElement('script')
-        script.src = 'https://developers.kakao.com/sdk/js/kakao.js'
-        script.async = true
+    // useEffect(() => {
+    //     const script = document.createElement('script')
+    //     script.src = 'https://developers.kakao.com/sdk/js/kakao.js'
+    //     script.async = true
 
-        document.body.appendChild(script)
+    //     document.body.appendChild(script)
 
-        return () => {
-            document.body.removeChild(script)
-        }
-    }, [])
+    //     return () => {
+    //         document.body.removeChild(script)
+    //     }
+    // }, [])
 
 // ########################################################################################################################################################### 
     return(
@@ -46,7 +46,7 @@ const UserFontInfo = () => {
                             <div><div>폰트태그</div><div>태그들 담기는곳</div></div>
                             <div>대표폰트설정</div>
                             <div>폰트다운가능여부</div>
-                            <div><button>다운</button><KakaoShareButton/></div>
+                            {/* <div><button>다운</button><KakaoShareButton/></div> */}
                         </Box>
                     </div>
                 </div>
