@@ -2,34 +2,24 @@
     height: 100vh;
 
     &__Profile{
-        height:100px;
         overflow: auto;
     }
     &__Myfont{
-        height:200px;
-        overflow: auto;
         display: flex;
         flex-flow: row;
-        &__Card{
-            width:150px;
-        }
+        flex-wrap: wrap;
+        margin: 0 auto;
     }
     &__Myfavoritesfont{
         height:200px;
         overflow: auto;
         display: flex;
         flex-flow: row;
-        &__Card{
-            width:150px;
-        }
     }
     &__Mydownloadfont{
         height:200px;
         overflow: auto;
         display: flex;
         flex-flow: row;
-        &__Card{
-            width:150px;
-        }
     }
 }
