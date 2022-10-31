@@ -23,8 +23,8 @@
     border: none;
     height: 200px;
     padding: 10px;
-    font-size: 1.05rem;
-    line-height: 30px;
+    font-size: 1.85rem;
+    line-height: 50px;
     background-color: transparent;
     max-width: 100%;
     width: 100%;
@@ -40,6 +40,7 @@
     border-color: rgba(228, 228, 231, var(--tw-border-opacity));
     background-color: rgba(222, 196, 196, 0.23);
     padding: 3px 5px;
+    cursor: pointer;
   }
 
   & .font_info {
@@ -54,6 +55,7 @@
   & .icon {
     margin-right: 2px;
     cursor: pointer;
+    z-index: 2;
   }
 
   & .num {
@@ -62,7 +64,8 @@
   }
 
   & .font_name {
-    font-weight: bold;
+    // font-weight: bold;
+    font-size: 25px;
   }
 
   & .font_favorite_download_info {

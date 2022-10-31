@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import "../styles/FontSearchPage/FontSearchPage.scss";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -6,7 +6,9 @@ import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Divider, Grid, TextField, useMediaQuery } from "@mui/material";
 import { FcSearch } from "react-icons/fc";
+import { BsFonts } from "react-icons/bs";
 import FontSearchItem from "../components/FontSearch/FontSearchItem";
+import { useInView } from "react-intersection-observer";
 
 const FontSearchPage = () => {
   const [searchCondition, setSearchCondition] = useState("nickName");
@@ -18,38 +20,63 @@ const FontSearchPage = () => {
       fontName: "지홍체",
       favoriteCount: 140,
       downloadCount: 300,
+      fontDownloadAddress:
+        "https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap",
+      fontFamilyName: "Do Hyeon",
     },
     {
       fontUser: "구미_채민지_2반민지",
       fontName: "우울할땐 우울체",
       favoriteCount: 150,
       downloadCount: 4400,
+      fontDownloadAddress:
+        "https://fonts.googleapis.com/css2?family=Poor+Story&display=swap",
+      fontFamilyName: "Poor Story",
     },
     {
       fontUser: "구미_한제규_알고리즘왕",
       fontName: "알고리즘전용체",
       favoriteCount: 40,
       downloadCount: 5,
+      fontDownloadAddress:
+        "https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap",
+      fontFamilyName: "Black Han Sans",
     },
     {
       fontUser: "구미_가수왕_폰트왕",
       fontName: "가수체",
       favoriteCount: 1040,
       downloadCount: 30000,
+      fontDownloadAddress:
+        "https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap",
+      fontFamilyName: "Nanum Pen Script",
     },
     {
       fontUser: "구미_조경수_폰트마마",
       fontName: "경수우울체",
       favoriteCount: 350,
       downloadCount: 100,
+      fontDownloadAddress:
+        "https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap",
+      fontFamilyName: "Gamja Flower",
     },
     {
       fontUser: "구미_임현탁_막걸리가좋아",
       fontName: "현탁막걸리체",
       favoriteCount: 200,
       downloadCount: 10,
+      fontDownloadAddress:
+        "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
+      fontFamilyName: "Black And White Picture",
     },
   ]);
+
+  const [fontEditorText, setFontEditorText] = useState("만나서 반갑습니다.");
+
+  // 무한 스크롤
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [ref, inView] = useInView();
 
   const isMobile600 = useMediaQuery("(max-width:600px)");
 
@@ -69,6 +96,27 @@ const FontSearchPage = () => {
 
     //fontData axios로 받기
   }, []);
+
+  // 서버에서 아이템을 가지고 오는 함수
+  const getItems = useCallback(async () => {
+    setLoading(true);
+    // await axios.get(`${Your Server Url}/page=${page}`).then((res) => {
+    //   setItems(prevState => [...prevState, res])
+    // })
+    setLoading(false);
+  }, [page]);
+
+  // `getItems` 가 바뀔 때 마다 함수 실행
+  useEffect(() => {
+    getItems();
+  }, [getItems]);
+
+  useEffect(() => {
+    // 사용자가 마지막 요소를 보고 있고, 로딩 중이 아니라면
+    if (inView && !loading) {
+      setPage((prevState) => prevState + 1);
+    }
+  }, [inView, loading]);
 
   const enterClick = (e) => {
     //검색 조건 받아오는 aixos 서버 통신
@@ -156,7 +204,9 @@ const FontSearchPage = () => {
       <div className="font_search_opt">
         {isMobile600 ? (
           <>
-            <FormControl sx={{ width: 120 }}>
+            <FormControl
+              sx={{ width: 120, marginBottom: "15px", marginRight: "20px" }}
+            >
               <InputLabel id="demo-simple-select-label2">정렬</InputLabel>
               <Select
                 labelId="demo-simple-select-label2"
@@ -173,7 +223,7 @@ const FontSearchPage = () => {
             </FormControl>
           </>
         ) : (
-          <ul>
+          <ul style={{ marginRight: "20px" }}>
             <li
               className="font_search_opt_name"
               id="latest"
@@ -204,17 +254,44 @@ const FontSearchPage = () => {
             </li>
           </ul>
         )}
+        <div className="font_text_editor">
+          <span>
+            <BsFonts size={30} />
+          </span>
+          <input
+            type="text"
+            placeholder="원하는 글자를 입력하세요"
+            value={fontEditorText}
+            onChange={(e) => {
+              setFontEditorText(e.target.value);
+            }}
+          />
+        </div>
       </div>
       <div className="custom_m_y_10">
         <Divider />
       </div>
 
       <Grid container spacing={3}>
-        {fontData.map((data, idx) => (
-          <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
-            <FontSearchItem fontData={data} />
-          </Grid>
-        ))}
+        {fontData.map((data, idx) =>
+          fontData.length - 1 === idx ? (
+            <Grid key={idx} ref={ref} xs={12} sm={6} md={4} lg={3} item>
+              <FontSearchItem
+                idx={idx}
+                fontData={data}
+                fontEditorText={fontEditorText}
+              />
+            </Grid>
+          ) : (
+            <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
+              <FontSearchItem
+                idx={idx}
+                fontData={data}
+                fontEditorText={fontEditorText}
+              />
+            </Grid>
+          )
+        )}
       </Grid>
     </div>
   );

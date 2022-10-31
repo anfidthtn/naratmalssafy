@@ -68,10 +68,15 @@
 
   & .font_search_opt_select {
     color: #33383e !important;
+    font-weight: bold;
   }
 
   & .font_search_opt {
     margin-top: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
   }
 
   @media (max-width: 600px) {
@@ -79,5 +84,28 @@
       margin-top: 30px;
       margin-bottom: 10px;
     }
+  }
+
+  & .font_text_editor {
+    display: flex;
+    align-items: center;
+    flex-grow: 1;
+    text-align: center;
+    border: 1px solid #dadde0;
+    height: 40px;
+    padding: 0 14px;
+  }
+
+  & .font_text_editor input {
+    margin: 0;
+    border: none;
+    background: none;
+    font-size: 16px;
+    line-height: 24px;
+    box-sizing: border-box;
+    padding: 0 6px;
+    outline: none;
+    height: 100%;
+    width: 100%;
   }
 }
