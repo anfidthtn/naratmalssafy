@@ -30,7 +30,7 @@ public class User {
 
     @Id
     @Column(name="user_seq")
-    long userSeq;
+    Long userSeq;
     @Column(name="user_email")
     String userEmail;
     @Column(name = "user_nickname")

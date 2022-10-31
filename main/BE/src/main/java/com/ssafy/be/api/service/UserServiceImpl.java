@@ -10,6 +10,7 @@ import com.ssafy.be.db.entity.Font;
 import com.ssafy.be.db.entity.FontDownloadHistory;
 import com.ssafy.be.db.entity.User;
 import com.ssafy.be.db.entity.UserFont;
+import com.ssafy.be.db.repository.UserFontRepository;
 import com.ssafy.be.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -23,6 +24,8 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    UserFontRepository userFontRepository;
     @Autowired
     KakaoLogin kakaoLogin;
 
@@ -95,7 +98,9 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.findByUserEmail(inputUser.getUserEmail());
         List<Font> resLike = new ArrayList<>();
         List<Font> resDownload = new ArrayList<>();
-        List<UserFont> likeFonts = user.getLikeFonts();
+        //List<UserFont> likeFonts = user.getLikeFonts();
+        List<UserFont> likeFonts = userFontRepository.findByUser(user);
+        //레포만들어서 가져오기
         List<FontDownloadHistory> downloadFonts = user.getDownloadFonts();
         for(UserFont e :likeFonts){
             resLike.add(e.getFont());

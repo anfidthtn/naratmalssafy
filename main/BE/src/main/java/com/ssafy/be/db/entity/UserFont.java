@@ -1,11 +1,17 @@
 package com.ssafy.be.db.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "t_user_font")
 public class UserFont {
     /*
@@ -16,10 +22,10 @@ font_seq bigint*/
     @Id
     @Column(name = "user_font_seq")
     long userFontSeq;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_seq",referencedColumnName = "user_seq")
     User user;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "font_seq",referencedColumnName = "font_seq")
     Font font;
 }

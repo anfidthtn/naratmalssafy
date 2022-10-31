@@ -1,10 +1,19 @@
 package com.ssafy.be.db.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Builder
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "t_font")
 public class Font {
     /*font_seq bigint PK
@@ -35,13 +44,13 @@ font_download_file bigint
     File fontDownloadFile;
     @ManyToOne
     @JoinColumn(name = "font_creater", referencedColumnName = "user_seq")
-    User user;
+    User fontCreater;
 
-    @OneToMany
-    @JoinColumn(name = "font_seq", referencedColumnName = "font_seq")
+    @OneToMany(mappedBy = "font")
+    //@JoinColumn(name = "font_seq", referencedColumnName = "font_seq")
     List<UserFont> likeUsers;
 
-    @OneToMany
-    @JoinColumn(name = "font_seq", referencedColumnName = "font_seq")
+    @OneToMany(mappedBy = "downloadFont")
+    //@JoinColumn(name = "font_seq", referencedColumnName = "font_seq")
     List <FontDownloadHistory> downloadUsers;
 }
