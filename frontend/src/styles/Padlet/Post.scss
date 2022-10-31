@@ -1,0 +1,32 @@
+.Postseoul{
+    height: 100vh;
+}
+.Postdaejeon{
+    height: 100vh;
+}
+.Postgwangju{
+    height: 100vh;
+}
+.Postgumi{
+    height: 100vh;
+}
+.Postbusan{
+    height: 100vh;
+}
+.Modal{
+    width: 300px;
+    height: 200px;
+    z-index:9999;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,-50%);
+    background-color: gray;
+    border: 1px solid black;
+    border-radius: 8px;
+    &__Close{
+        position: absolute;
+        right:10px;
+        top:10px;
+    }
+}
