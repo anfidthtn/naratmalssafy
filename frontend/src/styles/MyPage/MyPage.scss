@@ -1,6 +1,18 @@
 .Mypage{
     height: 100vh;
-
+    &__Fontselect{
+        display: flex;
+        flex-flow: row;
+        &__My{
+            margin-right:100px;
+        }
+        &__Favorite{
+            margin-right:100px;
+        }
+        &__Download{
+            margin-right:100px;
+        }
+    }
     &__Profile{
         overflow: auto;
     }
@@ -11,15 +23,15 @@
         margin: 0 auto;
     }
     &__Myfavoritesfont{
-        height:200px;
-        overflow: auto;
         display: flex;
         flex-flow: row;
+        flex-wrap: wrap;
+        margin: 0 auto;
     }
     &__Mydownloadfont{
-        height:200px;
-        overflow: auto;
         display: flex;
         flex-flow: row;
+        flex-wrap: wrap;
+        margin: 0 auto;
     }
 }

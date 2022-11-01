@@ -3,14 +3,23 @@ import React from "react";
 import "../../../styles/MyPage/Card.scss";
 import { BsFillStarFill } from "react-icons/bs";
 import { FiDownload } from "react-icons/fi";
+import { useEffect } from 'react';
 
-const MyFont = ({key, id, creater, name, path, preview, download, favorite}) => {
-
+const MyFont = ({key, id, fontFamilyName, creater, name, path, preview, download, favorite}) => {
+  useEffect(() => {
+    const fontDataDiv = document.getElementById(`fontData_${id}`);
+    const fontDataTextArea = document.getElementById(
+      `fontData_textarea_${id}`
+    );
+    fontDataDiv.style.fontFamily = fontFamilyName;
+    fontDataTextArea.style.fontFamily = fontFamilyName;
+  }, []);
  
     return(
-        <div className="fontData">
+        <div className="fontData" id={`fontData_${id}`}>
+          <link rel="stylesheet" type="text/css" href={path}/>
         <div className="textarea_box">
-          <textarea className="textarea">안녕하세요 반갑습니다</textarea>
+          <textarea className="textarea" id={`fontData_textarea_${id}`}>안녕하세요 반갑습니다</textarea>
         </div>
         <div className="info_box">
           <div className="font_info">
