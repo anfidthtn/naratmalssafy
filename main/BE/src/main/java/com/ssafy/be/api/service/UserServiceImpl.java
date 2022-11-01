@@ -103,7 +103,6 @@ public class UserServiceImpl implements UserService {
         //즐찾 폰트
         for(UserFont e : user.getLikeFonts()){
             Font temp = e.getFont();
-            if(temp.getFontDeleteYN().equals("Y")) continue;
             ResFont resFont = ResFont.builder()
                     .createrEmail(temp.getFontCreater().getUserEmail())
                     .createrName(temp.getFontCreater().getUserName())
@@ -113,13 +112,16 @@ public class UserServiceImpl implements UserService {
                     .fontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
                     .fileName(temp.getFontDownloadFile().getFileSavedName())
+                    .fontSeq(temp.getFontSeq())
+                    .downloadCount(temp.getFontDownloadCount())
+                    .regDate(temp.getFontRegDate())
                     .build();
             resLike.add(resFont);
         }
         //다운로드 폰트
         for(FontDownloadHistory e : user.getDownloadFonts()){
             Font temp = e.getDownloadFont();
-            if(temp.getFontDeleteYN().equals("Y")) continue;
+
             ResFont resFont = ResFont.builder()
                     .createrEmail(temp.getFontCreater().getUserEmail())
                     .createrName(temp.getFontCreater().getUserName())
@@ -129,12 +131,14 @@ public class UserServiceImpl implements UserService {
                     .fontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
                     .fileName(temp.getFontDownloadFile().getFileSavedName())
+                    .fontSeq(temp.getFontSeq())
+                    .downloadCount(temp.getFontDownloadCount())
+                    .regDate(temp.getFontRegDate())
                     .build();
             resDownload.add(resFont);
         }
         //제작 폰트
         for(Font temp : user.getCreateFonts()){
-            if(temp.getFontDeleteYN().equals("Y")) continue;
             ResFont resFont = ResFont.builder()
                     .createrEmail(temp.getFontCreater().getUserEmail())
                     .createrName(temp.getFontCreater().getUserName())
@@ -144,6 +148,7 @@ public class UserServiceImpl implements UserService {
                     .fontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
                     .fileName(temp.getFontDownloadFile().getFileSavedName())
+                    .fontSeq(temp.getFontSeq())
                     .build();
             resMyFont.add(resFont);
         }
@@ -156,6 +161,7 @@ public class UserServiceImpl implements UserService {
                 .downloadFonts(resDownload)
                 .likeFonts(resLike)
                 .myFonts(resMyFont)
+
                 .build();
         return res;
     }
