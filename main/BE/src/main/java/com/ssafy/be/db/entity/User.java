@@ -29,6 +29,7 @@ public class User {
 
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="user_seq")
     Long userSeq;
     @Column(name="user_email")
@@ -39,7 +40,6 @@ public class User {
     String userName;
     @Column(name = "user_location")
     String userLocation;
-
     @OneToMany(mappedBy = "user")
     List <UserFont> likeFonts;
     @OneToMany(mappedBy = "user")
