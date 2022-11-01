@@ -2,6 +2,7 @@ import { useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import axios from 'axios'
 
+
 const KakaoRedirectHandler = () => {
     console.log('hello')
     const location = useLocation();

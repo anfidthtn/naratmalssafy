@@ -1,11 +1,40 @@
 import { useScript } from "../hooks"
 import { useEffect } from "react"
-import { useLocation } from "react-router-dom";
 import kakao from "../assets/sharebutton.png";
+import { CopyToClipboard } from 'react-copy-to-clipboard'
+import styled from '@emotion/styled'
 
+const URLShareButton = styled.button`
+	width: 48px;
+	height: 48px;
+	color: white;
+	border-radius: 24px;
+	border: 0px;
+	font-weight: 800;
+	font-size: 15px;
+	cursor: pointer;
+	background-color: #7362ff;
+	&:hover {
+		background-color: #a99fee;
+	}
+`;
+const ShareButton = styled.button`
+	width: 48px;
+	height: 48px;
+	color: white;
+	border-radius: 24px;
+	border: 0px;
+	font-weight: 800;
+	font-size: 8px;
+	cursor: pointer;
+	background-color: #f8c440;
+	&:hover {
+		background-color: #ffd977;
+	}
+`;
 
 const Share = () => {
-    const currentUrl = useLocation();
+// 카카오톡 공유버튼 #################################################################################
     const status = useScript("https://developers.kakao.com/sdk/js/kakao.js")
     useEffect(() => {
 		if (status === "ready" && window.Kakao) {
@@ -27,9 +56,16 @@ const Share = () => {
             },
         })
     }
+// #####################################################################################################################################################
+
+// 링크 복사####################################################################################################################################################
+    const currentUrl = window.location.href
+// ############################################################################################################################################################ 
+
     return(
         <div>
-            <button onClick={handleKakaoButton}><img src={kakao} alt="shareButton"></img></button>
+            <ShareButton onClick={handleKakaoButton}>Kakao</ShareButton>
+            <CopyToClipboard text={currentUrl}><URLShareButton>URL</URLShareButton></CopyToClipboard>
         </div>
     );
 };
