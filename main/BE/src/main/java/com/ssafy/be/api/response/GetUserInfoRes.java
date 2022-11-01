@@ -1,5 +1,6 @@
 package com.ssafy.be.api.response;
 
+import com.ssafy.be.api.dto.ResFont;
 import com.ssafy.be.db.entity.Font;
 import lombok.Builder;
 import lombok.Data;
@@ -16,10 +17,11 @@ public class GetUserInfoRes {
     String userNickname;
 
     //TODO 내 폰트 (리스트)
-
+    List<ResFont> myFonts;
     //즐겨찾기 한 폰트(리스트)
-    List<Font> likeFonts;
+    List<ResFont> likeFonts;
     //다운로드 한 폰트(리스트)
-    List<Font> downloadFonts;
+    List<ResFont> downloadFonts;
+
 
 }

@@ -36,13 +36,15 @@ font_download_file bigint
     String fontDescription;
     @Column(name = "font_fav_count")
     long fontFavCount;
+    @Column(name = "font_deleteYN")
+    String fontDeleteYN;
     @OneToOne
     @JoinColumn(name = "font_preview",referencedColumnName = "file_seq")
     File fontPreview;
     @OneToOne
     @JoinColumn(name = "font_download_file",referencedColumnName = "file_seq")
     File fontDownloadFile;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "font_creater", referencedColumnName = "user_seq")
     User fontCreater;
 

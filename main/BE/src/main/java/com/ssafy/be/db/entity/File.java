@@ -1,5 +1,7 @@
 package com.ssafy.be.db.entity;
 
+import lombok.Getter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -7,6 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "t_file")
+@Getter
 public class File {
     /*file_seq bigint AI PK
 file_original_name varchar(45)

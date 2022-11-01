@@ -1,5 +1,6 @@
 package com.ssafy.be.api.service;
 
+import com.ssafy.be.api.dto.ResFont;
 import com.ssafy.be.api.request.RegistUserReq;
 import com.ssafy.be.api.response.GetUserInfoRes;
 import com.ssafy.be.api.response.UpdateUserInfoRes;
@@ -10,7 +11,7 @@ import com.ssafy.be.db.entity.Font;
 import com.ssafy.be.db.entity.FontDownloadHistory;
 import com.ssafy.be.db.entity.User;
 import com.ssafy.be.db.entity.UserFont;
-import com.ssafy.be.db.repository.UserFontRepository;
+import com.ssafy.be.db.repository.FontRepository;
 import com.ssafy.be.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.EntityGraph;
@@ -25,9 +26,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
     @Autowired
-    UserFontRepository userFontRepository;
-    @Autowired
     KakaoLogin kakaoLogin;
+    @Autowired
+    FontRepository fontRepository;
 
 
     @Override
@@ -96,18 +97,57 @@ public class UserServiceImpl implements UserService {
     @Override
     public GetUserInfoRes getUserInfo(User inputUser) {
         User user = userRepository.findByUserEmail(inputUser.getUserEmail());
-        List<Font> resLike = new ArrayList<>();
-        List<Font> resDownload = new ArrayList<>();
-        //List<UserFont> likeFonts = user.getLikeFonts();
-        List<UserFont> likeFonts = userFontRepository.findByUser(user);
-        //레포만들어서 가져오기
-        List<FontDownloadHistory> downloadFonts = user.getDownloadFonts();
-        for(UserFont e :likeFonts){
-            resLike.add(e.getFont());
+        List<ResFont> resLike = new ArrayList<>();
+        List<ResFont> resDownload = new ArrayList<>();
+        List<ResFont> resMyFont = new ArrayList<>();
+        //즐찾 폰트
+        for(UserFont e : user.getLikeFonts()){
+            Font temp = e.getFont();
+            if(temp.getFontDeleteYN().equals("Y")) continue;
+            ResFont resFont = ResFont.builder()
+                    .createrEmail(temp.getFontCreater().getUserEmail())
+                    .createrName(temp.getFontCreater().getUserName())
+                    .description(temp.getFontDescription())
+                    .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
+                    .FontName(temp.getFontName())
+                    .fontPath(temp.getFontPath())
+                    .favCount(temp.getFontFavCount())
+                    .fileName(temp.getFontDownloadFile().getFileSavedName())
+                    .build();
+            resLike.add(resFont);
         }
-        for(FontDownloadHistory e :downloadFonts){
-            resDownload.add(e.getDownloadFont());
+        //다운로드 폰트
+        for(FontDownloadHistory e : user.getDownloadFonts()){
+            Font temp = e.getDownloadFont();
+            if(temp.getFontDeleteYN().equals("Y")) continue;
+            ResFont resFont = ResFont.builder()
+                    .createrEmail(temp.getFontCreater().getUserEmail())
+                    .createrName(temp.getFontCreater().getUserName())
+                    .description(temp.getFontDescription())
+                    .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
+                    .FontName(temp.getFontName())
+                    .fontPath(temp.getFontPath())
+                    .favCount(temp.getFontFavCount())
+                    .fileName(temp.getFontDownloadFile().getFileSavedName())
+                    .build();
+            resDownload.add(resFont);
         }
+        //제작 폰트
+        for(Font temp : user.getCreateFonts()){
+            if(temp.getFontDeleteYN().equals("Y")) continue;
+            ResFont resFont = ResFont.builder()
+                    .createrEmail(temp.getFontCreater().getUserEmail())
+                    .createrName(temp.getFontCreater().getUserName())
+                    .description(temp.getFontDescription())
+                    .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
+                    .FontName(temp.getFontName())
+                    .fontPath(temp.getFontPath())
+                    .favCount(temp.getFontFavCount())
+                    .fileName(temp.getFontDownloadFile().getFileSavedName())
+                    .build();
+            resMyFont.add(resFont);
+        }
+
         GetUserInfoRes res = GetUserInfoRes.builder()
                 .userEmail(user.getUserEmail())
                 .userLocation(user.getUserLocation())
@@ -115,6 +155,7 @@ public class UserServiceImpl implements UserService {
                 .userNickname(user.getUserNickname())
                 .downloadFonts(resDownload)
                 .likeFonts(resLike)
+                .myFonts(resMyFont)
                 .build();
         return res;
     }

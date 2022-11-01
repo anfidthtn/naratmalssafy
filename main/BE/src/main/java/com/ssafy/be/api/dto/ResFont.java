@@ -13,6 +13,7 @@ public class ResFont
     String fontPath;
     Long favCount;
     String downloadFile;
+    String fileName;
     String createrName;
     String createrEmail;
     String description;

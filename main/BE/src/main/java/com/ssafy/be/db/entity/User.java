@@ -41,10 +41,9 @@ public class User {
     String userLocation;
 
     @OneToMany(mappedBy = "user")
-    //@JoinColumn(name = "user_seq", referencedColumnName = "user_seq")
     List <UserFont> likeFonts;
-//
     @OneToMany(mappedBy = "user")
-//    @JoinColumn(name = "user_seq", referencedColumnName = "user_seq")
     List <FontDownloadHistory> downloadFonts;
+    @OneToMany(mappedBy = "fontCreater")
+    List <Font> createFonts;
 }
