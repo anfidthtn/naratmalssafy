@@ -1,0 +1,301 @@
+.FontDetailPage {
+  margin-top: 100px;
+
+  & .first_row_box {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  & .font_name {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  & .font_user {
+    font-size: 1rem;
+    margin-top: 5px;
+  }
+
+  & .font_info_box {
+    margin-top: 10px;
+  }
+
+  & .font_popular_info_box {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 20px;
+  }
+
+  & .font_favorite_box {
+    display: flex;
+    align-items: center;
+    border: 1px solid rgba(209, 213, 219, 1);
+    border-radius: 0.225rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    color: rgba(107, 114, 128, 1);
+    margin-bottom: 10px;
+  }
+
+  & .font_favorite_box:hover {
+    background-color: rgba(249, 250, 251, 0.4);
+  }
+
+  & .font_favorite_download_info_box {
+    display: flex;
+  }
+
+  & .font_favorite_count {
+    margin-right: 10px;
+  }
+
+  & .second_row_box {
+    margin-top: 30px;
+  }
+
+  & .font_oneline_header {
+    font-size: 20px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  & .font_oneline_mention {
+    width: 100%;
+    padding: 30px 100px;
+    background: transparent;
+    border-width: 3px;
+    border-style: solid;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    line-height: 1.2;
+    white-space: pre-line;
+    text-align: center;
+    font-size: 30px;
+    box-sizing: border-box;
+    border-color: peachpuff;
+  }
+
+  & .third_row_box {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    height: 800px;
+    margin-top: 30px;
+  }
+
+  & .text_area_box {
+    width: 60%;
+  }
+
+  & .text_area_box textarea {
+    width: 50%;
+    height: 400px;
+    padding: 200px 25%;
+    letter-spacing: 1px;
+    line-height: 1;
+    border: none;
+    outline: none;
+    resize: none;
+    font-size: 24px;
+    background-image: url("../../assets/textarea_img/background_1.jpg");
+    // object-fit: cover;
+    background-size: cover;
+    background-position: 50% 50%;
+  }
+
+  & .control_panel {
+    margin-left: 30px;
+    height: 800px;
+    padding: 20px 30px;
+    background-color: #fff;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    width: 35%;
+    min-width: 360px;
+    max-width: 500px;
+  }
+
+  & .font_editor_panel_header {
+    font-weight: bold;
+    margin-bottom: 15px;
+    font-size: 16px;
+  }
+
+  & .font_editor_panel_first_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  & .font_align_box {
+    width: 100%;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16);
+    border-radius: 1px;
+    margin-left: 10px;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: box-shadow 0.2s linear;
+  }
+
+  & .font_align_box:hover {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.24);
+  }
+
+  & .font_align_box ul {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: #fff;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    width: 100%;
+  }
+
+  & .font_align_box li {
+    border-radius: 10px;
+    padding: 5px 10px;
+    font-size: 17px;
+  }
+
+  & .font_align_box .select_font_align {
+    background-color: #efefef;
+  }
+
+  & .font_editor_panel_second_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    margin-top: 10px;
+  }
+
+  & .font_color_select_box {
+    padding: 8px 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16);
+    cursor: pointer;
+    border-radius: 3px;
+    transition: box-shadow 0.2s linear;
+    width: 30%;
+  }
+
+  & .font_color_select_box:hover {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.24);
+  }
+
+  & .font_color_current {
+    width: 37px;
+    height: 37px;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 1px solid #cacaca;
+    background-color: black;
+  }
+
+  & .font_spacing_select_box {
+    width: 100%;
+    padding: 10px 0;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.16);
+    cursor: pointer;
+    text-align: center;
+    font-weight: bold;
+    height: 55px;
+    box-sizing: border-box;
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.2s linear;
+  }
+
+  & .font_spacing_select_box:hover {
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.24);
+  }
+
+  & .textarea_background_img_box {
+    margin-top: 10px;
+  }
+
+  & .textarea_background_img_box_header {
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  & .textarea_background_img_grid {
+    width: 300px;
+    height: 300px;
+    margin: 10px auto;
+    display: flex;
+    align-items: center;
+  }
+
+  & .textarea_background_img_grid .bg_img {
+    text-align: center;
+  }
+
+  & .textarea_background_img_grid img {
+    background-position: 50%;
+    background-size: contain;
+    border-radius: 12px;
+  }
+
+  & .font_size_30 {
+    font-size: 30px;
+  }
+
+  & .font_size_20 {
+    font-size: 20px;
+  }
+
+  & .font_weight_bold {
+    font-weight: bold;
+  }
+
+  & .font_picker_box {
+    display: none;
+    position: absolute;
+    z-index: 11;
+    top: 0;
+    left: 0;
+  }
+
+  & .font_spacing_picker_box {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 11;
+    width: 300px;
+    box-sizing: border-box;
+    padding: 15px 25px;
+    background-color: white;
+    border-radius: 10px;
+    display: none;
+
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.07),
+      0 4px 8px rgba(0, 0, 0, 0.07), 0 8px 16px rgba(0, 0, 0, 0.07),
+      0 16px 32px rgba(0, 0, 0, 0.07), 0 32px 64px rgba(0, 0, 0, 0.07);
+  }
+
+  & .spacing_picker_header {
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  & .full_width_height {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    top: 0;
+    left: 0;
+    visibility: hidden;
+  }
+}
