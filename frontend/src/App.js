@@ -16,6 +16,7 @@ import Postgumi from "./components/Padlet/Postgumi.jsx";
 import Postgwangju from "./components/Padlet/Postgwangju.jsx";
 import Postdaejeon from "./components/Padlet/Postdaejeon.jsx";
 import FontSearchPage from "./pages/FontSearchPage.jsx";
+import ShareTest from "./components/share.js"
 import FontDetailPage from "./pages/FontDetailPage.jsx";
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
           <Route path="/post/gwangju" element={<Postgwangju />} />
           <Route path="/post/gumi" element={<Postgumi />} />
           <Route path="/search" element={<FontSearchPage />} />
+          <Route path="/kakao" element={<ShareTest />} />
         </Routes>
       </BrowserRouter>
       <Footer />

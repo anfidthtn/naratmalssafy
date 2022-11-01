@@ -6,6 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
+import axios from 'axios'
 const EditUserInfo = () => {
     const dummyuserinfo={
         'userSeq' : 0,
@@ -18,6 +19,9 @@ const EditUserInfo = () => {
     const [region, setRegion] = useState('')
     const [name, setName] = useState('')
     const [nickname, setNickname] = useState('')
+    const [change, setChange] = useState(false)
+    const token = localStorage.getItem('token')
+
     const handleRegion = (event) => {
         setRegion(event.target.value)
     }
@@ -29,12 +33,27 @@ const EditUserInfo = () => {
     }
     const handleEdit = () => {
         const userInfo={
-            'region' : region,
-            'name' : name,
-            'nickname' : nickname
+            'userLocation' : region,
+            'userName' : name,
+            'userNickname' : nickname
         }
         console.log(userInfo)
-        // axios.post('url', userInfo)
+        axios({
+            url: '/api/user',
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`, 
+                'Content-Type':'application/json'
+            },
+            data: userInfo
+        })
+        .then(res => {
+            console.log(res)
+            window.location.href='/'
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
 // #############################################################################################################
 
@@ -42,14 +61,27 @@ const EditUserInfo = () => {
 
 // 닉네임 중복 체크 ################################################################################## 
     const handleNicknameCheck=()=>{
-        const Nicknameinfo={
-            'nickname' : nickname
-        }
-        console.log(Nicknameinfo)
-        // axios.post('url', Nicknameinfo)
+        axios({
+            url: `/api/user/checknickname/${nickname}`,
+            method: 'GET',
+            headers: {'Content-Type':'application/json'}
+        })
+        .then(res => {
+            if (res.data === true){
+                setChange(res.data)
+            }
+            else{
+                setChange(res.data)
+            }
+        })
+        .catch(err => {
+            console.log(err)
+        })
     }
 // #############################################################################################################
-    
+    const handleBack=()=>{
+        window.location.href = 'mypage'
+    }
     return(
         <div>
             <div className='Edituserinfo'>
@@ -79,8 +111,8 @@ const EditUserInfo = () => {
                 </FormControl>
                 <button onClick={handleNicknameCheck}>중복체크</button>
                 <p>최종 활동명은 지역, 이름, 닉네임을 합쳐 지역_이름_닉네임 형식으로 만들어드립니다.</p>
-                <button onClick={handleEdit}>정보수정</button>
-                <button>뒤로가기</button>
+                <button disabled={!change} onClick={handleEdit}>정보수정</button>
+                <button onClick={handleBack}>뒤로가기</button>
             </Box>
         </div>
         </div>

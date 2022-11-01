@@ -30,10 +30,19 @@ export default function TopNav() {
               >
                 폰트검색
               </li>
-              <li>ForSSAFY</li>
+              <li                 
+                onClick={() => {
+                  navigate("/padlet");
+                }}>ForSSAFY</li>
               <li>서명만들기</li>
-              <li>마이페이지</li>
-              <li>로그인</li>
+              <li
+                onClick={() => {
+                  navigate("/mypage");
+                }}>마이페이지</li>
+              <li
+                onClick={() => {
+                  navigate("/login");
+                }}>로그인</li>
             </ul>
           </div>
         ) : (
