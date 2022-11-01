@@ -1,6 +1,5 @@
 import { useScript } from "../hooks"
 import { useEffect } from "react"
-import kakao from "../assets/sharebutton.png";
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import styled from '@emotion/styled'
 
@@ -47,14 +46,34 @@ const Share = () => {
 	}, [status]);
     const handleKakaoButton = () => {
         window.Kakao.Link.sendDefault({
-            objectType: 'text',
-            text:
-              '기본 템플릿으로 제공되는 텍스트 템플릿은 텍스트를 최대 200자까지 표시할 수 있습니다. 텍스트 템플릿은 텍스트 영역과 하나의 기본 버튼을 가집니다. 임의의 버튼을 설정할 수도 있습니다. 여러 장의 이미지, 프로필 정보 등 보다 확장된 형태의 카카오톡 공유는 다른 템플릿을 이용해 보낼 수 있습니다.',
-            link: {
-              mobileWebUrl: 'https://developers.kakao.com',
-              webUrl: 'https://developers.kakao.com',
-            },
+            objectType: 'feed',
+            content: {
+                title: '구미_임현탁_연딱콩님의 폰트를 구경해보세요!',
+                description: '#폰트 #나만의 #싸피 #SSAFY #추억 #선물',
+                imageUrl:
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTemP_0duhHjJ0tjzZtz_AKErxLKTuaKteuw&usqp=CAU',
+                link: {
+                  mobileWebUrl: 'http://localhost:3000/kakao',
+                  webUrl: 'http://localhost:3000/kakao',
+                },
+              },
+            //   social: {
+            //     likeCount: 286,
+            //     commentCount: 45,
+            //     sharedCount: 845,
+            //   },
+              buttons: [
+                {
+                  title: '자세히보기',
+                  link: {
+                    mobileWebUrl: 'http://localhost:3000/kakao',
+                    webUrl: 'http://localhost:3000/kakao',
+                  },
+                },
+              ],
         })
+
+
     }
 // #####################################################################################################################################################
 
