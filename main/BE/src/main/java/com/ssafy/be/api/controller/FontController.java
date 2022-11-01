@@ -22,6 +22,7 @@ public class FontController {
     public ResponseEntity<GetFontsRes> getFonts(@ApiIgnore Authentication auth,@PathVariable int page, @PathVariable int count){
         UserDetail userDetail = (UserDetail) auth.getDetails();
         User user = userDetail.getUser();
+        System.out.println(page +" "+count);
         GetFontsRes res = fontService.getFonts(user,page,count);
         return ResponseEntity.status(200).body(res);
     }
