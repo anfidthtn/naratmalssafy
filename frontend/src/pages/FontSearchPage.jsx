@@ -9,67 +9,13 @@ import { FcSearch } from "react-icons/fc";
 import { BsFonts } from "react-icons/bs";
 import FontSearchItem from "../components/FontSearch/FontSearchItem";
 import { useInView } from "react-intersection-observer";
+import { dummyDataSet } from "../store/dummy";
 
 const FontSearchPage = () => {
   const [searchCondition, setSearchCondition] = useState("nickName");
   const [searchText, setSearchText] = useState("");
   const [searchOption, setSearchOption] = useState("latest");
-  const [fontData, setFontData] = useState([
-    {
-      fontUser: "구미_유지홍_짐닥",
-      fontName: "지홍체",
-      favoriteCount: 140,
-      downloadCount: 300,
-      fontDownloadAddress:
-        "https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap",
-      fontFamilyName: "Do Hyeon",
-    },
-    {
-      fontUser: "구미_채민지_2반민지",
-      fontName: "우울할땐 우울체",
-      favoriteCount: 150,
-      downloadCount: 4400,
-      fontDownloadAddress:
-        "https://fonts.googleapis.com/css2?family=Poor+Story&display=swap",
-      fontFamilyName: "Poor Story",
-    },
-    {
-      fontUser: "구미_한제규_알고리즘왕",
-      fontName: "알고리즘전용체",
-      favoriteCount: 40,
-      downloadCount: 5,
-      fontDownloadAddress:
-        "https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap",
-      fontFamilyName: "Black Han Sans",
-    },
-    {
-      fontUser: "구미_가수왕_폰트왕",
-      fontName: "가수체",
-      favoriteCount: 1040,
-      downloadCount: 30000,
-      fontDownloadAddress:
-        "https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap",
-      fontFamilyName: "Nanum Pen Script",
-    },
-    {
-      fontUser: "구미_조경수_폰트마마",
-      fontName: "경수우울체",
-      favoriteCount: 350,
-      downloadCount: 100,
-      fontDownloadAddress:
-        "https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap",
-      fontFamilyName: "Gamja Flower",
-    },
-    {
-      fontUser: "구미_임현탁_막걸리가좋아",
-      fontName: "현탁막걸리체",
-      favoriteCount: 200,
-      downloadCount: 10,
-      fontDownloadAddress:
-        "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
-      fontFamilyName: "Black And White Picture",
-    },
-  ]);
+  const [fontData, setFontData] = useState(dummyDataSet);
 
   const [fontEditorText, setFontEditorText] = useState("만나서 반갑습니다.");
 

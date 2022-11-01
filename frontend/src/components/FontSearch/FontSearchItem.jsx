@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import "../../styles/FontSearchPage/FontSearchItem.scss";
 import { BsFillStarFill } from "react-icons/bs";
 import { FiDownload } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const FontSearchItem = ({ idx, fontData, fontEditorText }) => {
   const [subFontEditorText, setSubFontEditorText] = useState(fontEditorText);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     setSubFontEditorText(fontEditorText);
@@ -36,7 +39,12 @@ const FontSearchItem = ({ idx, fontData, fontEditorText }) => {
           }}
         ></textarea>
       </div>
-      <div className="info_box">
+      <div
+        className="info_box"
+        onClick={() => {
+          navigate(`/detail/${fontData.id}`);
+        }}
+      >
         <div className="font_info">
           <div className="font_first_row_box">
             <div className="font_name">{fontData.fontName}</div>
