@@ -9,6 +9,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Builder
@@ -62,5 +63,18 @@ font_download_file bigint
     @PrePersist
     public void createdAt() {
         this.fontRegDate = LocalDateTime.now();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Font font = (Font) o;
+        return fontSeq.equals(font.fontSeq);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(fontSeq);
     }
 }

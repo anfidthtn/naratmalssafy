@@ -5,10 +5,13 @@ import com.ssafy.be.api.service.FontService;
 import com.ssafy.be.common.auth.UserDetail;
 import com.ssafy.be.db.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+
+
 
 
 @RestController
@@ -18,12 +21,11 @@ public class FontController {
     @Autowired
     FontService fontService;
 
-    @GetMapping("/{page}/{count}")
-    public ResponseEntity<GetFontsRes> getFonts(@ApiIgnore Authentication auth,@PathVariable int page, @PathVariable int count){
+    @GetMapping()
+    public ResponseEntity<GetFontsRes> getFonts(@ApiIgnore Authentication auth, Pageable page){
         UserDetail userDetail = (UserDetail) auth.getDetails();
         User user = userDetail.getUser();
-        System.out.println(page +" "+count);
-        GetFontsRes res = fontService.getFonts(user,page,count);
+        GetFontsRes res = fontService.getFonts(user,page);
         return ResponseEntity.status(200).body(res);
     }
 }
