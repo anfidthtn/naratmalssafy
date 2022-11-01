@@ -6,10 +6,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -31,7 +30,7 @@ public class User {
 
     @Id
     @Column(name="user_seq")
-    long userSeq;
+    Long userSeq;
     @Column(name="user_email")
     String userEmail;
     @Column(name = "user_nickname")
@@ -40,4 +39,11 @@ public class User {
     String userName;
     @Column(name = "user_location")
     String userLocation;
+
+    @OneToMany(mappedBy = "user")
+    List <UserFont> likeFonts;
+    @OneToMany(mappedBy = "user")
+    List <FontDownloadHistory> downloadFonts;
+    @OneToMany(mappedBy = "fontCreater")
+    List <Font> createFonts;
 }
