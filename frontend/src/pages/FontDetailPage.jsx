@@ -3,8 +3,11 @@ import { useParams } from "react-router-dom";
 import { dummyDataSet } from "../store/dummy";
 import "../styles/FontDetailPage/FontDetailPage.scss";
 import { BiStar } from "react-icons/bi";
+import { BsStarFill } from "react-icons/bs";
+import { AiOutlineDownload, AiOutlineFontSize } from "react-icons/ai";
 import { TbAlignLeft, TbAlignCenter, TbAlignRight } from "react-icons/tb";
 import { SketchPicker } from "react-color";
+import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
@@ -13,23 +16,71 @@ import Select from "@mui/material/Select";
 import { Grid, Slider } from "@mui/material";
 
 import bgImage_1 from "../assets/textarea_img/background_1.jpg";
+import bgImage_2 from "../assets/textarea_img/background_2.jpg";
+import bgImage_3 from "../assets/textarea_img/background_3.jpg";
+import bgImage_4 from "../assets/textarea_img/background_4.jpg";
+
+import kakaoImg from "../assets/sns_icon/kakao_img.png";
+import linkImg from "../assets/sns_icon/link.png";
 
 const FontDetailPage = () => {
   const [fontData, setfontData] = useState({});
   const [fontTrialConfig, setFontTrialConfig] = useState({
     color: "#000000",
-    size: 20,
+    size: 30,
     lineHeight: 1, //1~2.1
     letterSpacing: 1, //1px~10px
     align: "left",
   });
+
+  const [oneLineText, setOneLineText] = useState("");
+  const [modifyText, setModifyText] = useState(false);
+
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  const currentUrl = window.location.href;
+  let clipboardModal = null;
+
   // 파라미터로 넘어오는 id 값 받기
   const { id } = useParams();
 
   useEffect(() => {
     // axios로 폰트 데이터 요청
     setfontData(dummyDataSet[id - 1]);
+    setOneLineText(dummyDataSet[id - 1].fontOnelineText);
+    setIsFavorite(dummyDataSet[id - 1].isFavorite);
+
+    const fontDetailPage = document.getElementById("FontDetailPage");
+    const textarea = document.getElementById(
+      `FontDetailPage_textarea_${fontData.id}`
+    );
+    const dummyData = dummyDataSet[id - 1];
+
+    fontDetailPage.style.fontFamily = dummyData.fontFamilyName;
+    textarea.style.fontFamily = dummyData.fontFamilyName;
   }, []);
+
+  useEffect(() => {
+    const textarea = document.getElementById(
+      `FontDetailPage_textarea_${fontData.id}`
+    );
+
+    textarea.style.fontSize = fontTrialConfig.size + "px";
+    textarea.style.color = fontTrialConfig.color;
+    textarea.style.letterSpacing = fontTrialConfig.letterSpacing + "px";
+    textarea.style.lineHeight = fontTrialConfig.lineHeight;
+    textarea.style.textAlign = fontTrialConfig.align;
+  }, [fontTrialConfig]);
+
+  useEffect(() => {
+    if (modifyText) {
+      const modifyOnelineTextarea = document.getElementById(
+        "modify_oneline_textarea"
+      );
+
+      modifyOnelineTextarea.style.fontFamily = fontData.fontFamilyName;
+    }
+  }, [modifyText]);
 
   function changeConfig(e, name, value) {
     setFontTrialConfig({
@@ -96,8 +147,70 @@ const FontDetailPage = () => {
     }
   }
 
+  function imageClick(e) {
+    const textarea = document.getElementById(
+      `FontDetailPage_textarea_${fontData.id}`
+    );
+
+    let bgImage = null;
+    switch (e.target.id) {
+      case `FontDetailPage_bgImage_1`:
+        bgImage = bgImage_1;
+        break;
+      case `FontDetailPage_bgImage_2`:
+        bgImage = bgImage_2;
+        break;
+      case `FontDetailPage_bgImage_3`:
+        bgImage = bgImage_3;
+        break;
+      case `FontDetailPage_bgImage_4`:
+        bgImage = bgImage_4;
+        break;
+      default:
+        break;
+    }
+    textarea.style.backgroundImage = `url(${bgImage})`;
+  }
+
+  function fontDownloadClick() {
+    // axios로 다운로드 받은 폰트번호 서버로 보내기
+
+    // 만약 다운로드가 성공한다면
+    setfontData({ ...fontData, downloadCount: ++fontData.downloadCount });
+
+    //다운로드 페이지 이동
+    window.location.href =
+      "https://ownglyph-out-bucket.s3.ap-northeast-2.amazonaws.com/70470e04-293f-41da-8fb2-a90934921f2b/%EC%98%A8%EA%B8%80%EC%9E%8E%20%EC%9C%A8%ED%95%98%EC%B2%B4.ttf";
+  }
+
+  function clickModifyTextButton() {
+    // 변경사항 서버로 axios 보내기
+
+    // 정상적인 응답이 오면
+    fontData.fontOnelineText = oneLineText;
+    setModifyText(false);
+  }
+
+  function clickFavoriteButton() {
+    // Favorite 버튼 클릭 API 요청
+
+    // 만약 성공했다면
+    setIsFavorite(!isFavorite);
+
+    if (isFavorite) {
+      fontData.favoriteCount -= 1;
+    } else {
+      fontData.favoriteCount += 1;
+    }
+  }
+
   return (
-    <div className="FontDetailPage">
+    <div className="FontDetailPage" id="FontDetailPage">
+      <link
+        rel="stylesheet"
+        type="text/css"
+        href={fontData.fontDownloadAddress}
+      />
       <div className="first_row_box">
         <div className="font_info_box">
           <div className="font_name">{fontData.fontName}</div>
@@ -106,13 +219,22 @@ const FontDetailPage = () => {
             <span style={{ fontSize: "1.5rem" }}>{fontData.fontUser}</span>{" "}
           </div>
         </div>
-        <div className="font_popular_info_box">
-          <div className="font_favorite_box">
-            <BiStar size={30} color="orange" />
-            <span style={{ fontSize: "20px", marginLeft: "3px" }}>
-              즐겨찾기
-            </span>{" "}
-          </div>
+        <div className="font_popular_info_box" onClick={clickFavoriteButton}>
+          {isFavorite ? (
+            <div className="font_favorite_box">
+              <BsStarFill size={30} color="orange" />
+              <span style={{ fontSize: "20px", marginLeft: "3px" }}>
+                즐겨찾기 취소
+              </span>{" "}
+            </div>
+          ) : (
+            <div className="font_favorite_box">
+              <BiStar size={30} color="orange" />
+              <span style={{ fontSize: "20px", marginLeft: "3px" }}>
+                즐겨찾기 추가
+              </span>{" "}
+            </div>
+          )}
           <div className="font_favorite_download_info_box">
             <div className="font_favorite_count">
               <span className="font_size_20">즐겨찾기 수:</span>{" "}
@@ -130,14 +252,57 @@ const FontDetailPage = () => {
         </div>
       </div>
       <div className="second_row_box">
-        <div className="font_oneline_header">폰트 한줄 설명</div>
-        <div className="font_oneline_mention">
-          이 폰트는 우울할 때 쓰시면 아주 효과가 만점인 폰트입니다.!
+        <div className="font_oneline_header">
+          <span>폰트 한줄 설명</span>
+          {modifyText ? (
+            <div>
+              <span
+                className="font_oneline_fix"
+                style={{ marginRight: "20px" }}
+                onClick={() => {
+                  setOneLineText(fontData.fontOnelineText);
+                  setModifyText(false);
+                }}
+              >
+                취소하기
+              </span>
+              <span
+                className="font_oneline_fix"
+                onClick={clickModifyTextButton}
+              >
+                수정완료
+              </span>
+            </div>
+          ) : (
+            <span
+              className="font_oneline_fix"
+              onClick={() => {
+                setModifyText(!modifyText);
+              }}
+            >
+              수정하기
+            </span>
+          )}
         </div>
+        {modifyText ? (
+          <textarea
+            className="modify_oneline_textarea"
+            id="modify_oneline_textarea"
+            value={oneLineText}
+            onChange={(e) => {
+              setOneLineText(e.target.value);
+            }}
+          ></textarea>
+        ) : (
+          <div className="font_oneline_mention">{oneLineText}</div>
+        )}
       </div>
       <div className="third_row_box">
         <div className="text_area_box">
-          <textarea id={`FontDetailPage_textarea_${fontData.id}`}></textarea>
+          <textarea
+            id={`FontDetailPage_textarea_${fontData.id}`}
+            placeholder="원하는 글자를 작성해보세요"
+          ></textarea>
         </div>
         <div className="control_panel">
           <div className="font_editor_panel">
@@ -212,47 +377,96 @@ const FontDetailPage = () => {
             </div>
             <div className="textarea_background_img_grid">
               <Grid container spacing={1}>
-                <Grid xs={6} sm={6} md={6} item>
-                  <div className="bg_img">
-                    <img
-                      src={bgImage_1}
-                      alt="font"
-                      width={"135px"}
-                      height={"130px"}
-                    />
-                  </div>
-                </Grid>
-                <Grid xs={6} sm={6} md={6} item>
-                  <div className="bg_img">
-                    <img
-                      src={bgImage_1}
-                      alt="font"
-                      width={"135px"}
-                      height={"130px"}
-                    />
-                  </div>
-                </Grid>
-                <Grid xs={6} sm={6} md={6} item>
-                  <div className="bg_img">
-                    <img
-                      src={bgImage_1}
-                      alt="font"
-                      width={"135px"}
-                      height={"130px"}
-                    />
-                  </div>
-                </Grid>
-                <Grid xs={6} sm={6} md={6} item>
-                  <div className="bg_img">
-                    <img
-                      src={bgImage_1}
-                      alt="font"
-                      width={"135px"}
-                      height={"130px"}
-                    />
-                  </div>
-                </Grid>
+                {[1, 2, 3, 4].map((_, i) => {
+                  let bgImage = null;
+                  switch (i) {
+                    case 0:
+                      bgImage = bgImage_1;
+                      break;
+                    case 1:
+                      bgImage = bgImage_2;
+                      break;
+                    case 2:
+                      bgImage = bgImage_3;
+                      break;
+                    case 3:
+                      bgImage = bgImage_4;
+                      break;
+                    default:
+                      break;
+                  }
+                  return (
+                    <Grid xs={6} sm={6} md={6} item key={i}>
+                      <div className="bg_img">
+                        <img
+                          onClick={imageClick}
+                          id={`FontDetailPage_bgImage_${i + 1}`}
+                          src={bgImage}
+                          alt="font"
+                          width={"135px"}
+                          height={"130px"}
+                        />
+                      </div>
+                    </Grid>
+                  );
+                })}
               </Grid>
+            </div>
+          </div>
+          <div className="sns_box">
+            <div className="sns_header">폰트 공유</div>
+            {/* 카카오톡 버튼 공유 클릭 */}
+            <div
+              className="sns_icon_box"
+              onClick={() => {
+                console.log("카카오톡 버튼 공유 클릭");
+              }}
+            >
+              <div className="sns_img_box">
+                <img
+                  src={kakaoImg}
+                  alt="카카오"
+                  width={"27px"}
+                  height={"27px"}
+                />
+              </div>
+              <CopyToClipboard text={currentUrl}>
+                <div
+                  className="sns_img_box"
+                  onClick={() => {
+                    clearTimeout(clipboardModal);
+                    const clipboard_check =
+                      document.getElementById("clipboard_check");
+                    clipboard_check.style.visibility = "visible";
+                    clipboardModal = setTimeout(() => {
+                      clipboard_check.style.visibility = "hidden";
+                    }, 1000);
+                  }}
+                >
+                  <img
+                    src={linkImg}
+                    alt="링크"
+                    width={"42px"}
+                    height={"42px"}
+                  />
+                </div>
+              </CopyToClipboard>
+            </div>
+            <div className="font_download_box" onClick={fontDownloadClick}>
+              폰트 다운로드
+              <AiOutlineDownload size={25} style={{ marginLeft: "10px" }} />
+            </div>
+          </div>
+          <div className="font_make_box">
+            <div className="font_make_header">폰트 제작</div>
+            <div
+              className="font_make_button"
+              onClick={() => {
+                console.log("제작하기 페이지로 이동");
+              }}
+            >
+              내 폰트 제작하기
+              <AiOutlineFontSize size={25} style={{ marginLeft: "10px" }} />
             </div>
           </div>
         </div>
@@ -299,6 +513,9 @@ const FontDetailPage = () => {
           valueLabelDisplay="auto"
           onChange={changeConfig}
         />
+      </div>
+      <div className="clipboard_check" id="clipboard_check">
+        클립보드에 복사 되었습니다.
       </div>
       <div
         className="full_width_height"
