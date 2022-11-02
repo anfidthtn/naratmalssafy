@@ -21,6 +21,7 @@ user_seq bigint
 font_seq bigint*/
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_font_seq")
     long userFontSeq;
     @ManyToOne(fetch = FetchType.LAZY)
