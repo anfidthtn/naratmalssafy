@@ -1,5 +1,6 @@
 package com.ssafy.be.api.controller;
 
+import com.ssafy.be.api.response.GetFontDetailRes;
 import com.ssafy.be.api.response.GetFontsRes;
 import com.ssafy.be.api.service.FontService;
 import com.ssafy.be.common.auth.UserDetail;
@@ -26,6 +27,13 @@ public class FontController {
         UserDetail userDetail = (UserDetail) auth.getDetails();
         User user = userDetail.getUser();
         GetFontsRes res = fontService.getFonts(user,page);
+        return ResponseEntity.status(200).body(res);
+    }
+    @GetMapping("/detail/{fontSeq}")
+    public ResponseEntity<GetFontDetailRes> getFont(@ApiIgnore Authentication auth, @PathVariable long fontSeq){
+        UserDetail userDetail = (UserDetail) auth.getDetails();
+        User user =  userDetail.getUser();
+        GetFontDetailRes res = fontService.getFont(user,fontSeq);
         return ResponseEntity.status(200).body(res);
     }
 }

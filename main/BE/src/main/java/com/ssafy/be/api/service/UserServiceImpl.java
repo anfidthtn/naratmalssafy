@@ -1,5 +1,6 @@
 package com.ssafy.be.api.service;
 
+import com.ssafy.be.api.dto.Creater;
 import com.ssafy.be.api.dto.ResFont;
 import com.ssafy.be.api.response.GetUserInfoRes;
 import com.ssafy.be.api.response.LikeFontRes;
@@ -104,10 +105,14 @@ public class UserServiceImpl implements UserService {
         for(UserFont e : user.getLikeFonts()){
             Font temp = e.getFont();
             ResFont resFont = ResFont.builder()
-                    .createrEmail(temp.getFontCreater().getUserEmail())
-                    .createrName(temp.getFontCreater().getUserName())
+                    .creater(Creater.builder()
+                            .email(temp.getFontCreater().getUserEmail())
+                            .location(temp.getFontCreater().getUserLocation())
+                            .name(temp.getFontCreater().getUserName())
+                            .nickname(temp.getFontCreater().getUserNickname())
+                            .build())
                     .description(temp.getFontDescription())
-                    .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
+                   // .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
                     .FontName(temp.getFontName())
                     .fontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
@@ -123,10 +128,14 @@ public class UserServiceImpl implements UserService {
             Font temp = e.getDownloadFont();
 
             ResFont resFont = ResFont.builder()
-                    .createrEmail(temp.getFontCreater().getUserEmail())
-                    .createrName(temp.getFontCreater().getUserName())
+                    .creater(Creater.builder()
+                            .email(temp.getFontCreater().getUserEmail())
+                            .location(temp.getFontCreater().getUserLocation())
+                            .name(temp.getFontCreater().getUserName())
+                            .nickname(temp.getFontCreater().getUserNickname())
+                            .build())
                     .description(temp.getFontDescription())
-                    .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
+                   // .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
                     .FontName(temp.getFontName())
                     .fontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
@@ -140,10 +149,14 @@ public class UserServiceImpl implements UserService {
         //제작 폰트
         for(Font temp : user.getCreateFonts()){
             ResFont resFont = ResFont.builder()
-                    .createrEmail(temp.getFontCreater().getUserEmail())
-                    .createrName(temp.getFontCreater().getUserName())
+                    .creater(Creater.builder()
+                            .email(temp.getFontCreater().getUserEmail())
+                            .location(temp.getFontCreater().getUserLocation())
+                            .name(temp.getFontCreater().getUserName())
+                            .nickname(temp.getFontCreater().getUserNickname())
+                            .build())
                     .description(temp.getFontDescription())
-                    .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
+                   // .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
                     .FontName(temp.getFontName())
                     .fontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
