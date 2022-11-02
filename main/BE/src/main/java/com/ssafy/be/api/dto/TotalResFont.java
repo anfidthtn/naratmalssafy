@@ -14,7 +14,6 @@ public class TotalResFont {
     String FontName;
     String fontPath;
     Long favCount;
-    String fileName;
     String description;
     Long downloadCount;
     LocalDateTime regDate;

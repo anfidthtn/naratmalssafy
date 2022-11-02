@@ -116,7 +116,6 @@ public class UserServiceImpl implements UserService {
                     .FontName(temp.getFontName())
                     .fontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
-                    .fileName(temp.getFontDownloadFile().getFileSavedName())
                     .fontSeq(temp.getFontSeq())
                     .downloadCount(temp.getFontDownloadCount())
                     .regDate(temp.getFontRegDate())
@@ -139,7 +138,6 @@ public class UserServiceImpl implements UserService {
                     .FontName(temp.getFontName())
                     .fontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
-                    .fileName(temp.getFontDownloadFile().getFileSavedName())
                     .fontSeq(temp.getFontSeq())
                     .downloadCount(temp.getFontDownloadCount())
                     .regDate(temp.getFontRegDate())
@@ -160,7 +158,6 @@ public class UserServiceImpl implements UserService {
                     .FontName(temp.getFontName())
                     .fontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
-                    .fileName(temp.getFontDownloadFile().getFileSavedName())
                     .fontSeq(temp.getFontSeq())
                     .build();
             resMyFont.add(resFont);

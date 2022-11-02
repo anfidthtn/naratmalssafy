@@ -18,7 +18,6 @@ public class ResFont
     String FontName;
     String fontPath;
     Long favCount;
-    String fileName;
     String description;
     Long downloadCount;
     LocalDateTime regDate;
