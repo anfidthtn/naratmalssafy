@@ -10,11 +10,11 @@ import "../src/styles/Common/App.scss";
 import TopNav from "./components/Common/TopNav.jsx";
 import Footer from "./components/Common/Footer.jsx";
 import PadletPage from "./pages/PadletPage.jsx";
-import Postseoul from "./components/Padlet/Postseoul.jsx";
-import Postbusan from "./components/Padlet/Postbusan.jsx";
-import Postgumi from "./components/Padlet/Postgumi.jsx";
-import Postgwangju from "./components/Padlet/Postgwangju.jsx";
-import Postdaejeon from "./components/Padlet/Postdaejeon.jsx";
+import Postseoul from "./components/Padlet/Seoul/Postseoul.jsx";
+import Postbusan from "./components/Padlet/Busan/Postbusan.jsx";
+import Postgumi from "./components/Padlet/Gumi/Postgumi.jsx";
+import Postgwangju from "./components/Padlet/Gwangju/Postgwangju.jsx";
+import Postdaejeon from "./components/Padlet/Daejeon/Postdaejeon.jsx";
 import FontSearchPage from "./pages/FontSearchPage.jsx";
 import ShareTest from "./components/share.js"
 import FontDetailPage from "./pages/FontDetailPage.jsx";

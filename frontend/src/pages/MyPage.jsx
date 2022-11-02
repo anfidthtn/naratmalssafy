@@ -5,6 +5,8 @@ import '../styles/MyPage/MyPage.scss'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Grid } from "@mui/material";
+
 
 
 const dummyfontfile=[
@@ -119,49 +121,6 @@ const MyPage = () => {
     } 
 // ###########################################################################################################
 
-
-// 내폰트, 다운로드폰트, 즐겨찾기폰트에게 정보 전달 ######################################################### 
-    const MyfontCards = dummyfontfile.map((e) => (
-        <MyFont
-          key={e.fontSeq}
-          id={e.fontSeq}
-          creater={e.fontCreater}
-          name={e.fontName}
-          path={e.fontPath}
-          preview={e.fontPreview}
-          download={e.downloadCount}
-          favorite={e.favoriteCount}
-          fontFamilyName={e.fontFamilyName}
-        />
-    ));
-    const MyfavoritesfontCards = dummyfontfile.map((e) => (
-      <MyFavoritesFont
-        key={e.fontSeq}
-        id={e.fontSeq}
-        creater={e.fontCreater}
-        name={e.fontName}
-        path={e.fontPath}
-        preview={e.fontPreview}
-        download={e.downloadCount}
-        favorite={e.favoriteCount}
-        fontFamilyName={e.fontFamilyName}
-      />
-    ));
-    const MydownlodfontCards = dummyfontfile.map((e) => (
-      <MyDownloadFont
-        key={e.fontSeq}
-        id={e.fontSeq}
-        creater={e.fontCreater}
-        name={e.fontName}
-        path={e.fontPath}
-        preview={e.fontPreview}
-        download={e.downloadCount}
-        favorite={e.favoriteCount}
-        fontFamilyName={e.fontFamilyName}
-      />
-    ));
-// ###########################################################################################
-
     return(
         <div className='Mypage'>
             <div className='Mypage__Profile'>
@@ -178,7 +137,25 @@ const MyPage = () => {
                 {
                     ismyfontshow &&
                     <div className='Mypage__Myfont'>
-                    {MyfontCards} 마이폰트해윙
+                    <Grid container spacing={3}>
+                        {dummyfontfile.map((data, idx) =>
+                        dummyfontfile.length - 1 === idx ? (
+                            <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
+                            <MyFont
+                                idx={idx}
+                                fontData={data}
+                            />
+                            </Grid>
+                        ) : (
+                            <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
+                            <MyFont
+                                idx={idx}
+                                fontData={data}
+                            />
+                            </Grid>
+                        )
+                        )}
+                    </Grid>
                     </div>
                 }
             </div>
@@ -186,15 +163,52 @@ const MyPage = () => {
                 { 
                     isfavoriteshow &&
                     <div className='Mypage__Myfavoritesfont'>
-                    {MyfavoritesfontCards} 패이보릿해윙
+                    <Grid container spacing={3}>
+                        {dummyfontfile.map((data, idx) =>
+                        dummyfontfile.length - 1 === idx ? (
+                            <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
+                            <MyFont
+                                idx={idx}
+                                fontData={data}
+                            />
+                            </Grid>
+                        ) : (
+                            <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
+                            <MyFont
+                                idx={idx}
+                                fontData={data}
+                            />
+                            </Grid>
+                        )
+                        )}
+                    </Grid>
                     </div>
                 }
+            
             </div>
             <div>
                 { 
                     isdownloadshow &&
                     <div className='Mypage__Mydownloadfont'>
-                    {MydownlodfontCards} 다운로드해윙
+                    <Grid container spacing={3}>
+                        {dummyfontfile.map((data, idx) =>
+                        dummyfontfile.length - 1 === idx ? (
+                            <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
+                            <MyFont
+                                idx={idx}
+                                fontData={data}
+                            />
+                            </Grid>
+                        ) : (
+                            <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
+                            <MyFont
+                                idx={idx}
+                                fontData={data}
+                            />
+                            </Grid>
+                        )
+                        )}
+                    </Grid>
                     </div>    
                 }
         </div>
