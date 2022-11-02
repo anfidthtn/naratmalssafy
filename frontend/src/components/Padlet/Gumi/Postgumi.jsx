@@ -4,7 +4,8 @@ import PostGumiItem from "./PostGumiItem.jsx";
 import { Grid } from "@mui/material";
 
 
-const PostGumi = () => {
+const PostGumi = ({userinfo}) => {
+    const userfont = userinfo
     const [modalOpen, setModalOpen] = useState(false)
     const [dummyPostInfo, setDummyPostInfo] = useState([
         {
@@ -69,6 +70,7 @@ const PostGumi = () => {
                         <PostGumiItem
                             idx={idx}
                             postData={data}
+                            userfont={userfont}
                         />
                         </Grid>
                     ): (
@@ -76,6 +78,7 @@ const PostGumi = () => {
                         <PostGumiItem
                             idx={idx}
                             postData={data}
+                            userfont={userfont}
                         />
                         </Grid>
                     )

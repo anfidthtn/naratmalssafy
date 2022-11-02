@@ -4,7 +4,8 @@ import PostSeoulItem from './PostSeoulItem.jsx'
 import { Grid } from "@mui/material";
 
 
-const PostSeoul = () => {
+const PostSeoul = ({userinfo}) => {
+    const userfont = userinfo
     const [modalOpen, setModalOpen] = useState(false)
     const [dummyPostInfo, setDummyPostInfo] = useState([
         {
@@ -70,6 +71,7 @@ const PostSeoul = () => {
                         <PostSeoulItem
                             idx={idx}
                             postData={data}
+                            userfont={userfont}
                         />
                         </Grid>
                     ): (
@@ -77,6 +79,7 @@ const PostSeoul = () => {
                         <PostSeoulItem
                             idx={idx}
                             postData={data}
+                            userfont={userfont}
                         />
                         </Grid>
                     )

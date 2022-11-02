@@ -4,7 +4,8 @@ import PostBusanItem from "./PostBusanItem.jsx";
 import { Grid } from "@mui/material";
 
 
-const PostBusan = () => {
+const PostBusan = ({userinfo}) => {
+    const userfont = userinfo
     const [modalOpen, setModalOpen] = useState(false)
     const [dummyPostInfo, setDummyPostInfo] = useState([
         {
@@ -69,6 +70,7 @@ const PostBusan = () => {
                         <PostBusanItem
                             idx={idx}
                             postData={data}
+                            userfont={userfont}
                         />
                         </Grid>
                     ): (
@@ -76,6 +78,7 @@ const PostBusan = () => {
                         <PostBusanItem
                             idx={idx}
                             postData={data}
+                            userfont={userfont}
                         />
                         </Grid>
                     )

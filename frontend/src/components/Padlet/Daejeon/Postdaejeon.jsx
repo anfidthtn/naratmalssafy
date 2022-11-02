@@ -4,7 +4,8 @@ import PostDaejeonItem from "./PostDaejeonItem.jsx";
 import { Grid } from "@mui/material";
 
 
-const PostDaejeon = () => {
+const PostDaejeon = ({userinfo}) => {
+    const userfont = userinfo
     const [modalOpen, setModalOpen] = useState(false)
     const [dummyPostInfo, setDummyPostInfo] = useState([
         {
@@ -69,6 +70,7 @@ const PostDaejeon = () => {
                         <PostDaejeonItem
                             idx={idx}
                             postData={data}
+                            userfont={userfont}
                         />
                         </Grid>
                     ): (
@@ -76,6 +78,7 @@ const PostDaejeon = () => {
                         <PostDaejeonItem
                             idx={idx}
                             postData={data}
+                            userfont={userfont}
                         />
                         </Grid>
                     )

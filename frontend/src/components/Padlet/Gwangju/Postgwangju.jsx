@@ -4,7 +4,8 @@ import PostGwangjuItem from "./PostGwangjuItem.jsx";
 import { Grid } from "@mui/material";
 
 
-const PostGwangju = () => {
+const PostGwangju = ({userinfo}) => {
+    const userfont = userinfo
     const [modalOpen, setModalOpen] = useState(false)
     const [dummyPostInfo, setDummyPostInfo] = useState([
         {
@@ -69,6 +70,7 @@ const PostGwangju = () => {
                         <PostGwangjuItem
                             idx={idx}
                             postData={data}
+                            userfont={userfont}
                         />
                         </Grid>
                     ): (
@@ -76,6 +78,7 @@ const PostGwangju = () => {
                         <PostGwangjuItem
                             idx={idx}
                             postData={data}
+                            userfont={userfont}
                         />
                         </Grid>
                     )
