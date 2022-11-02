@@ -28,7 +28,7 @@ const FontDetailPage = () => {
   const [fontTrialConfig, setFontTrialConfig] = useState({
     color: "#000000",
     size: 30,
-    lineHeight: 1, //1~2.1
+    lineHeight: 1.6, //1~2.1
     letterSpacing: 1, //1px~10px
     align: "left",
   });
@@ -219,16 +219,16 @@ const FontDetailPage = () => {
             <span style={{ fontSize: "1.5rem" }}>{fontData.fontUser}</span>{" "}
           </div>
         </div>
-        <div className="font_popular_info_box" onClick={clickFavoriteButton}>
+        <div className="font_popular_info_box">
           {isFavorite ? (
-            <div className="font_favorite_box">
+            <div className="font_favorite_box" onClick={clickFavoriteButton}>
               <BsStarFill size={30} color="orange" />
               <span style={{ fontSize: "20px", marginLeft: "3px" }}>
                 즐겨찾기 취소
               </span>{" "}
             </div>
           ) : (
-            <div className="font_favorite_box">
+            <div className="font_favorite_box" onClick={clickFavoriteButton}>
               <BiStar size={30} color="orange" />
               <span style={{ fontSize: "20px", marginLeft: "3px" }}>
                 즐겨찾기 추가
