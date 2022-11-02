@@ -40,7 +40,7 @@ font_download_file bigint
     @Column(name = "font_description")
     String fontDescription;
     @Column(name = "font_fav_count")
-    long fontFavCount;
+    Long fontFavCount;
     @Column(name = "font_download_count")
     Long fontDownloadCount;
     @Column(name = "font_reg_date")
@@ -66,6 +66,8 @@ font_download_file bigint
     @PrePersist
     public void createdAt() {
         this.fontRegDate = LocalDateTime.now();
+        this.fontFavCount = 0L;
+        this.fontDownloadCount = 0L;
     }
 
     public void updateFavCount(String flag){

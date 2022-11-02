@@ -1,5 +1,7 @@
 package com.ssafy.be.api.controller;
 
+import com.ssafy.be.api.request.RegistFontReq;
+import com.ssafy.be.api.response.CheckFontNameRes;
 import com.ssafy.be.api.response.GetFontDetailRes;
 import com.ssafy.be.api.response.GetFontsRes;
 import com.ssafy.be.api.service.FontService;
@@ -35,5 +37,20 @@ public class FontController {
         User user =  userDetail.getUser();
         GetFontDetailRes res = fontService.getFont(user,fontSeq);
         return ResponseEntity.status(200).body(res);
+    }
+
+    @GetMapping("/checkname/{fontName}")
+    public ResponseEntity<CheckFontNameRes> checkFontName(@PathVariable String fontName){
+        CheckFontNameRes res = fontService.checkFontName(fontName);
+        return ResponseEntity.status(200).body(res);
+    }
+
+    @PostMapping()
+    public ResponseEntity<Void> registFont(@ApiIgnore Authentication authentication,RegistFontReq req){
+        UserDetail userDetail = (UserDetail) authentication.getDetails();
+        User user = userDetail.getUser();
+        Long fontSeq = fontService.registFontInfo(req.getFontName(),req.getDescription(),user);
+        //TODO fastAPI 통신
+        return null;
     }
 }

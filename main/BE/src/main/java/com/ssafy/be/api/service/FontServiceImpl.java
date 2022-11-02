@@ -2,6 +2,7 @@ package com.ssafy.be.api.service;
 
 import com.ssafy.be.api.dto.Creater;
 import com.ssafy.be.api.dto.TotalResFont;
+import com.ssafy.be.api.response.CheckFontNameRes;
 import com.ssafy.be.api.response.GetFontDetailRes;
 import com.ssafy.be.api.response.GetFontsRes;
 import com.ssafy.be.db.entity.Font;
@@ -10,6 +11,7 @@ import com.ssafy.be.db.entity.UserFont;
 import com.ssafy.be.db.repository.FontDownloadHistoryRepository;
 import com.ssafy.be.db.repository.FontRepository;
 import com.ssafy.be.db.repository.UserFontRepository;
+import org.hibernate.annotations.Check;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -93,6 +95,36 @@ public class FontServiceImpl implements FontService {
 
         //폰트 반환해
         return res;
+    }
+
+    @Override
+    public CheckFontNameRes checkFontName(String fontName) {
+        CheckFontNameRes res;
+        Font findRes= fontRepository.findByFontName(fontName);
+        if(findRes ==null){
+            res = CheckFontNameRes.builder()
+                    .isUsable(true)
+                    .msg("사용가능한 폰트 이름입니다.")
+                    .build();
+        }
+        else {
+            res = CheckFontNameRes.builder()
+                    .isUsable(false)
+                    .msg("이미 사용중인 폰트 이름입니다.")
+                    .build();
+        }
+        return res;
+    }
+
+    @Override
+    public Long registFontInfo(String fontName, String fontDescription, User user) {
+        Font font = Font.builder()
+                .fontDescription(fontDescription)
+                .fontName(fontName)
+                .fontCreater(user)
+                .build();
+        Font RegistedFont = fontRepository.save(font);
+        return RegistedFont.getFontSeq();
     }
 
 
