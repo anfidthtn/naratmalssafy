@@ -50,6 +50,7 @@ public class FontController {
         UserDetail userDetail = (UserDetail) authentication.getDetails();
         User user = userDetail.getUser();
         Long fontSeq = fontService.registFontInfo(req.getFontName(),req.getDescription(),user);
+        fontService.createFont(req.getUploadImg(),fontSeq);
         //TODO fastAPI 통신
         return null;
     }

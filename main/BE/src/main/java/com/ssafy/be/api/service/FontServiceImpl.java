@@ -11,16 +11,16 @@ import com.ssafy.be.db.entity.UserFont;
 import com.ssafy.be.db.repository.FontDownloadHistoryRepository;
 import com.ssafy.be.db.repository.FontRepository;
 import com.ssafy.be.db.repository.UserFontRepository;
-import org.hibernate.annotations.Check;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class FontServiceImpl implements FontService {
@@ -70,9 +70,9 @@ public class FontServiceImpl implements FontService {
         //폰트 가져와
         Font target = fontRepository.findById(fontSeq).get();
         //다운로드 했는지 확인해
-        boolean isDownload = fontDownloadHistoryRepository.findByUserAndDownloadFont(user,target)==null?false:true;
+        boolean isDownload = fontDownloadHistoryRepository.findByUserAndDownloadFont(user, target) != null;
         //즐겨찾기 했는지 확인해
-        boolean isLike = userFontRepository.findByUserAndFont(user,target)==null?false:true;
+        boolean isLike = userFontRepository.findByUserAndFont(user, target) != null;
         GetFontDetailRes res = GetFontDetailRes.builder()
                 .creater(Creater.builder()
                         .email(target.getFontCreater().getUserEmail())
@@ -125,6 +125,13 @@ public class FontServiceImpl implements FontService {
                 .build();
         Font RegistedFont = fontRepository.save(font);
         return RegistedFont.getFontSeq();
+    }
+
+    @Override
+    public Void createFont(List<MultipartFile> uploadImg, Long fontSeq) {
+        //비동기 통신
+        RestTemplate restTemplate = new RestTemplate();
+        return null;
     }
 
 
