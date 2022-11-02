@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ import java.util.Objects;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@DynamicUpdate
 @Table(name = "t_font")
 public class Font {
     /*font_seq bigint PK
@@ -28,6 +30,7 @@ font_preview bigint
 font_download_file bigint
 */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "font_seq")
     Long fontSeq;
     @Column(name = "font_name")
@@ -65,16 +68,12 @@ font_download_file bigint
         this.fontRegDate = LocalDateTime.now();
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Font font = (Font) o;
-        return fontSeq.equals(font.fontSeq);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(fontSeq);
+    public void updateFavCount(String flag){
+        if("FavRegist".equals(flag)){
+            this.fontFavCount+=1;
+        }
+        else if("FavClear".equals(flag)){
+            this.fontFavCount-=1;
+        }
     }
 }

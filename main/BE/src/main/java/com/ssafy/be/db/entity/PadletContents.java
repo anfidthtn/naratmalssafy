@@ -12,6 +12,7 @@ padlet_contents_writer bigint
 
 */
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "padlet_contents_seq")
     long padletContentsSeq;
     @OneToOne

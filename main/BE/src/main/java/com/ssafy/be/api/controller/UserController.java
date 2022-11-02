@@ -1,8 +1,10 @@
 package com.ssafy.be.api.controller;
 
+import com.ssafy.be.api.request.LikeFontToggleReq;
 import com.ssafy.be.api.request.RegistUserReq;
 import com.ssafy.be.api.request.UpdateUserInfoReq;
 import com.ssafy.be.api.request.UserLoginReq;
+import com.ssafy.be.api.response.LikeFontRes;
 import com.ssafy.be.api.response.UpdateUserInfoRes;
 import com.ssafy.be.api.response.UserLoginRes;
 import com.ssafy.be.api.response.GetUserInfoRes;
@@ -26,6 +28,7 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+
 
     @GetMapping("/checknickname/{nickname}")
     public ResponseEntity<Boolean> checkNickname(@PathVariable String nickname){
@@ -77,6 +80,14 @@ public class UserController {
                 userInfo.getUserName(),
                 userInfo.getUserNickname()
         );
+        return ResponseEntity.status(200).body(res);
+    }
+
+    @PostMapping("/toggleLike")
+    public ResponseEntity<LikeFontRes> likeFontToggle(@ApiIgnore Authentication authentication,@RequestBody LikeFontToggleReq target){
+        UserDetail userDetail = (UserDetail) authentication.getDetails();
+        User user = userDetail.getUser();
+        LikeFontRes res = userService.toggleLikeFont(user,target.getId());
         return ResponseEntity.status(200).body(res);
     }
 
