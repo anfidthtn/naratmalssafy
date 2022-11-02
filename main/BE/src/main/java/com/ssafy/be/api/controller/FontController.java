@@ -26,8 +26,11 @@ public class FontController {
 
     @GetMapping()
     public ResponseEntity<GetFontsRes> getFonts(@ApiIgnore Authentication auth, Pageable page){
-        UserDetail userDetail = (UserDetail) auth.getDetails();
-        User user = userDetail.getUser();
+        User user = null;
+        if(auth!=null){
+            UserDetail userDetail = (UserDetail) auth.getDetails();
+            user = userDetail.getUser();
+        }
         GetFontsRes res = fontService.getFonts(user,page);
         return ResponseEntity.status(200).body(res);
     }

@@ -34,33 +34,57 @@ public class FontServiceImpl implements FontService {
     @Override
     public GetFontsRes getFonts(User user, Pageable pageable) {
         Page<Font> fontAll =  fontRepository.findAll(pageable);
-        List<UserFont> myLike = userFontRepository.findByUser(user);
-        HashSet<Long> forCheck =new HashSet<Long>();
-        for(UserFont u : myLike){
-            forCheck.add(u.getFont().getFontSeq());
-        }
         List<TotalResFont> resInput = new ArrayList<>();
-        for(Font temp : fontAll.getContent()){
-            TotalResFont totalResFont = TotalResFont.builder()
-                    .creater(Creater.builder()
-                            .email(temp.getFontCreater().getUserEmail())
-                            .location(temp.getFontCreater().getUserLocation())
-                            .name(temp.getFontCreater().getUserName())
-                            .nickname(temp.getFontCreater().getUserNickname())
-                            .build())
-                    .description(temp.getFontDescription())
-                    //.downloadFile(temp.getFontDownloadFile().getFileSavedPath())
-                    .FontName(temp.getFontName())
-                    .fontPath(temp.getFontPath())
-                    .favCount(temp.getFontFavCount())
-                    .fileName(temp.getFontDownloadFile().getFileSavedName())
-                    .fontSeq(temp.getFontSeq())
-                    .downloadCount(temp.getFontDownloadCount())
-                    .regDate(temp.getFontRegDate())
-                    .isLike(forCheck.contains(temp.getFontSeq()))
-                    .build();
-            resInput.add(totalResFont);
+        if(user != null){
+            List<UserFont> myLike = userFontRepository.findByUser(user);
+            HashSet<Long> forCheck =new HashSet<Long>();
+            for(UserFont u : myLike){
+                forCheck.add(u.getFont().getFontSeq());
+            }
+            for(Font temp : fontAll.getContent()){
+                TotalResFont totalResFont = TotalResFont.builder()
+                        .creater(Creater.builder()
+                                .email(temp.getFontCreater().getUserEmail())
+                                .location(temp.getFontCreater().getUserLocation())
+                                .name(temp.getFontCreater().getUserName())
+                                .nickname(temp.getFontCreater().getUserNickname())
+                                .build())
+                        .description(temp.getFontDescription())
+                        //.downloadFile(temp.getFontDownloadFile().getFileSavedPath())
+                        .FontName(temp.getFontName())
+                        .fontPath(temp.getFontPath())
+                        .favCount(temp.getFontFavCount())
+                        .fontSeq(temp.getFontSeq())
+                        .downloadCount(temp.getFontDownloadCount())
+                        .regDate(temp.getFontRegDate())
+                        .isLike(forCheck.contains(temp.getFontSeq()))
+                        .build();
+                resInput.add(totalResFont);
+            }
         }
+        else{
+            for(Font temp : fontAll.getContent()){
+                TotalResFont totalResFont = TotalResFont.builder()
+                        .creater(Creater.builder()
+                                .email(temp.getFontCreater().getUserEmail())
+                                .location(temp.getFontCreater().getUserLocation())
+                                .name(temp.getFontCreater().getUserName())
+                                .nickname(temp.getFontCreater().getUserNickname())
+                                .build())
+                        .description(temp.getFontDescription())
+                        //.downloadFile(temp.getFontDownloadFile().getFileSavedPath())
+                        .FontName(temp.getFontName())
+                        .fontPath(temp.getFontPath())
+                        .favCount(temp.getFontFavCount())
+                        .fontSeq(temp.getFontSeq())
+                        .downloadCount(temp.getFontDownloadCount())
+                        .regDate(temp.getFontRegDate())
+                        .isLike(false)
+                        .build();
+                resInput.add(totalResFont);
+            }
+        }
+
         GetFontsRes res = GetFontsRes.builder().fonts(resInput).build();
         return res;
     }
