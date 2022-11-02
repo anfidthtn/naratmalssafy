@@ -76,4 +76,7 @@ font_download_file bigint
             this.fontFavCount-=1;
         }
     }
+    public void updateDownloadCount(){
+        this.fontDownloadCount +=1;
+    }
 }

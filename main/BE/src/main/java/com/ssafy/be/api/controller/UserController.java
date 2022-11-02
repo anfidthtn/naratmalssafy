@@ -1,26 +1,19 @@
 package com.ssafy.be.api.controller;
 
-import com.ssafy.be.api.request.LikeFontToggleReq;
-import com.ssafy.be.api.request.RegistUserReq;
-import com.ssafy.be.api.request.UpdateUserInfoReq;
-import com.ssafy.be.api.request.UserLoginReq;
+import com.ssafy.be.api.request.*;
 import com.ssafy.be.api.response.LikeFontRes;
 import com.ssafy.be.api.response.UpdateUserInfoRes;
 import com.ssafy.be.api.response.UserLoginRes;
 import com.ssafy.be.api.response.GetUserInfoRes;
+import com.ssafy.be.api.service.DownloadHistoryService;
 import com.ssafy.be.api.service.UserService;
 import com.ssafy.be.common.auth.UserDetail;
-import com.ssafy.be.db.entity.Font;
 import com.ssafy.be.db.entity.User;
-import com.ssafy.be.db.entity.UserFont;
-import org.apache.commons.collections4.Get;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
-
-import java.util.List;
 
 @RequestMapping("/api/user")
 @RestController
@@ -28,6 +21,8 @@ import java.util.List;
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    DownloadHistoryService downloadHistoryService;
 
 
     @GetMapping("/checknickname/{nickname}")
@@ -91,8 +86,12 @@ public class UserController {
         return ResponseEntity.status(200).body(res);
     }
 
-
-
-
-
+    @PostMapping("/download")
+    //TODO 반환타입 Void
+    public ResponseEntity<Void> registDownloadHistory(@ApiIgnore Authentication authentication, @RequestBody RegistDownloadHistoryReq req){
+        UserDetail userDetail = (UserDetail) authentication.getDetails();
+        User user = userDetail.getUser();
+        downloadHistoryService.registDownloadHistory(user,req.getFontSeq(), req.getFontName());
+        return ResponseEntity.status(200).body(null);
+    }
 }
