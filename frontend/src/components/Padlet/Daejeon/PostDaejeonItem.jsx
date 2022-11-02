@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../../styles/FontSearchPage/FontSearchItem.scss";
 
-const PostDaejeonItem = ({ idx, postData }) => {
+const PostDaejeonItem = ({ idx, postData, userfont }) => {
     const [subFontEditorText, setSubFontEditorText] = useState(postData.padlet_contents_comments);
   
     useEffect(() => {

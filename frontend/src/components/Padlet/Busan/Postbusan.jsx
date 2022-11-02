@@ -1,11 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from 'axios'
 import Modal from './Modal.jsx'
 import PostBusanItem from "./PostBusanItem.jsx";
 import { Grid } from "@mui/material";
 
 
-const PostBusan = ({userinfo}) => {
-    const userfont = userinfo
+const PostBusan = () => {
+    const token = localStorage.getItem('token')
+    const [userinfo, setUserinfo] = useState('')
+    useEffect(() => {
+        axios({
+            url: '/api/user',
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`, 
+                'Content-Type':'application/json'
+            } 
+        })
+        .then(res => {
+            setUserinfo(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    })
     const [modalOpen, setModalOpen] = useState(false)
     const [dummyPostInfo, setDummyPostInfo] = useState([
         {
@@ -61,7 +79,7 @@ const PostBusan = ({userinfo}) => {
     }
     return(
         <div className="Post">
-            <div>부산 패들릿</div>
+            <div>부산 패들릿 </div>
             <div>
             <Grid container spacing={3}>
                 {dummyPostInfo.map((data,idx) =>
@@ -69,17 +87,14 @@ const PostBusan = ({userinfo}) => {
                         <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                         <PostBusanItem
                             idx={idx}
-                            postData={data}
-                            userfont={userfont}
-                        />
+                            postData={data}                        />
                         </Grid>
                     ): (
                         <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                         <PostBusanItem
                             idx={idx}
                             postData={data}
-                            userfont={userfont}
-                        />
+                                                    />
                         </Grid>
                     )
 
@@ -88,7 +103,7 @@ const PostBusan = ({userinfo}) => {
             </div>
             <button className="Post__Create" onClick={showModal}>생성</button>
             <button className="Post__Back" onClick={goBack}>뒤로</button>
-            {modalOpen && <Modal setModalOpen={setModalOpen}/>}
+            {modalOpen && <Modal setModalOpen={setModalOpen} userinfo={userinfo}/>}
         </div>
     );
 };

@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import "../../../styles/FontSearchPage/FontSearchItem.scss";
 
-const PostSeoulItem = ({ idx, postData }) => {
+const PostSeoulItem = ({ idx, postData}) => {
   const [subFontEditorText, setSubFontEditorText] = useState(postData.padlet_contents_comments);
-
   useEffect(() => {
     setSubFontEditorText(postData.padlet_contents_comments);
   }, [postData.padlet_contents_comments]);
@@ -16,6 +15,8 @@ const PostSeoulItem = ({ idx, postData }) => {
     fontDataDiv.style.fontFamily = postData.fontFamilyName;
     fontDataTextArea.style.fontFamily = postData.fontFamilyName;
   }, []);
+
+
 
   return (
     <div className="fontData" id={`postData_${idx}`}>

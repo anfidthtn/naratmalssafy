@@ -1,11 +1,29 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Modal from './Modal.jsx'
+import axios from 'axios'
 import PostDaejeonItem from "./PostDaejeonItem.jsx";
 import { Grid } from "@mui/material";
 
 
-const PostDaejeon = ({userinfo}) => {
-    const userfont = userinfo
+const PostDaejeon = () => {
+    const token = localStorage.getItem('token')
+    const [userinfo, setUserinfo] = useState('')
+    useEffect(() => {
+        axios({
+            url: '/api/user',
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`, 
+                'Content-Type':'application/json'
+            } 
+        })
+        .then(res => {
+            setUserinfo(res.data)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    })
     const [modalOpen, setModalOpen] = useState(false)
     const [dummyPostInfo, setDummyPostInfo] = useState([
         {
@@ -70,7 +88,6 @@ const PostDaejeon = ({userinfo}) => {
                         <PostDaejeonItem
                             idx={idx}
                             postData={data}
-                            userfont={userfont}
                         />
                         </Grid>
                     ): (
@@ -78,7 +95,6 @@ const PostDaejeon = ({userinfo}) => {
                         <PostDaejeonItem
                             idx={idx}
                             postData={data}
-                            userfont={userfont}
                         />
                         </Grid>
                     )
@@ -88,7 +104,7 @@ const PostDaejeon = ({userinfo}) => {
             </div>
             <button className="Post__Create" onClick={showModal}>생성</button>
             <button className="Post__Back" onClick={goBack}>뒤로</button>
-            {modalOpen && <Modal setModalOpen={setModalOpen}/>}
+            {modalOpen && <Modal setModalOpen={setModalOpen} userinfo={userinfo}/>}
         </div>
     );
 };
