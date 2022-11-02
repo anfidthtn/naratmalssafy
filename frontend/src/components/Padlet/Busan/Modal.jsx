@@ -1,12 +1,11 @@
-import '../../styles/Padlet/Post.scss'
+import '../../../styles/Padlet/Post.scss'
 import { useState } from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import PostSeoul from './Postseoul';
 
-const Modal = ({setModalOpen, postdata}) => {
+const Modal = ({setModalOpen}) => {
     const closeModal = () => {
         setModalOpen(false)
     }
