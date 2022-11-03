@@ -2,10 +2,7 @@ package com.ssafy.be.api.service;
 
 import com.ssafy.be.api.dto.Creater;
 import com.ssafy.be.api.dto.ResFont;
-import com.ssafy.be.api.response.GetUserInfoRes;
-import com.ssafy.be.api.response.LikeFontRes;
-import com.ssafy.be.api.response.UpdateUserInfoRes;
-import com.ssafy.be.api.response.UserLoginRes;
+import com.ssafy.be.api.response.*;
 import com.ssafy.be.common.util.JwtTokenUtil;
 import com.ssafy.be.common.util.KakaoLogin;
 import com.ssafy.be.db.entity.Font;
@@ -222,5 +219,12 @@ public class UserServiceImpl implements UserService {
             }
         }
         return res;
+    }
+
+    @Override
+    public GetDownloadFontsRes getDownloadFonts(User user) {
+        List<FontDownloadHistory> downloadFonts = userRepository.findByUserEmail(user.getUserEmail()).getDownloadFonts();
+
+        return null;
     }
 }

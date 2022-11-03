@@ -24,9 +24,9 @@ public class DownloadHistoryServiceImpl implements DownloadHistoryService{
                     .user(user)
                     .build();
             fontDownloadHistoryRepository.save(downloadHistory);
-            downloadFont.updateDownloadCount();
-            fontRepository.save(downloadFont);
         }
+        downloadFont.updateDownloadCount();
+        fontRepository.save(downloadFont);
         return null;
     }
 }

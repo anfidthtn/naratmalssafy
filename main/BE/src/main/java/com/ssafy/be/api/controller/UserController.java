@@ -1,10 +1,7 @@
 package com.ssafy.be.api.controller;
 
 import com.ssafy.be.api.request.*;
-import com.ssafy.be.api.response.LikeFontRes;
-import com.ssafy.be.api.response.UpdateUserInfoRes;
-import com.ssafy.be.api.response.UserLoginRes;
-import com.ssafy.be.api.response.GetUserInfoRes;
+import com.ssafy.be.api.response.*;
 import com.ssafy.be.api.service.DownloadHistoryService;
 import com.ssafy.be.api.service.UserService;
 import com.ssafy.be.common.auth.UserDetail;
@@ -93,5 +90,13 @@ public class UserController {
         User user = userDetail.getUser();
         downloadHistoryService.registDownloadHistory(user,req.getFontSeq(), req.getFontName());
         return ResponseEntity.status(200).body(null);
+    }
+
+    @GetMapping("/download")
+    public ResponseEntity<GetDownloadFontsRes> getDownloadFonts(@ApiIgnore Authentication authentication){
+        UserDetail userDetail = (UserDetail) authentication.getDetails();
+        User user = userDetail.getUser();
+        GetDownloadFontsRes res = userService.getDownloadFonts(user);
+        return ResponseEntity.status(200).body(res);
     }
 }
