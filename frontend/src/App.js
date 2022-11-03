@@ -16,8 +16,9 @@ import Postgumi from "./components/Padlet/Gumi/Postgumi.jsx";
 import Postgwangju from "./components/Padlet/Gwangju/Postgwangju.jsx";
 import Postdaejeon from "./components/Padlet/Daejeon/Postdaejeon.jsx";
 import FontSearchPage from "./pages/FontSearchPage.jsx";
-import ShareTest from "./components/share.js"
+import ShareTest from "./components/share.js";
 import FontDetailPage from "./pages/FontDetailPage.jsx";
+import FontMakePage from "./pages/FontMakePage.jsx";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="/oauth/callback/kakao" element={<KakaoLogin />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/" element={<MainPage />} />
+          <Route path="/make-font" element={<FontMakePage />} />
           <Route path="/detail/:id" element={<FontDetailPage />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/userinfo" element={<EditUserInfo />} />
