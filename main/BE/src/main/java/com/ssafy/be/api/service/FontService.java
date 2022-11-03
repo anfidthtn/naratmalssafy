@@ -12,7 +12,7 @@ import java.util.List;
 
 
 public interface FontService {
-    public GetFontsRes getFonts(User user, Pageable pageable);
+    public GetFontsRes getFonts(User user, Pageable pageable, String flag, String keyword);
     public GetFontDetailRes getFont(User user, Long fontSeq);
     public CheckFontNameRes checkFontName(String fontName);
     public Long registFontInfo(String fontName, String fontDescription, User user);

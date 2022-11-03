@@ -51,7 +51,7 @@ font_download_file bigint
     File fontDownloadFile;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "font_creater", referencedColumnName = "user_seq")
-    User fontCreater;
+    User fontCreator;
 
     @OneToMany(mappedBy = "font")
     //@JoinColumn(name = "font_seq", referencedColumnName = "font_seq")

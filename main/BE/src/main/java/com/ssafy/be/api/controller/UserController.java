@@ -12,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
+import java.util.List;
+
 @RequestMapping("/api/user")
 @RestController
 
@@ -93,10 +95,10 @@ public class UserController {
     }
 
     @GetMapping("/download")
-    public ResponseEntity<GetDownloadFontsRes> getDownloadFonts(@ApiIgnore Authentication authentication){
+    public ResponseEntity<List<GetDownloadFontsRes>> getDownloadFonts(@ApiIgnore Authentication authentication){
         UserDetail userDetail = (UserDetail) authentication.getDetails();
         User user = userDetail.getUser();
-        GetDownloadFontsRes res = userService.getDownloadFonts(user);
+        List<GetDownloadFontsRes> res = userService.getDownloadFonts(user);
         return ResponseEntity.status(200).body(res);
     }
 }

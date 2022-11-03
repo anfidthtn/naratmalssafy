@@ -1,7 +1,8 @@
 package com.ssafy.be.api.service;
 
-import com.ssafy.be.api.dto.Creater;
+import com.ssafy.be.api.dto.Creator;
 import com.ssafy.be.api.dto.ResFont;
+import com.ssafy.be.api.dto.TotalResFont;
 import com.ssafy.be.api.response.*;
 import com.ssafy.be.common.util.JwtTokenUtil;
 import com.ssafy.be.common.util.KakaoLogin;
@@ -13,12 +14,12 @@ import com.ssafy.be.db.repository.FontRepository;
 import com.ssafy.be.db.repository.UserFontRepository;
 import com.ssafy.be.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.data.jpa.repository.EntityGraph;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -102,11 +103,11 @@ public class UserServiceImpl implements UserService {
         for(UserFont e : user.getLikeFonts()){
             Font temp = e.getFont();
             ResFont resFont = ResFont.builder()
-                    .creater(Creater.builder()
-                            .email(temp.getFontCreater().getUserEmail())
-                            .location(temp.getFontCreater().getUserLocation())
-                            .name(temp.getFontCreater().getUserName())
-                            .nickname(temp.getFontCreater().getUserNickname())
+                    .creator(Creator.builder()
+                            .email(temp.getFontCreator().getUserEmail())
+                            .location(temp.getFontCreator().getUserLocation())
+                            .name(temp.getFontCreator().getUserName())
+                            .nickname(temp.getFontCreator().getUserNickname())
                             .build())
                     .description(temp.getFontDescription())
                    // .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
@@ -124,11 +125,11 @@ public class UserServiceImpl implements UserService {
             Font temp = e.getDownloadFont();
 
             ResFont resFont = ResFont.builder()
-                    .creater(Creater.builder()
-                            .email(temp.getFontCreater().getUserEmail())
-                            .location(temp.getFontCreater().getUserLocation())
-                            .name(temp.getFontCreater().getUserName())
-                            .nickname(temp.getFontCreater().getUserNickname())
+                    .creator(Creator.builder()
+                            .email(temp.getFontCreator().getUserEmail())
+                            .location(temp.getFontCreator().getUserLocation())
+                            .name(temp.getFontCreator().getUserName())
+                            .nickname(temp.getFontCreator().getUserNickname())
                             .build())
                     .description(temp.getFontDescription())
                    // .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
@@ -145,11 +146,11 @@ public class UserServiceImpl implements UserService {
         for(Font temp : user.getCreateFonts()){
             if(temp.getFontPath()==null) continue;
             ResFont resFont = ResFont.builder()
-                    .creater(Creater.builder()
-                            .email(temp.getFontCreater().getUserEmail())
-                            .location(temp.getFontCreater().getUserLocation())
-                            .name(temp.getFontCreater().getUserName())
-                            .nickname(temp.getFontCreater().getUserNickname())
+                    .creator(Creator.builder()
+                            .email(temp.getFontCreator().getUserEmail())
+                            .location(temp.getFontCreator().getUserLocation())
+                            .name(temp.getFontCreator().getUserName())
+                            .nickname(temp.getFontCreator().getUserNickname())
                             .build())
                     .description(temp.getFontDescription())
                    // .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
@@ -219,9 +220,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public GetDownloadFontsRes getDownloadFonts(User user) {
+    public List<GetDownloadFontsRes> getDownloadFonts(User user) {
         List<FontDownloadHistory> downloadFonts = userRepository.findByUserEmail(user.getUserEmail()).getDownloadFonts();
-
-        return null;
+        List<GetDownloadFontsRes> res = new ArrayList<>();
+        for(FontDownloadHistory t : downloadFonts){
+            String path = t.getDownloadFont().getFontPath();
+            String name = t.getDownloadFont().getFontName();
+            res.add(GetDownloadFontsRes.builder().fontName(name).fontPath(path).build());
+        }
+        return res;
     }
+
 }

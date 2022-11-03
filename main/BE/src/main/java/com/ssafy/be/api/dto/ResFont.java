@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class ResFont
 {
     //폰트 파일 주소, 이름 필요
-    Creater creater;
+    Creator creator;
     Long fontSeq;
     String FontName;
     String fontPath;

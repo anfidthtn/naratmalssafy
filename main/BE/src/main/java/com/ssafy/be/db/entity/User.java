@@ -44,6 +44,6 @@ public class User {
     List <UserFont> likeFonts;
     @OneToMany(mappedBy = "user")
     List <FontDownloadHistory> downloadFonts;
-    @OneToMany(mappedBy = "fontCreater")
+    @OneToMany(mappedBy = "fontCreator")
     List <Font> createFonts;
 }

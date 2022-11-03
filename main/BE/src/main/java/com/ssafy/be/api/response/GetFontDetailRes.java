@@ -1,6 +1,6 @@
 package com.ssafy.be.api.response;
 
-import com.ssafy.be.api.dto.Creater;
+import com.ssafy.be.api.dto.Creator;
 import lombok.Builder;
 import lombok.Data;
 
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class GetFontDetailRes {
-    Creater creater;
+    Creator creator;
     Long fontSeq;
     String FontName;
     String fontPath;
