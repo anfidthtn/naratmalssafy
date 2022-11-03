@@ -21,6 +21,9 @@ const dummyfontfile= dummyDataSet
 const token = localStorage.getItem('token')
 const MyPage = () => {
     const [userinfo, setUserinfo] = useState('')
+    const [ismyfontsempty, setIsmyfontsempty] = useState(false)
+    const [isdownloadfontsempty, setIsdownloadfontsempty] = useState(false)
+    const [islikefontsempty, setIslikefontsempty] = useState(false)
     useEffect(() => {
         axios({
             url: '/api/user',
@@ -32,7 +35,15 @@ const MyPage = () => {
         })
         .then(res=> {
             setUserinfo(res.data)
-            console.log(res)
+            if (res.data.downloadFonts.length === 0) {
+                setIsdownloadfontsempty(true)
+            }
+            if (res.data.likeFonts.length === 0){
+                setIslikefontsempty(true)
+            }
+            if (res.data.myFonts.length === 0){
+                setIsmyfontsempty(true)
+            }
         })
         .catch(err => {
             console.log(err)
@@ -191,6 +202,8 @@ const handleNicknameCheck=()=>{
                 </Box>
             </div>
                 }
+                { !ismyfontsempty &&
+                <div>
                 {
                     ismyfontshow &&
                     <div className='Mypage__Myfont'>
@@ -215,6 +228,10 @@ const handleNicknameCheck=()=>{
                     </Grid>
                     </div>
                 }
+                </div>
+                }
+                {!islikefontsempty &&
+                <div>
                 { 
                     isfavoriteshow &&
                     <div className='Mypage__Myfavoritesfont'>
@@ -239,6 +256,10 @@ const handleNicknameCheck=()=>{
                     </Grid>
                     </div>
                 }
+                </div>
+                }
+                {!isdownloadfontsempty &&
+                <div>
                 { 
                     isdownloadshow &&
                     <div className='Mypage__Mydownloadfont'>
@@ -263,6 +284,32 @@ const handleNicknameCheck=()=>{
                     </Grid>
                     </div>    
                 }
+                </div>
+            }
+        { ismyfontsempty &&
+            <div>
+            {
+                ismyfontshow && 
+                <div>내폰트가 없네?</div>
+            }
+            </div>
+        }
+        { islikefontsempty &&
+            <div>
+            {
+                isfavoriteshow &&
+                <div>즐겨찾기폰트가 없네?</div>
+            }
+            </div>
+        }
+        { isdownloadfontsempty &&
+            <div>
+            {
+                isdownloadshow &&
+                <div>다운로드폰트가 없네?</div>
+            }
+            </div>
+        }
         </div>
     );
 };
