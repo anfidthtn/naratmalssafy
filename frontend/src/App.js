@@ -5,7 +5,6 @@ import SignUpPage from "./pages/SignUpPage.jsx";
 import KakaoLogin from "./components/Login/KakaoLogin.jsx";
 import MainPage from "./pages/MainPage.jsx";
 import MyPage from "./pages/MyPage.jsx";
-import EditUserInfo from "./components/Mypage/EditUserInfo.jsx";
 import "../src/styles/Common/App.scss";
 import TopNav from "./components/Common/TopNav.jsx";
 import Footer from "./components/Common/Footer.jsx";
@@ -16,7 +15,6 @@ import Postgumi from "./components/Padlet/Gumi/Postgumi.jsx";
 import Postgwangju from "./components/Padlet/Gwangju/Postgwangju.jsx";
 import Postdaejeon from "./components/Padlet/Daejeon/Postdaejeon.jsx";
 import FontSearchPage from "./pages/FontSearchPage.jsx";
-import ShareTest from "./components/share.js"
 import FontDetailPage from "./pages/FontDetailPage.jsx";
 
 function App() {
@@ -31,7 +29,6 @@ function App() {
           <Route path="/" element={<MainPage />} />
           <Route path="/detail/:id" element={<FontDetailPage />} />
           <Route path="/mypage" element={<MyPage />} />
-          <Route path="/userinfo" element={<EditUserInfo />} />
           <Route path="/padlet" element={<PadletPage />} />
           <Route path="/post/seoul" element={<Postseoul />} />
           <Route path="/post/busan" element={<Postbusan />} />
@@ -39,7 +36,6 @@ function App() {
           <Route path="/post/gwangju" element={<Postgwangju />} />
           <Route path="/post/gumi" element={<Postgumi />} />
           <Route path="/search" element={<FontSearchPage />} />
-          <Route path="/kakao" element={<ShareTest />} />
         </Routes>
       </BrowserRouter>
       <Footer />

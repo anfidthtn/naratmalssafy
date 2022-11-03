@@ -3,40 +3,64 @@
     &__Fontselect{
         display: flex;
         flex-flow: row;
+        
+        &__Edit{
+            margin-right: 100px;
+            margin-bottom: 10px;
+        }
         &__My{
             margin-right: 100px;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
         &__Favorite{
             margin-right:100px;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
 
         }
         &__Download{
             margin-right:100px;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
 
         }
     }
     &__Profile{
         overflow: auto;
+        height: 10%
+    }
+    &__Fontselect{
+        
+    }
+    &__Edituserinfo{
+        margin-top: 10%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        &__Space{
+            margin-top:10px
+        }
     }
     &__Myfont{
         display: flex;
         flex-flow: row;
         flex-wrap: wrap;
         margin: 0 auto;
+        height: 80%;
+        overflow-y:scroll;
     }
     &__Myfavoritesfont{
         display: flex;
         flex-flow: row;
         flex-wrap: wrap;
         margin: 0 auto;
+        height: 80%;
+        overflow-y:scroll;
     }
     &__Mydownloadfont{
         display: flex;
         flex-flow: row;
         flex-wrap: wrap;
-        margin: 0 auto;
+        margin: 0 auto;        
+        height: 80%;
+        overflow-y:scroll;
     }
 }
