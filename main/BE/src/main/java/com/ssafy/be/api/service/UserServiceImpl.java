@@ -113,7 +113,6 @@ public class UserServiceImpl implements UserService {
                     .FontName(temp.getFontName())
                     .fontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
-                    .fileName(temp.getFontDownloadFile().getFileSavedName())
                     .fontSeq(temp.getFontSeq())
                     .downloadCount(temp.getFontDownloadCount())
                     .regDate(temp.getFontRegDate())
@@ -136,7 +135,6 @@ public class UserServiceImpl implements UserService {
                     .FontName(temp.getFontName())
                     .fontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
-                    .fileName(temp.getFontDownloadFile().getFileSavedName())
                     .fontSeq(temp.getFontSeq())
                     .downloadCount(temp.getFontDownloadCount())
                     .regDate(temp.getFontRegDate())
@@ -145,6 +143,7 @@ public class UserServiceImpl implements UserService {
         }
         //제작 폰트
         for(Font temp : user.getCreateFonts()){
+            if(temp.getFontPath()==null) continue;
             ResFont resFont = ResFont.builder()
                     .creater(Creater.builder()
                             .email(temp.getFontCreater().getUserEmail())
@@ -157,7 +156,6 @@ public class UserServiceImpl implements UserService {
                     .FontName(temp.getFontName())
                     .fontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
-                    .fileName(temp.getFontDownloadFile().getFileSavedName())
                     .fontSeq(temp.getFontSeq())
                     .build();
             resMyFont.add(resFont);
@@ -171,7 +169,6 @@ public class UserServiceImpl implements UserService {
                 .downloadFonts(resDownload)
                 .likeFonts(resLike)
                 .myFonts(resMyFont)
-
                 .build();
         return res;
     }
