@@ -1,8 +1,8 @@
 From node:16.18.0
- 
-COPY ./ ./
 
-WORKDIR /node_server
+COPY ./ ./node_server/
+
+WORKDIR ./node_server
 
 RUN npm install
 
