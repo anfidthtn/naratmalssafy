@@ -5,12 +5,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Builder
@@ -19,6 +16,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @DynamicUpdate
 @Table(name = "t_font")
+
 public class Font {
     /*font_seq bigint PK
 font_name varchar(45)

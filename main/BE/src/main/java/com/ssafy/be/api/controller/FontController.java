@@ -4,6 +4,7 @@ import com.ssafy.be.api.request.RegistFontReq;
 import com.ssafy.be.api.response.CheckFontNameRes;
 import com.ssafy.be.api.response.GetFontDetailRes;
 import com.ssafy.be.api.response.GetFontsRes;
+import com.ssafy.be.api.response.RegistFontRes;
 import com.ssafy.be.api.service.FontService;
 import com.ssafy.be.common.auth.UserDetail;
 import com.ssafy.be.db.entity.User;
@@ -49,12 +50,15 @@ public class FontController {
     }
 
     @PostMapping()
-    public ResponseEntity<Void> registFont(@ApiIgnore Authentication authentication,RegistFontReq req){
+    public ResponseEntity<RegistFontRes> registFont(@ApiIgnore Authentication authentication, RegistFontReq req){
         UserDetail userDetail = (UserDetail) authentication.getDetails();
         User user = userDetail.getUser();
         Long fontSeq = fontService.registFontInfo(req.getFontName(),req.getDescription(),user);
+        if(fontSeq == -1L){
+            return ResponseEntity.status(200).body(RegistFontRes.builder().isSuccess(false).msg("이미 사용중인 폰트 이름입니다.").build());
+        }
         fontService.createFont(req.getUploadImg(),fontSeq);
-        //TODO fastAPI 통신
-        return null;
+
+        return ResponseEntity.status(200).body(RegistFontRes.builder().isSuccess(true).msg("폰트제작 요청이 완료되었습니다.").build());
     }
 }

@@ -42,6 +42,7 @@ public class FontServiceImpl implements FontService {
                 forCheck.add(u.getFont().getFontSeq());
             }
             for(Font temp : fontAll.getContent()){
+                if(temp.getFontPath()==null) continue;
                 TotalResFont totalResFont = TotalResFont.builder()
                         .creater(Creater.builder()
                                 .email(temp.getFontCreater().getUserEmail())
@@ -64,6 +65,7 @@ public class FontServiceImpl implements FontService {
         }
         else{
             for(Font temp : fontAll.getContent()){
+                if(temp.getFontPath()==null) continue;
                 TotalResFont totalResFont = TotalResFont.builder()
                         .creater(Creater.builder()
                                 .email(temp.getFontCreater().getUserEmail())
@@ -147,6 +149,9 @@ public class FontServiceImpl implements FontService {
                 .fontName(fontName)
                 .fontCreater(user)
                 .build();
+        if(!checkFontName(fontName).isUsable()){
+            return -1L;
+        }
         Font RegistedFont = fontRepository.save(font);
         return RegistedFont.getFontSeq();
     }
