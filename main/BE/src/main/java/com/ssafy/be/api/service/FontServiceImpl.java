@@ -1,6 +1,6 @@
 package com.ssafy.be.api.service;
 
-import com.ssafy.be.api.dto.Creater;
+import com.ssafy.be.api.dto.Creator;
 import com.ssafy.be.api.dto.TotalResFont;
 import com.ssafy.be.api.response.CheckFontNameRes;
 import com.ssafy.be.api.response.GetFontDetailRes;
@@ -11,6 +11,7 @@ import com.ssafy.be.db.entity.UserFont;
 import com.ssafy.be.db.repository.FontDownloadHistoryRepository;
 import com.ssafy.be.db.repository.FontRepository;
 import com.ssafy.be.db.repository.UserFontRepository;
+import com.ssafy.be.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,9 +32,23 @@ public class FontServiceImpl implements FontService {
     UserFontRepository userFontRepository;
     @Autowired
     FontDownloadHistoryRepository fontDownloadHistoryRepository;
+    @Autowired
+    UserRepository userRepository;
     @Override
-    public GetFontsRes getFonts(User user, Pageable pageable) {
-        Page<Font> fontAll =  fontRepository.findAll(pageable);
+    public GetFontsRes getFonts(User user, Pageable pageable, String flag, String keyword) {
+        Page<Font> fontAll;
+        if("fontName".equals(flag)){
+            fontAll = fontRepository.findByFontNameContains(pageable,keyword);
+        }
+        else if("creator".equals(flag)){
+            List<User> creators = userRepository.findByUserNameContainsOrUserNicknameContainsIgnoreCaseOrUserLocationContains(keyword,keyword,keyword);
+            fontAll = fontRepository.findByFontCreatorIn(pageable,creators);
+        }
+        else{
+
+            fontAll =  fontRepository.findAll(pageable);
+        }
+
         List<TotalResFont> resInput = new ArrayList<>();
         if(user != null){
             List<UserFont> myLike = userFontRepository.findByUser(user);
@@ -44,11 +59,11 @@ public class FontServiceImpl implements FontService {
             for(Font temp : fontAll.getContent()){
                 if(temp.getFontPath()==null) continue;
                 TotalResFont totalResFont = TotalResFont.builder()
-                        .creater(Creater.builder()
-                                .email(temp.getFontCreater().getUserEmail())
-                                .location(temp.getFontCreater().getUserLocation())
-                                .name(temp.getFontCreater().getUserName())
-                                .nickname(temp.getFontCreater().getUserNickname())
+                        .creator(Creator.builder()
+                                .email(temp.getFontCreator().getUserEmail())
+                                .location(temp.getFontCreator().getUserLocation())
+                                .name(temp.getFontCreator().getUserName())
+                                .nickname(temp.getFontCreator().getUserNickname())
                                 .build())
                         .description(temp.getFontDescription())
                         //.downloadFile(temp.getFontDownloadFile().getFileSavedPath())
@@ -67,11 +82,11 @@ public class FontServiceImpl implements FontService {
             for(Font temp : fontAll.getContent()){
                 if(temp.getFontPath()==null) continue;
                 TotalResFont totalResFont = TotalResFont.builder()
-                        .creater(Creater.builder()
-                                .email(temp.getFontCreater().getUserEmail())
-                                .location(temp.getFontCreater().getUserLocation())
-                                .name(temp.getFontCreater().getUserName())
-                                .nickname(temp.getFontCreater().getUserNickname())
+                        .creator(Creator.builder()
+                                .email(temp.getFontCreator().getUserEmail())
+                                .location(temp.getFontCreator().getUserLocation())
+                                .name(temp.getFontCreator().getUserName())
+                                .nickname(temp.getFontCreator().getUserNickname())
                                 .build())
                         .description(temp.getFontDescription())
                         //.downloadFile(temp.getFontDownloadFile().getFileSavedPath())
@@ -100,11 +115,11 @@ public class FontServiceImpl implements FontService {
         //즐겨찾기 했는지 확인해
         boolean isLike = userFontRepository.findByUserAndFont(user, target) != null;
         GetFontDetailRes res = GetFontDetailRes.builder()
-                .creater(Creater.builder()
-                        .email(target.getFontCreater().getUserEmail())
-                        .location(target.getFontCreater().getUserLocation())
-                        .name(target.getFontCreater().getUserName())
-                        .nickname(target.getFontCreater().getUserNickname())
+                .creator(Creator.builder()
+                        .email(target.getFontCreator().getUserEmail())
+                        .location(target.getFontCreator().getUserLocation())
+                        .name(target.getFontCreator().getUserName())
+                        .nickname(target.getFontCreator().getUserNickname())
                         .build())
                 .description(target.getFontDescription())
                 .downloadCount(target.getFontDownloadCount())
@@ -147,7 +162,7 @@ public class FontServiceImpl implements FontService {
         Font font = Font.builder()
                 .fontDescription(fontDescription)
                 .fontName(fontName)
-                .fontCreater(user)
+                .fontCreator(user)
                 .build();
         if(!checkFontName(fontName).isUsable()){
             return -1L;

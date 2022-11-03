@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class Creater {
+public class Creator {
     String name;
     String email;
     String nickname;
