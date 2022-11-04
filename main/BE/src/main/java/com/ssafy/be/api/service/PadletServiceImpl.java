@@ -21,14 +21,14 @@ public class PadletServiceImpl implements PadletService{
     @Autowired
     PadletRepository padletRepository;
     @Override
-    public IsSuccessRes registPadlet(User user, Long fontSeq, String content, String title, String color) {
+    public IsSuccessRes registPadlet(User user, Long fontSeq, String content, String title, String color, String location) {
         Font usedFont = fontRepository.findById(fontSeq).get();
         PadletContents save = PadletContents.builder()
                 .title(title)
                 .content(content)
                 .font(usedFont)
                 .user(user)
-                .location(user.getUserLocation())
+                .location(location)
                 .color(color)
                 .build();
         if(padletRepository.save(save)==null){
@@ -43,12 +43,14 @@ public class PadletServiceImpl implements PadletService{
         List<PadletResDto> resList = new ArrayList<>();
         for(PadletContents p : padlets){
             PadletResDto item = PadletResDto.builder()
+                    .seq(p.getPadletContentsSeq())
                     .title(p.getTitle())
                     .color(p.getColor())
                     .content(p.getContent())
                     .fontName(p.getFont().getFontName())
                     .fontPath(p.getFont().getFontPath())
                     .fontSeq(p.getFont().getFontSeq())
+                    .userEmail(p.getUser().getUserEmail())
                     .userName(p.getUser().getUserName())
                     .userLocation(p.getUser().getUserLocation())
                     .userNickname(p.getUser().getUserNickname())
@@ -56,5 +58,14 @@ public class PadletServiceImpl implements PadletService{
             resList.add(item);
         }
         return GetPadletRes.builder().padletList(resList).build();
+    }
+
+    @Override
+    public IsSuccessRes deletePadlet(Long padletSeq) {
+        padletRepository.deleteById(padletSeq);
+        if(!padletRepository.findById(padletSeq).isPresent()){
+            return IsSuccessRes.builder().isSuccess(true).msg("삭제에 성공했습니다.").build();
+        }
+        return IsSuccessRes.builder().isSuccess(false).msg("삭제에 실패했습니다.").build();
     }
 }

@@ -1,6 +1,7 @@
 package com.ssafy.be.api.controller;
 
 
+import com.ssafy.be.api.request.DeletePadletReq;
 import com.ssafy.be.api.request.RegistPadletReq;
 import com.ssafy.be.api.response.GetPadletRes;
 import com.ssafy.be.api.response.IsSuccessRes;
@@ -23,13 +24,20 @@ public class PadletController {
     public ResponseEntity<IsSuccessRes> registPadlet(@ApiIgnore Authentication authentication, @RequestBody RegistPadletReq req){
         UserDetail userDetail = (UserDetail) authentication.getDetails();
         User user = userDetail.getUser();
-        IsSuccessRes res= padletService.registPadlet(user, req.getFontSeq(),req.getContent(), req.getTitle(), req.getColor());
+        IsSuccessRes res= padletService.registPadlet(user, req.getFontSeq(),req.getContent(), req.getTitle(), req.getColor(),req.getLocation());
         return ResponseEntity.status(200).body(res);
     }
-
     @GetMapping("/{location}")
     public ResponseEntity<GetPadletRes> getPadlet(@PathVariable String location){
         GetPadletRes res = padletService.getPadlet(location);
+        return ResponseEntity.status(200).body(res);
+    }
+    @DeleteMapping()
+    public ResponseEntity<IsSuccessRes> deletePadlet(@RequestBody DeletePadletReq req){
+//        @ApiIgnore Authentication auth,
+//        UserDetail userDetail = (UserDetail)auth.getDetails();
+//        User user = userDetail.getUser();
+        IsSuccessRes res = padletService.deletePadlet(req.getSeq());
         return ResponseEntity.status(200).body(res);
     }
 }

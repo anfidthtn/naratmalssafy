@@ -9,5 +9,6 @@ public class RegistPadletReq {
     String content;
     String title;
     String color;
+    String location;
     Long fontSeq;
 }

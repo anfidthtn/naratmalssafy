@@ -35,10 +35,10 @@ padlet_contents_writer bigint
     @Column(name = "padlet_contents_color")
     String color;
 
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "padlet_contents_font_seq",referencedColumnName = "font_seq")
     Font font;
-    @OneToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="padlet_contents_writer",referencedColumnName = "user_seq")
     User user;
 }

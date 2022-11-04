@@ -23,7 +23,6 @@ public class UserController {
     @Autowired
     DownloadHistoryService downloadHistoryService;
 
-
     @GetMapping("/checknickname/{nickname}")
     public ResponseEntity<Boolean> checkNickname(@PathVariable String nickname){
         //닉네임 있는지 확인

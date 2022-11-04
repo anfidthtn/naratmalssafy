@@ -10,6 +10,7 @@ import java.util.List;
 public class PadletResDto {
 
     //------패들릿 내용
+    Long seq;
     String title;
     String content;
     String color;
@@ -18,6 +19,7 @@ public class PadletResDto {
     String fontPath;
     Long fontSeq;
     //------작성자 정보
+    String userEmail;
     String userLocation;
     String userName;
     String userNickname;
