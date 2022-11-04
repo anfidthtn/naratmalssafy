@@ -6,6 +6,8 @@ import { FiDownload } from "react-icons/fi";
 import { useEffect } from 'react';
 
 const MyFont = ({ idx, fontData}) => {
+  const navigate = useNavigate();
+
   useEffect(() => {
     const fontDataDiv = document.getElementById(`fontData_${idx}`);
     const fontDataTextArea = document.getElementById(
@@ -17,11 +19,13 @@ const MyFont = ({ idx, fontData}) => {
  
     return(
         <div className="fontData" id={`fontData_${idx}`}>
-          <link rel="stylesheet" type="text/css" href={fontData.fontPath}/>
+          <link rel="stylesheet" type="text/css" href={fontData.fontDownloadAddress}/>
         <div className="textarea_box">
           <textarea className="textarea" id={`fontData_textarea_${idx}`}>안녕하세요 반갑습니다</textarea>
         </div>
-        <div className="info_box">
+        <div className="info_box"         onClick={() => {
+              navigate(`/detail/${fontData.id}`);
+            }}>
           <div className="font_info">
             <div className="font_first_row_box">
               <div className="font_name">{fontData.fontName}</div>
@@ -39,7 +43,7 @@ const MyFont = ({ idx, fontData}) => {
             <div className="font_user_info">
               <span style={{ fontSize: "10px" }}>Designed By.</span>
               <span style={{ fontWeight: "bold", fontSize: "12px" }}>
-                {fontData.fontCreater}
+                {fontData.fontUser}
               </span>
             </div>
           </div>

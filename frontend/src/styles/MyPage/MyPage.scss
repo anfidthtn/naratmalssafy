@@ -3,40 +3,145 @@
     &__Fontselect{
         display: flex;
         flex-flow: row;
+        
+        &__Edit{
+            margin-right: 100px;
+            margin-bottom: 10px;
+        }
         &__My{
             margin-right: 100px;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
         }
         &__Favorite{
             margin-right:100px;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
 
         }
         &__Download{
             margin-right:100px;
-            margin-bottom: 30px;
+            margin-bottom: 10px;
 
         }
     }
     &__Profile{
         overflow: auto;
+        height: 10%
+    }
+    &__Fontselect{
+        
+    }
+    &__Edituserinfo{
+        margin-top: 10%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        &__Space{
+            margin-top:10px
+        }
     }
     &__Myfont{
         display: flex;
         flex-flow: row;
         flex-wrap: wrap;
         margin: 0 auto;
+        height: 80%;
+        overflow-y:scroll;
     }
     &__Myfavoritesfont{
         display: flex;
         flex-flow: row;
         flex-wrap: wrap;
         margin: 0 auto;
+        height: 80%;
+        overflow-y:scroll;
     }
     &__Mydownloadfont{
         display: flex;
         flex-flow: row;
         flex-wrap: wrap;
-        margin: 0 auto;
+        margin: 0 auto;        
+        height: 80%;
+        overflow-y:scroll;
+    }
+    &__Alert{
+        margin-top: 15%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        &__Myfont{
+            &__Title{
+                font-size: xx-large;
+                font-weight: bold;
+                margin-bottom: 5%;
+            }
+            &__Content{
+                font-size: large;
+                margin-bottom: 10px;
+            }
+            &__Button{
+                font-size: large;
+                font-weight: bold;
+                margin-top: 5%;
+                text-align: center;
+                cursor: pointer;
+                max-width: 350px;
+                width: 80%;
+                height: 42px;
+                line-height: 42px;
+                background-color: #ffc6d8;
+                color: white;
+                border-radius: 10px;
+            }
+        }
+        &__Favorite{
+            &__Title{
+                font-size: xx-large;
+                font-weight: bold;
+                margin-bottom: 5%;
+            }
+            &__Content{
+                font-size: large;
+                margin-bottom: 10px;
+            }
+            &__Button{
+                font-size: large;
+                font-weight: bold;
+                margin-top: 5%;
+                text-align: center;
+                cursor: pointer;
+                max-width: 350px;
+                width: 80%;
+                height: 42px;
+                line-height: 42px;
+                background-color: #ffc6d8;
+                color: white;
+                border-radius: 10px;
+            }
+        }
+        &__Download{
+            &__Title{
+                font-size: xx-large;
+                font-weight: bold;
+                margin-bottom: 5%;
+            }
+            &__Content{
+                font-size: large;
+                margin-bottom: 10px;
+            }
+            &__Button{
+                font-size: large;
+                font-weight: bold;
+                margin-top: 5%;
+                text-align: center;
+                cursor: pointer;
+                max-width: 350px;
+                width: 80%;
+                height: 42px;
+                line-height: 42px;
+                background-color: #ffc6d8;
+                color: white;
+                border-radius: 10px;
+            }
+        }
     }
 }

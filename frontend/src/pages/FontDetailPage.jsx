@@ -23,6 +23,8 @@ import bgImage_4 from "../assets/textarea_img/background_4.jpg";
 import kakaoImg from "../assets/sns_icon/kakao_img.png";
 import linkImg from "../assets/sns_icon/link.png";
 
+import { useScript } from "../hooks"
+
 const FontDetailPage = () => {
   const [fontData, setfontData] = useState({});
   const [fontTrialConfig, setFontTrialConfig] = useState({
@@ -203,6 +205,44 @@ const FontDetailPage = () => {
       fontData.favoriteCount += 1;
     }
   }
+  // 카카오 공유 버튼######################################################################################################
+  const status = useScript("https://developers.kakao.com/sdk/js/kakao.js")
+  useEffect(() => {
+    if (status === "ready" && window.Kakao) {
+			// 중복 initialization 방지
+			if (!window.Kakao.isInitialized()) {
+				// 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
+				window.Kakao.init("143701b766fa03b8b23aa8b170cdf655");
+			}
+		}
+  }, [status])
+
+  const handleKakaoButton = () => {
+    window.Kakao.Link.sendDefault({
+        objectType: 'feed',
+        content: {
+            title: `${fontData.fontUser}님의 폰트를 구경해보세요!`,
+            // 폰트 만든사람 이름 넣어서 보내면 됨.
+            description: '#폰트 #나만의 #싸피 #SSAFY #추억 #선물',
+            imageUrl:
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTemP_0duhHjJ0tjzZtz_AKErxLKTuaKteuw&usqp=CAU',
+            link: {
+              mobileWebUrl: window.location.href,
+              webUrl: window.location.href,
+            },
+          },
+          buttons: [
+            {
+              title: '자세히보기',
+              link: {
+                mobileWebUrl: window.location.href,
+                webUrl: window.location.href,
+              },
+            },
+          ],
+    })
+}
+  // 카카오 공유 버튼######################################################################################################
 
   return (
     <div className="FontDetailPage" id="FontDetailPage">
@@ -418,9 +458,7 @@ const FontDetailPage = () => {
             {/* 카카오톡 버튼 공유 클릭 */}
             <div
               className="sns_icon_box"
-              onClick={() => {
-                console.log("카카오톡 버튼 공유 클릭");
-              }}
+              onClick={handleKakaoButton}
             >
               <div className="sns_img_box">
                 <img
