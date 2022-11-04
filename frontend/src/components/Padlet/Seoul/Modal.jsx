@@ -6,7 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 const Modal = ({setModalOpen, userinfo }) => {
-    const userfont = userinfo.downloadFonts
+    const userfodnt = userinfo.downloadFonts
     const fontinfo = [
         {
             fontName: "지홍체",
@@ -61,7 +61,21 @@ const Modal = ({setModalOpen, userinfo }) => {
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
                 value={font}
-                label="Age"
+                label="Font"
+                onChange={handlechange}
+                >
+                    {fontinfo.map((data) =>
+                        <MenuItem value={data.fontPath}>{data.fontName}</MenuItem>    
+                    )}
+                </Select>
+            </FormControl>
+            <FormControl fullWidth className='Modal__Select__Color'>
+                <InputLabel id="demo-simple-select-label">색상 선택</InputLabel>
+                <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={font}
+                label="Color"
                 onChange={handlechange}
                 >
                     {fontinfo.map((data) =>

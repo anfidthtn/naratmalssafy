@@ -3,6 +3,8 @@ import axios from 'axios'
 import Modal from './Modal.jsx'
 import PostSeoulItem from './PostSeoulItem.jsx'
 import { Grid } from "@mui/material";
+import Background from "../../../assets/padletback.png"
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 
 const PostSeoul = () => {
@@ -103,7 +105,7 @@ const PostSeoul = () => {
                 )}
             </Grid>
             </div>
-            <button className="Post__Create" onClick={showModal}>생성</button>
+            <div className="Post__Create" onClick={showModal}><AddCircleOutlineIcon/></div>
             <button className="Post__Back" onClick={goBack}>뒤로</button>
             {modalOpen && <Modal setModalOpen={setModalOpen} userinfo={userinfo}/>}
         </div>
