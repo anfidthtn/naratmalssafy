@@ -4,7 +4,7 @@ module.exports = function (app) {
   app.use(
     "/api",
     createProxyMiddleware({
-      target: "https://나랏말싸피.com",
+      target: "https://xn--910b35kqzb51p93w.com",
       changeOrigin: true,
       // pathRewrite: {
       //   "^/api": "/",
