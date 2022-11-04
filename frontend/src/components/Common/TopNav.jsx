@@ -51,7 +51,13 @@ export default function TopNav() {
         {!isMobile1024 ? (
           <div className="TopNav__LinkBox">
             <ul>
-              <li>폰트제작</li>
+              <li
+                onClick={() => {
+                  navigate("/make-font");
+                }}
+              >
+                폰트제작
+              </li>
               <li
                 onClick={() => {
                   navigate("/search");
@@ -59,10 +65,13 @@ export default function TopNav() {
               >
                 폰트검색
               </li>
-              <li                 
+              <li
                 onClick={() => {
                   navigate("/padlet");
-                }}>ForSSAFY</li>
+                }}
+              >
+                ForSSAFY
+              </li>
               <li>서명만들기</li>
               <li
                 onClick={() => {

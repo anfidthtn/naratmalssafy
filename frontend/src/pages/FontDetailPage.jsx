@@ -476,6 +476,8 @@ const FontDetailPage = () => {
                     const clipboard_check =
                       document.getElementById("clipboard_check");
                     clipboard_check.style.visibility = "visible";
+                    clipboard_check.style.left =
+                      window.innerWidth / 2 - 175 / 2 + "px";
                     clipboardModal = setTimeout(() => {
                       clipboard_check.style.visibility = "hidden";
                     }, 1000);
