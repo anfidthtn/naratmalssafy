@@ -2,7 +2,6 @@ package com.ssafy.be.api.service;
 
 import com.ssafy.be.api.dto.Creator;
 import com.ssafy.be.api.dto.ResFont;
-import com.ssafy.be.api.dto.TotalResFont;
 import com.ssafy.be.api.response.*;
 import com.ssafy.be.common.util.JwtTokenUtil;
 import com.ssafy.be.common.util.KakaoLogin;
@@ -14,12 +13,10 @@ import com.ssafy.be.db.repository.FontRepository;
 import com.ssafy.be.db.repository.UserFontRepository;
 import com.ssafy.be.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 @Service
@@ -194,26 +191,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public LikeFontRes toggleLikeFont(User user, Long targetId) {
+    public IsSuccessRes toggleLikeFont(User user, Long targetId) {
         Font target = fontRepository.findById(targetId).get();
-        LikeFontRes res;
+        IsSuccessRes res;
         if(userFontRepository.findByUserAndFont(user,target)!=null){
             userFontRepository.deleteByUserAndFont(user, target);
             if (userFontRepository.findByUserAndFont(user, target) == null) {
                 //font 객체 생성
                 target.updateFavCount("FavClear");
                 fontRepository.save(target);
-                res = LikeFontRes.builder().isSuccess(true).msg("즐겨찾기 해제 성공").build();
+                res = IsSuccessRes.builder().isSuccess(true).msg("즐겨찾기 해제 성공").build();
             } else {
-                res = LikeFontRes.builder().isSuccess(false).msg("즐겨찾기 해제 실패").build();
+                res = IsSuccessRes.builder().isSuccess(false).msg("즐겨찾기 해제 실패").build();
             }
         } else {
                 userFontRepository.save(UserFont.builder().font(target).user(user).build());
                 target.updateFavCount("FavRegist");
                 fontRepository.save(target);
-                res = LikeFontRes.builder().isSuccess(true).msg("즐겨찾기 성공").build();
+                res = IsSuccessRes.builder().isSuccess(true).msg("즐겨찾기 성공").build();
             if(userFontRepository.findByUserAndFont(user, target)==null){
-                res = LikeFontRes.builder().isSuccess(false).msg("즐겨찾기 실패").build();
+                res = IsSuccessRes.builder().isSuccess(false).msg("즐겨찾기 실패").build();
             }
         }
         return res;

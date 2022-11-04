@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class LikeFontRes {
+public class IsSuccessRes {
     boolean isSuccess;
     String msg;
 }

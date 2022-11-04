@@ -23,7 +23,6 @@ public class UserController {
     @Autowired
     DownloadHistoryService downloadHistoryService;
 
-
     @GetMapping("/checknickname/{nickname}")
     public ResponseEntity<Boolean> checkNickname(@PathVariable String nickname){
         //닉네임 있는지 확인
@@ -78,10 +77,10 @@ public class UserController {
     }
 
     @PostMapping("/toggleLike")
-    public ResponseEntity<LikeFontRes> likeFontToggle(@ApiIgnore Authentication authentication,@RequestBody LikeFontToggleReq target){
+    public ResponseEntity<IsSuccessRes> likeFontToggle(@ApiIgnore Authentication authentication, @RequestBody LikeFontToggleReq target){
         UserDetail userDetail = (UserDetail) authentication.getDetails();
         User user = userDetail.getUser();
-        LikeFontRes res = userService.toggleLikeFont(user,target.getId());
+        IsSuccessRes res = userService.toggleLikeFont(user,target.getId());
         return ResponseEntity.status(200).body(res);
     }
 
