@@ -3,38 +3,37 @@ import "../../styles/Common/TopNav.scss";
 import navicon from "../../assets/navicon.png";
 import { useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function TopNav() {
   const isMobile1024 = useMediaQuery("(max-width:1024px)");
   const navigate = useNavigate();
-  const [isloginshow, setIsloginshow] = useState(false)
+  const [isloginshow, setIsloginshow] = useState(true)
   const [istoken, setIstoken] = useState('')
+  useEffect(() => {
+    const token = localStorage.getItem('token')
+    setIstoken(token)
+    if (istoken === null || istoken === '') {
+      setIsloginshow(true)
+    }
+    else{
+      setIsloginshow(false)
+    }
+  })
+
+
   const handlelogin = () => {
     const token = localStorage.getItem('token')
     setIstoken(token)
-    if (istoken === ''){
-      navigate('/login')
-    } 
-    else {
-      navigate('/login')
-    }
+    navigate('/login')
   }
   const handlelogout = () => {
     const token = localStorage.getItem('token')
     setIstoken(token)
-    if (istoken !== ''){
-      setIsloginshow(true)
-      localStorage.setItem('token', '')
-      alert('로그아웃 되었습니다!')
-      navigate('/')
-    }
-    else {
-      setIsloginshow(true)
-      localStorage.setItem('token', '')
-      alert('로그아웃 되었습니다!')
-      navigate('/')
-    }
+    setIsloginshow(true)
+    localStorage.setItem('token', '')
+    alert('로그아웃 되었습니다!')
+    navigate('/')
   }
 
   return (

@@ -142,9 +142,11 @@ const handleNicknameCheck=()=>{
     .then(res => {
         if (res.data === true){
             setChange(res.data)
+            alert("사용 가능한 닉네임입니다!")
         }
         else{
             setChange(res.data)
+            alert("중복된 닉네임이 있습니다! 다른 닉네임을 입력해주세요.")
         }
     })
     .catch(err => {
@@ -199,10 +201,10 @@ const handleNicknameCheck=()=>{
                         <TextField label="닉네임" variant="outlined" value={nickname} onChange={handleNickname}/>
                     </FormControl>
                     <div className='Mypage__Edituserinfo__Space'></div>
-                    <button onClick={handleNicknameCheck}>중복체크</button>
                     <p>최종 활동명은 지역, 이름, 닉네임을 합쳐 지역_이름_닉네임 형식으로 만들어드립니다.</p>
-                    <button disabled={!change} onClick={handleEdit}>정보수정</button>
+                    { change && <div className="checkNicknamecenter"><div className="checkNickname"  onClick={handleEdit}>정보수정하기</div></div>}
                 </Box>
+                <div><div className="Nickname" onClick={handleNicknameCheck}>중복체크</div></div>
             </div>
                 }
                 { !ismyfontsempty &&
@@ -297,7 +299,7 @@ const handleNicknameCheck=()=>{
                     <div className='Mypage__Alert__Myfont__Title'>안녕하세요, {userinfo.userLocation}_{userinfo.userName}_{userinfo.userNickname}님 ^◡^</div>
                     <div className='Mypage__Alert__Myfont__Content'>현재 제작한 폰트가 없어요.</div>
                     <div className='Mypage__Alert__Myfont__Content'>나랏말싸피와 함께 폰트를 제작해 보아요!!</div>
-                    <div className='Mypage__Alert__Myfont__Button' onClick={()=> navigate('/search')}>폰트제작하기</div>
+                    <div className='Mypage__Alert__Myfont__Button' onClick={()=> navigate('/make-font')}>폰트제작하기</div>
                 </div>
             }
             </div>

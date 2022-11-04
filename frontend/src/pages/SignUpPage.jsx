@@ -123,10 +123,10 @@ const SignUpPage = () => {
                     <TextField label="닉네임" variant="outlined" value={nickname} onChange={handleNickname}/>
                 </FormControl>
                 <div className='Signup__Content__Space'></div>
-                <button onClick={handleNicknameCheck}>중복체크</button>
                 <p>최종 활동명은 지역, 이름, 닉네임을 합쳐 지역_이름_닉네임 형식으로 만들어드립니다.</p> 
-                <button disabled={!signup} onClick={handleSignup}>회원가입</button>
+                { signup && <div className="checkNicknamecenter"><div className="checkNickname"  onClick={handleSignup}>가입하기</div></div>}
             </Box>
+            <div><div className="Nickname" onClick={handleNicknameCheck}>중복체크</div></div>
         </div>
         </div>
         </div>
