@@ -14,10 +14,6 @@ import java.util.Optional;
 @Repository
 public interface UserFontRepository extends JpaRepository<UserFont,Long> {
     List<UserFont> findByUser(User user);
-
     void deleteByUserAndFont(User user, Font font);
-
-
-
     UserFont findByUserAndFont(User user, Font font);
 }
