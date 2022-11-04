@@ -34,6 +34,7 @@ public class FontServiceImpl implements FontService {
     FontDownloadHistoryRepository fontDownloadHistoryRepository;
     @Autowired
     UserRepository userRepository;
+    private String saveFolderPath;
     @Override
     public GetFontsRes getFonts(User user, Pageable pageable, String flag, String keyword) {
         Page<Font> fontAll;
@@ -172,8 +173,17 @@ public class FontServiceImpl implements FontService {
     }
 
     @Override
-    public Void createFont(List<MultipartFile> uploadImg, Long fontSeq) {
-        //비동기 통신
+    public Long createFont(List<MultipartFile> uploadImg, Long fontSeq) {
+        //사진 저장하기
+        for(MultipartFile img : uploadImg){
+            if(img.isEmpty()){
+                return -2L;
+            }
+
+
+
+        }
+        //fast API fontSeq 전달하기
         RestTemplate restTemplate = new RestTemplate();
         return null;
     }
