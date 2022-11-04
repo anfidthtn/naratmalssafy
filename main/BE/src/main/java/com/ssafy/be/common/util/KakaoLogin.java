@@ -18,7 +18,7 @@ public class KakaoLogin {
         String AccessToken = "";
         String reqURL = "https://kauth.kakao.com/oauth/token";
         String ApiKey = "45836166586d1409b29b026acd726439";
-        String redirectURI="http://localhost:8081/api/user/kakao";
+        String redirectURI="https://나랏말싸피.com/oauth/callback/kakao";
         try{
             URL url = new URL(reqURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
