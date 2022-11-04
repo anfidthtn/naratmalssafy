@@ -17,6 +17,7 @@ import Postdaejeon from "./components/Padlet/Daejeon/Postdaejeon.jsx";
 import FontSearchPage from "./pages/FontSearchPage.jsx";
 import FontDetailPage from "./pages/FontDetailPage.jsx";
 import FontMakePage from "./pages/FontMakePage.jsx";
+import TestPage from "./pages/TestPage.jsx";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/post/gwangju" element={<Postgwangju />} />
           <Route path="/post/gumi" element={<Postgumi />} />
           <Route path="/search" element={<FontSearchPage />} />
+          <Route path="/test" element={<TestPage />} />
         </Routes>
       </BrowserRouter>
       <Footer />
