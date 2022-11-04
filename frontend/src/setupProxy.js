@@ -6,9 +6,7 @@ module.exports = function (app) {
     createProxyMiddleware({
       target: "http://xn--910b35kqzb51p93w.com",
       changeOrigin: true,
-      // pathRewrite: {
-      //   "^/api": "/",
-      // },
     })
   );
 };
+
