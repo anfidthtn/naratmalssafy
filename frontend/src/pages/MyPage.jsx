@@ -15,11 +15,14 @@ import TextField from '@mui/material/TextField';
 
 import { dummyDataSet } from '../store/dummy.js'
 
+import { useNavigate } from 'react-router-dom'
+
 
 
 const dummyfontfile= dummyDataSet
 const token = localStorage.getItem('token')
 const MyPage = () => {
+    const navigate = useNavigate()
     const [userinfo, setUserinfo] = useState('')
     const [ismyfontsempty, setIsmyfontsempty] = useState(false)
     const [isdownloadfontsempty, setIsdownloadfontsempty] = useState(false)
@@ -290,7 +293,12 @@ const handleNicknameCheck=()=>{
             <div>
             {
                 ismyfontshow && 
-                <div>내폰트가 없네?</div>
+                <div className='Mypage__Alert'>
+                    <div className='Mypage__Alert__Myfont__Title'>안녕하세요, {userinfo.userLocation}_{userinfo.userName}_{userinfo.userNickname}님 ^◡^</div>
+                    <div className='Mypage__Alert__Myfont__Content'>현재 제작한 폰트가 없어요.</div>
+                    <div className='Mypage__Alert__Myfont__Content'>나랏말싸피와 함께 폰트를 제작해 보아요!!</div>
+                    <div className='Mypage__Alert__Myfont__Button' onClick={()=> navigate('/search')}>폰트제작하기</div>
+                </div>
             }
             </div>
         }
@@ -298,7 +306,12 @@ const handleNicknameCheck=()=>{
             <div>
             {
                 isfavoriteshow &&
-                <div>즐겨찾기폰트가 없네?</div>
+                <div className='Mypage__Alert'>
+                    <div className='Mypage__Alert__Favorite__Title'>안녕하세요, {userinfo.userLocation}_{userinfo.userName}_{userinfo.userNickname}님 ^◡^</div>
+                    <div className='Mypage__Alert__Favorite__Content'>현재 즐겨찾기한 폰트가 없어요.</div>
+                    <div className='Mypage__Alert__Favorite__Content'>다른 회원님이 만든 폰트를 구경해봐요!</div>
+                    <div className='Mypage__Alert__Favorite__Button' onClick={()=> navigate('/search')}>폰트보러가기</div>
+                </div>
             }
             </div>
         }
@@ -306,7 +319,12 @@ const handleNicknameCheck=()=>{
             <div>
             {
                 isdownloadshow &&
-                <div>다운로드폰트가 없네?</div>
+                <div className='Mypage__Alert'>
+                    <div className='Mypage__Alert__Download__Title'>안녕하세요, {userinfo.userLocation}_{userinfo.userName}_{userinfo.userNickname}님 ^◡^</div>
+                    <div className='Mypage__Alert__Download__Content'>현재 다운로드한 폰트가 없어요.</div>
+                    <div className='Mypage__Alert__Download__Content'>다른 회원님이 만든 폰트를 구경해봐요!</div>
+                    <div className='Mypage__Alert__Download__Button' onClick={()=> navigate('/search')}>폰트보러가기</div>
+                </div>
             }
             </div>
         }
