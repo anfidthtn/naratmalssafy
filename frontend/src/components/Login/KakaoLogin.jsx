@@ -19,12 +19,12 @@ const KakaoRedirectHandler = () => {
             data: {'code' : KAKAO_CODE}
         })
         .then(res => {
+            console.log(res)
             if(res.data.loginResult !== '' && res.data.loginResult.substr(0, 7) === 'eyJ0eXA'){
                 localStorage.setItem('token', res.data.loginResult)
                 // window.location.href = '/'
             }
             else if (res.data.loginResult !== ''){
-                console.log(res)
                 // window.location.href = '/signup?userEmail=' + res.data.loginResult
             }
             // if(res.data.isSignUp === true){
