@@ -1,5 +1,7 @@
 import { useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
+import axios from 'axios'
+
 
 const KakaoRedirectHandler = () => {
     console.log('hello')
@@ -10,21 +12,30 @@ const KakaoRedirectHandler = () => {
     const redirect_uri = process.env.REACT_APP_KAKAO_REDIRECT_URI
 
     const getKakaoToken = () => {
-        console.log(KAKAO_CODE)
-        fetch(`https://kauth.kakao.com/oauth/otoken`, {
+        axios({
+            url: '/api/user/login',
             method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencodedcharset=utf-8'},
-            body: `grant_type=authorization_code&client_id=45836166586d1409b29b026acd726439&redirect_uri=http://localhost:3000/kakaoLogin&code=${KAKAO_CODE}`
+            headers: {'Content-Type':'application/json'},
+            data: {'code' : KAKAO_CODE}
         })
-        .then(res => 
-            console.log(res))
-        .then(data => {
-            if(data.access_token) {
-                localStorage.setItem('token', data.access_token)
-            } else{
-                console.log('왜 안돼?')
+        .then(res => {
+            if(res.data.loginResult !== '' && res.data.loginResult.substr(0, 7) === 'eyJ0eXA'){
+                localStorage.setItem('token', res.data.loginResult)
+                window.location.href = '/'
             }
-        })
+            else if (res.data.loginResult !== ''){
+                console.log(res)
+                window.location.href = '/signup?userEmail=' + res.data.loginResult
+            }
+            // if(res.data.isSignUp === true){
+            //     if(res.data.loginResult === ''){
+            //         // window.location.href = '/signup'
+            //     }
+        // }
+    })
+        .catch(err => 
+            console.log(err, "tq")
+        )
     }
 
 

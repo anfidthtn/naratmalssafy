@@ -1,4 +1,25 @@
 .Signup{
     height: 100vh;
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &__Logo{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        &__Main{
+            margin-left: 6%;
+        }
+        margin-top: 5%;
+        margin-bottom: 5%
+    }
+    &__Content{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        &__Space{
+            margin-top:10px
+        }
+    }
 }

@@ -8,12 +8,20 @@
     font-size: 10px;
   }
 
+  & .brand_info_box {
+    margin-right: 20px;
+  }
+
+  & .brand_info_box img {
+    user-select: none;
+  }
+
   & .brand_info {
-    font-size: 10px;
+    font-size: 11px;
   }
 
   & .precaution_info {
-    font-size: 10px;
+    font-size: 12px;
   }
 
   & .precaution_header {

@@ -7,7 +7,9 @@ import gumi from '../assets/gumi.png'
 import busan from '../assets/busan.png'
 import { useNavigate } from 'react-router-dom'
 
+
 const PadletPage = () => {
+
     const navigate = useNavigate()
     function navitoSeoul () {
         navigate('/post/seoul')
@@ -29,7 +31,7 @@ const PadletPage = () => {
             <div className='Padlet__West'>
                 <img className='Padlet__West__Seoul' src={seoul} alt="seoul" onClick={navitoSeoul}/>
                 <img className='Padlet__West__Daejeon' src={daejeon} alt="daejeon" onClick={navitoDaejeon}/>
-                <img className='Padlet__West__Gwangju' src={gwangju} alt="gwangju" onClick={navitoBusan}/>
+                <img className='Padlet__West__Gwangju' src={gwangju} alt="gwangju" onClick={navitoGwangju}/>
             </div>
             <div className='Padlet__main' >
                 <img src={map} alt="map"/>

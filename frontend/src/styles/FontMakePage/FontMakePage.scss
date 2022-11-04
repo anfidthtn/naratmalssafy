@@ -1,0 +1,192 @@
+.FontMakePage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  margin-top: 100px;
+  height: 80vh;
+
+  & .current_step_box {
+    margin-right: 30px;
+    width: 20%;
+    min-width: 200px;
+    max-width: 230px;
+    height: 50vh;
+    max-height: 575px;
+    border-radius: 15px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.4),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+  }
+
+  & .make_progress {
+    height: 25%;
+    padding: 40px 10px 40px 20px;
+    border-bottom: 3px solid #ffffff;
+    font-size: 18px;
+    box-sizing: border-box;
+    background-color: #ffeee0;
+    color: #4e4e4e;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+  }
+
+  & .make_progress:first-child {
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  }
+
+  & .make_progress:last-child {
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+  }
+
+  & .current_state_display {
+    border-bottom-color: #aa7f65;
+    animation: opacity-change infinite alternate linear 1s;
+    font-weight: bold;
+    color: #aa7f65;
+  }
+
+  & .current_state_num_display {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 10px;
+    text-align: center;
+    display: inline-block;
+    background-color: #aa7f65;
+    color: #fff;
+    box-shadow: 0 0 0 6px #aa80655c, 0 0 0 12px #aa80654f;
+  }
+
+  @keyframes opacity-change {
+    0% {
+      opacity: 0.5;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  & .make_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    max-width: 1000px;
+  }
+
+  & .make_ready_img {
+    max-width: 1000px;
+    max-height: 600px;
+    width: 100%;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+      0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    box-sizing: border-box;
+    display: none;
+    height: 80%;
+    min-height: 400px;
+  }
+
+  & .make_upload_box {
+    width: 100%;
+    height: 100%;
+    max-width: 1000px;
+    max-height: 513px;
+    background-color: transparent;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5),
+      0 4px 6px -2px rgba(0, 0, 0, 0.55);
+    box-sizing: border-box;
+  }
+
+  & .image_upload_text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: inline-block;
+    padding: 9px 18px;
+    border-radius: 15px;
+    background-color: #aa7f65;
+  }
+
+  & .image_upload_preview {
+    height: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & .image_upload_button {
+    height: 50%;
+    width: 100%;
+
+    border-radius: 20px;
+    border: 3px dashed #d4b099;
+    cursor: pointer;
+    background-color: #d4b0998c;
+  }
+
+  & .prev_next_button_box {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    margin-top: 20px;
+    min-width: 360px;
+    max-width: 1000px;
+  }
+
+  & .prev_button {
+    width: 30%;
+    min-width: 160px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 20px;
+    background-color: #d4b099;
+    color: white;
+    padding: 10px 30px;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.2s linear;
+    box-sizing: border-box;
+    font-weight: bold;
+    border: none;
+    user-select: none;
+  }
+
+  & .prev_button:hover {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  & .next_button {
+    user-select: none;
+    width: 30%;
+    min-width: 160px;
+    text-align: center;
+    border-radius: 5px;
+    font-size: 20px;
+    background-color: #fff;
+    color: #d4b099;
+    padding: 10px 30px;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
+    transition: box-shadow 0.2s linear;
+    box-sizing: border-box;
+    font-weight: bold;
+    border: none;
+  }
+
+  & .next_button:hover {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+  }
+
+  & .noHover {
+    pointer-events: none;
+  }
+}
