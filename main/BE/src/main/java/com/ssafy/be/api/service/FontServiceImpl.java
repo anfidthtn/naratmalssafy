@@ -2,6 +2,7 @@ package com.ssafy.be.api.service;
 
 import com.ssafy.be.api.dto.Creator;
 import com.ssafy.be.api.dto.TotalResFont;
+import com.ssafy.be.api.request.RegistDownloadHistoryReq;
 import com.ssafy.be.api.response.CheckFontNameRes;
 import com.ssafy.be.api.response.GetFontDetailRes;
 import com.ssafy.be.api.response.GetFontsRes;
@@ -13,15 +14,23 @@ import com.ssafy.be.db.repository.FontRepository;
 import com.ssafy.be.db.repository.UserFontRepository;
 import com.ssafy.be.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 @Service
 public class FontServiceImpl implements FontService {
@@ -34,6 +43,10 @@ public class FontServiceImpl implements FontService {
     FontDownloadHistoryRepository fontDownloadHistoryRepository;
     @Autowired
     UserRepository userRepository;
+    @Value("${users.handwriteImg.savePath}")
+    private String saveFolderPath;
+    @Value("${fastapi.request.url}")
+    private String url;
     @Override
     public GetFontsRes getFonts(User user, Pageable pageable, String flag, String keyword) {
         Page<Font> fontAll;
@@ -172,10 +185,49 @@ public class FontServiceImpl implements FontService {
     }
 
     @Override
-    public Void createFont(List<MultipartFile> uploadImg, Long fontSeq) {
-        //비동기 통신
+    public Long createFont(List<MultipartFile> uploadImg, Long fontSeq, String fontName) {
+        //사진 저장하기
+        String path;
+        File file;
+        String contentType;
+
+        //String absolutePath = new File("").getAbsolutePath() + "\\";
+        String absolutePath = System.getProperty("user.dir");;
+        for(MultipartFile img : uploadImg){
+            if(img.isEmpty()){
+                return -2L;
+            }
+            path = saveFolderPath + fontName;
+            file  = new File(path);
+            if(!file.exists()){
+                file.mkdirs();
+            }
+            contentType = img.getContentType();
+            if(ObjectUtils.isEmpty(contentType)){
+                return -3L;
+            }
+            if(!contentType.contains("image/png")){
+                return -4L;
+            }
+            String fileName = img.getOriginalFilename();
+            file = new File(absolutePath+path+"/"+fileName);
+            try{
+                img.transferTo(file);
+            } catch (IOException e){
+                e.printStackTrace();
+                return -5L;
+            }
+        }
+        //fast API fontSeq 전달하기
         RestTemplate restTemplate = new RestTemplate();
-        return null;
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        Map<String,Object> body = new HashMap<>();
+        body.put("fontSeq",fontSeq.longValue());
+        body.put("fontName",fontName);
+        HttpEntity<?> requestMessage = new HttpEntity<>(body,httpHeaders);
+        ResponseEntity<String> res = restTemplate.postForEntity(url,requestMessage,String.class);
+        return 0L;
     }
 
 

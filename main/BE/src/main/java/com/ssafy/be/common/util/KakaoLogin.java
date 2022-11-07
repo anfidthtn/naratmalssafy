@@ -2,6 +2,9 @@ package com.ssafy.be.common.util;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -12,13 +15,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 @Service
+@PropertySource("classpath:application.properties")
 public class KakaoLogin {
-
+    @Value("${kakao.login.redirectURI}")
+    private String redirectURI;
+    @Value("${kakao.api.key}")
+    private String ApiKey;
     public String getKaKaoAccessToken(String code){
         String AccessToken = "";
         String reqURL = "https://kauth.kakao.com/oauth/token";
-        String ApiKey = "45836166586d1409b29b026acd726439";
-        String redirectURI="https://나랏말싸피.com/oauth/callback/kakao";
         try{
             URL url = new URL(reqURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
