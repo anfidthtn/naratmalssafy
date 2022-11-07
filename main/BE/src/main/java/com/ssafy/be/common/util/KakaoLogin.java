@@ -18,11 +18,19 @@ import java.net.URLEncoder;
 @Service
 @PropertySource(value = "classpath:application.properties",encoding = "UTF-8")
 public class KakaoLogin {
-//    @Value("${kakao.login.redirectURI}")
-//    private String redirectURI;
+    @Value("${kakao.login.redirectURI}")
+    private String redirectURI;
+    //String redirectURI="";
+
     @Value("${kakao.api.key}")
     private String ApiKey;
     public String getKaKaoAccessToken(String code){
+        try{
+            redirectURI=URLEncoder.encode(redirectURI,"UTF-8");
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
         String AccessToken = "";
         String reqURL = "https://kauth.kakao.com/oauth/token";
         try{
@@ -36,8 +44,7 @@ public class KakaoLogin {
             sb.append("&client_id=");
             sb.append(ApiKey);
             sb.append("&redirect_uri=");
-            //sb.append(redirectURI);
-            sb.append("https://나랏말싸피.com/oauth/callback/kakao");
+            sb.append(redirectURI);
             sb.append("&code=");
             sb.append(code);
             bw.write(sb.toString());
@@ -45,8 +52,18 @@ public class KakaoLogin {
 
             int responseCode = connection.getResponseCode();
             if(responseCode!=200){
-                System.out.println(redirectURI);
                 System.out.println(responseCode);
+                BufferedReader br = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+                String line = "";
+                String result = "";
+
+                while ((line = br.readLine()) != null) {
+                    result += line;
+                }
+                System.out.println(result);
+                br.close();
+                bw.close();
+
                 return "Connection Fail";
             }
             BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
