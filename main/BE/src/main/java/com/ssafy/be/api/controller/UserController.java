@@ -24,7 +24,7 @@ public class UserController {
     UserService userService;
     @Autowired
     DownloadHistoryService downloadHistoryService;
-    private final Logger logger = LogManager.getLogger(PadletController.class);
+    private final Logger logger = LogManager.getLogger(UserController.class);
     @GetMapping("/checknickname/{nickname}")
     public ResponseEntity<Boolean> checkNickname(@PathVariable String nickname){
         //닉네임 있는지 확인
