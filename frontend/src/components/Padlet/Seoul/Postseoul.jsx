@@ -83,7 +83,7 @@ const PostSeoul = () => {
                     <div className="Post__FontEmpty__Button"onClick={()=> navigate('/search')}>폰트보러가기</div>
                 </div>
             }
-            { isfontinfoempty &&
+            { !isfontinfoempty &&
             <div>
                 { ispostinfoempty && 
                 <div className="Post__PostEmpty">
