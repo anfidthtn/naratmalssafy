@@ -16,5 +16,5 @@ public interface FontService {
     public GetFontDetailRes getFont(User user, Long fontSeq);
     public CheckFontNameRes checkFontName(String fontName);
     public Long registFontInfo(String fontName, String fontDescription, User user);
-    public Long createFont(List<MultipartFile> uploadImg, Long fontSeq);
+    public Long createFont(List<MultipartFile> uploadImg, Long fontSeq, String fontName);
 }

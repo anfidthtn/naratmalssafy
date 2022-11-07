@@ -13,12 +13,16 @@ import com.ssafy.be.db.repository.FontRepository;
 import com.ssafy.be.db.repository.UserFontRepository;
 import com.ssafy.be.db.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -34,6 +38,7 @@ public class FontServiceImpl implements FontService {
     FontDownloadHistoryRepository fontDownloadHistoryRepository;
     @Autowired
     UserRepository userRepository;
+    @Value("${users.handwriteImg.savePath}")
     private String saveFolderPath;
     @Override
     public GetFontsRes getFonts(User user, Pageable pageable, String flag, String keyword) {
@@ -173,15 +178,37 @@ public class FontServiceImpl implements FontService {
     }
 
     @Override
-    public Long createFont(List<MultipartFile> uploadImg, Long fontSeq) {
+    public Long createFont(List<MultipartFile> uploadImg, Long fontSeq, String fontName) {
         //사진 저장하기
+        String path;
+        File file;
+        String contentType;
+        //String absolutePath = new File("").getAbsolutePath() + "\\";
+        String absolutePath = System.getProperty("user.dir");;
         for(MultipartFile img : uploadImg){
             if(img.isEmpty()){
                 return -2L;
             }
-
-
-
+            path = saveFolderPath + fontName;
+            file  = new File(path);
+            if(!file.exists()){
+                file.mkdirs();
+            }
+            contentType = img.getContentType();
+            if(ObjectUtils.isEmpty(contentType)){
+                return -3L;
+            }
+            if(!contentType.contains("image/png")){
+                return -4L;
+            }
+            String fileName = img.getOriginalFilename();
+            file = new File(absolutePath+path+"/"+fileName);
+            try{
+                img.transferTo(file);
+            } catch (IOException e){
+                e.printStackTrace();
+                return -5L;
+            }
         }
         //fast API fontSeq 전달하기
         RestTemplate restTemplate = new RestTemplate();

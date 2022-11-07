@@ -61,13 +61,26 @@ public class FontController {
     public ResponseEntity<IsSuccessRes> registFont(@ApiIgnore Authentication authentication, RegistFontReq req){
         UserDetail userDetail = (UserDetail) authentication.getDetails();
         User user = userDetail.getUser();
+        if(req.getUploadImg()==null){
+            return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(false).msg("이미지 업로드 오류! 비어있는 파일입니다.").build());
+        }
         Long fontSeq = fontService.registFontInfo(req.getFontName(),req.getDescription(),user);
         logger.info("registFont requestUser: ["+user.getUserEmail()+"] "+" fontName: ["+req.getFontName()+"]");
         if(fontSeq == -1L){
             return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(false).msg("이미 사용중인 폰트 이름입니다.").build());
         }
-        if(fontService.createFont(req.getUploadImg(),fontSeq)==-2L){
+        Long res = fontService.createFont(req.getUploadImg(),fontSeq,req.getFontName());
+        if(res==-2L){
             return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(false).msg("이미지 업로드 오류! 비어있는 파일입니다.").build());
+        }
+        else if(res==-3){
+            return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(false).msg("이미지 업로드 오류! contentType이 없습니다.").build());
+        }
+        else if(res==-4){
+            return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(false).msg("이미지 업로드 오류! png파일이 아닙니다.").build());
+        }
+        else if(res==-5){
+            return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(false).msg("이미지 업로드 오류! 파일 저장중 에러가 발생했습니다.").build());
         }
         return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(true).msg("폰트제작 요청이 완료되었습니다.").build());
     }
