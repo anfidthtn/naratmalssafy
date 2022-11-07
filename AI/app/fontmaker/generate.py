@@ -27,7 +27,7 @@ class FontMaker():
         imgs = []
         maxH = 1
         for i in range(len(common_han)):
-            img = self.font_gen[i].astype(np.uint8)
+            img = np.abs(self.font_gen[i]).astype(np.uint8)
             tmp = np.where(img!=255)
             sizeh = img.shape[0]
             sizew = img.shape[1]
@@ -35,7 +35,7 @@ class FontMaker():
             img = np.pad(img[hs:he + 1,ws:we + 1], pad_width=2, mode='constant', constant_values=255)
             imgs.append(img)
             maxH = max(maxH, img.shape[0])
-        ratio = 128 / maxH
+        ratio = 256 / maxH
         
         for i in range(len(imgs)):
             img = imgs[i]
@@ -51,7 +51,7 @@ class FontMaker():
                 category_layer="download/category_emb.npz",
                 gen_weight="download/gen_weight.pt",
                 source_font_npz="fonts/source_font.npz",
-                epochs=100,
+                epochs=10,
                 learning_rate=5e-5,
                 display_sample=False):
         self.nowDir = os.path.dirname(__file__)
