@@ -14,6 +14,7 @@ import "react-image-crop/dist/ReactCrop.css";
 const FontMakePage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [uploadImage, setUploadImage] = useState(null);
+  const [introduction, setIntroduction] = useState("");
 
   const [cropStep, setCropStep] = useState(0);
 
@@ -49,10 +50,11 @@ const FontMakePage = () => {
     "바",
     "퀴",
     "에",
-    "돌",
+    "타",
     "고",
     "파",
   ];
+
   let nowImage = null;
 
   useEffect(() => {
@@ -67,11 +69,29 @@ const FontMakePage = () => {
     if (currentStep <= 4) {
       makeProgressDiv[0].classList.add("current_state_display");
       currentNumDiv[0].classList.add("current_state_num_display");
-    } else {
+    } else if (currentStep <= 6) {
       makeProgressDiv[1].classList.add("current_state_display");
       currentNumDiv[1].classList.add("current_state_num_display");
+    } else if (currentStep <= 8) {
+      makeProgressDiv[2].classList.add("current_state_display");
+      currentNumDiv[2].classList.add("current_state_num_display");
+    } else if (currentStep <= 9) {
+      makeProgressDiv[3].classList.add("current_state_display");
+      currentNumDiv[3].classList.add("current_state_num_display");
     }
   }, [currentStep]);
+
+  useEffect(() => {
+    const nextButton = document.getElementById("fontMakePage_next_button");
+    nextButton.classList.remove("noHover");
+    if (currentStep === 5 && !uploadImage) {
+      nextButton.classList.add("noHover");
+    } else if (currentStep === 6 && croppedImageUrl.length !== 11) {
+      nextButton.classList.add("noHover");
+    } else if (currentStep === 9) {
+      nextButton.classList.add("noHover");
+    }
+  }, [currentStep, cropStep, uploadImage, croppedImageUrl]);
 
   function clickStepButton(type) {
     setCurrentStep(
@@ -81,6 +101,26 @@ const FontMakePage = () => {
           : currentStep - 1
         : currentStep + 1
     );
+
+    if (type === "prev" && currentStep === 9) {
+      setCurrentStep(1);
+      setCroppedImageUrl([]);
+      setUploadImage(null);
+      setIntroduction("");
+      setCropStep(0);
+      setCrop({
+        aspect: 1280 / 300,
+        x: 0,
+        y: 0,
+        width: 100,
+        height: 100,
+        unit: "px",
+      });
+    } else if (type === "next" && currentStep === 8) {
+      console.log("완료 버튼 클릭");
+
+      //axios로 백엔드에 정보들 보내기
+    }
   }
 
   function UploadImageClick() {
@@ -97,6 +137,18 @@ const FontMakePage = () => {
       alert("이미지 파일을 업로드 해주세요!");
       return;
     }
+
+    setCroppedImageUrl([]);
+    setCropStep(0);
+    setCrop({
+      aspect: 1280 / 300,
+      x: 0,
+      y: 0,
+      width: 100,
+      height: 100,
+      unit: "px",
+    });
+
     const reader = new FileReader();
     reader.readAsDataURL(fileBlob);
     return new Promise((resolve) => {
@@ -112,24 +164,25 @@ const FontMakePage = () => {
   };
 
   function removeCanvas() {
-    if (!completedCrop || !imgRef.current) {
+    if (!completedCrop || !imgRef.current || cropStep === 0) {
       return;
     }
 
     setCroppedImageUrl([...croppedImageUrl.slice(0, -1)]);
     setCropStep(cropStep === 0 ? cropStep : cropStep - 1);
+    setCrop({ ...crop, x: crop.x - 50 });
   }
 
   // 크롭 영역 canvas에 넣기
   const createCanvas = () => {
-    if (!completedCrop || !imgRef.current) {
+    if (!completedCrop || !imgRef.current || cropStep === 11) {
       return;
     }
 
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
-    const crop = completedCrop;
+    //const crop = completedCrop;
 
     const scaleX = imgRef.current.naturalWidth / imgRef.current.width;
     const scaleY = imgRef.current.naturalHeight / imgRef.current.height;
@@ -154,9 +207,9 @@ const FontMakePage = () => {
     );
 
     const base64Image = canvas.toDataURL("image/png");
-    setCrop({ ...crop, x: crop.x + 50 });
     setCroppedImageUrl([...croppedImageUrl, base64Image]);
-    setCropStep(cropStep === 10 ? cropStep : cropStep + 1);
+    setCropStep(cropStep + 1);
+    setCrop({ ...crop, x: crop.x + 50 });
   };
 
   return (
@@ -250,8 +303,19 @@ const FontMakePage = () => {
           <>
             <div className="selected_image_preview_box">
               <div className="selected_info_text">
-                <span className="selected_word">{selectedWords[cropStep]}</span>
-                를 잡아 주세요
+                {cropStep !== 11 ? (
+                  <>
+                    <span className="selected_word">
+                      "{selectedWords[cropStep]}"
+                    </span>
+                    를 잡아 주세요
+                  </>
+                ) : (
+                  <>
+                    <span className="selected_word">다음</span>
+                    으로 넘어 가주세요!
+                  </>
+                )}
               </div>
             </div>
             <div className="crop_image_box">
@@ -266,6 +330,7 @@ const FontMakePage = () => {
                   alt="이미지"
                   width={"100%"}
                   height={"100%"}
+                  style={{ maxWidth: "1000px", maxHeight: "600px" }}
                 />
               </ReactCrop>
             </div>
@@ -273,10 +338,114 @@ const FontMakePage = () => {
               <button onClick={removeCanvas} className="crop_click_button">
                 {"〈"}
               </button>
-              <div className="crop_step">{cropStep + 1} / 11</div>
+              <div className="crop_step">
+                {cropStep >= 11 ? 11 : cropStep + 1} / 11
+              </div>
               <button onClick={createCanvas} className="crop_click_button">
                 {"〉"}
               </button>
+            </div>
+          </>
+        )}
+        {currentStep === 7 && (
+          <>
+            <div
+              className="crop_check_info_box"
+              style={{ textAlign: "center" }}
+            >
+              <div className="crop_check_info_row">
+                *반드시 <span style={{ color: "red" }}>11자</span>가 모두 잘
+                나왔는지 확인해주세요!
+              </div>
+              <div className="crop_check_info_row">
+                *만약 한 글자안에{" "}
+                <span style={{ color: "red" }}>다른 글자나 획이</span>{" "}
+                섞여있다면 다시 잡아주세요
+              </div>
+              <div className="crop_check_info_row">
+                *최대한 글자가 <span style={{ color: "red" }}>중앙</span>으로
+                오게 잡아주세요
+              </div>
+              <div className="crop_check_info_row">
+                *이전으로 돌아가시면{" "}
+                <span style={{ color: "red" }}>{'"<"'}</span> 버튼을 통해서 다시
+                원하는 글자를 잡을 수 있습니다.
+              </div>
+            </div>
+            <div className="selected_images_grid">
+              {croppedImageUrl.map((url, i) => {
+                return (
+                  <div key={i} className="crop_img_box">
+                    <div className="selected_word_header">
+                      {selectedWords[i]}
+                    </div>
+                    <img src={url} alt="이미지" className="crop_img"></img>
+                  </div>
+                );
+              })}
+            </div>
+          </>
+        )}
+        {currentStep === 8 && (
+          <>
+            <div className="crop_check_info_box">
+              <div className="crop_check_info_row">
+                해당 폰트를 설명할 수 있는{" "}
+                <span style={{ color: "#d4b099" }}>소개글</span>을 간단히 작성해
+                주세요
+              </div>
+              <div className="crop_check_info_row">
+                <span style={{ color: "#d4b099" }}>소개글</span>은
+                상세페이지에서 언제든지 수정할 수 있습니다.
+              </div>
+              <div className="crop_check_info_row">
+                <span style={{ color: "#d4b099" }}>ex{") "}</span>
+                <span style={{ fontWeight: "normal" }}>
+                  이 폰트는 싸피를 수료를 기념하기 위한 폰트입니다.!!
+                </span>
+              </div>
+            </div>
+            <div className="font_introduce_textarea_box">
+              <textarea
+                placeholder="소개하는 글을 쓰신 후 다음을 눌러주세요!"
+                value={introduction}
+                onChange={(e) => setIntroduction(e.target.value)}
+              ></textarea>
+            </div>
+          </>
+        )}
+        {currentStep === 9 && (
+          <>
+            <div className="completed_box">
+              <div className="completed_header">
+                <span style={{ color: "#d4b099" }}>제작 신청</span>이
+                완료되었습니다.
+              </div>
+              <div className="complted_info_text_box">
+                <div className="completed_info_text">
+                  *제작 완료까지 <span style={{ color: "red" }}>20분</span>정도
+                  소요 될 수 있습니다.
+                </div>
+                <div className="completed_info_text">
+                  *제작이 완료된 후에{" "}
+                  <span style={{ color: "red" }}>카카오톡 </span>알림으로 안내해
+                  드립니다.
+                </div>
+                <div className="completed_info_text">
+                  *제작이 완료된 후에{" "}
+                  <span style={{ color: "red" }}>자동적</span> 으로 폰트
+                  검색페이지에 공유됩니다.
+                </div>
+                <div className="completed_info_text">
+                  *언제든지 마이페이지에서 제작한 폰트를
+                  <span style={{ color: "red" }}> 다운로드</span> 할 수
+                  있습니다.
+                </div>
+                <div className="completed_info_text">
+                  *패들릿 페이지에서 제작한 폰트를
+                  <span style={{ color: "red" }}> 사용해</span> 볼수 있습니다.
+                </div>
+              </div>
             </div>
           </>
         )}
@@ -287,13 +456,14 @@ const FontMakePage = () => {
             }
             onClick={() => clickStepButton("prev")}
           >
-            이전
+            {currentStep === 9 ? "처음으로" : "이전"}
           </button>
           <button
             className="next_button"
+            id="fontMakePage_next_button"
             onClick={() => clickStepButton("next")}
           >
-            다음
+            {currentStep === 8 ? "완료" : "다음"}
           </button>
         </div>
       </div>
