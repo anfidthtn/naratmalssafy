@@ -1,5 +1,6 @@
 package com.ssafy.be.api.controller;
 
+import com.ssafy.be.api.request.RegistDownloadHistoryReq;
 import com.ssafy.be.api.request.RegistFontReq;
 import com.ssafy.be.api.response.*;
 import com.ssafy.be.api.service.FontService;
@@ -14,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/font")
@@ -83,5 +86,11 @@ public class FontController {
             return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(false).msg("이미지 업로드 오류! 파일 저장중 에러가 발생했습니다.").build());
         }
         return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(true).msg("폰트제작 요청이 완료되었습니다.").build());
+    }
+
+    @PostMapping("/test")
+    public ResponseEntity<IsSuccessRes> test(@RequestBody RegistDownloadHistoryReq req){
+        logger.info("registFont requestUser: ["+req.getFontName()+"] "+" fontName: ["+req.getFontSeq()+"]");
+        return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(true).msg(req.toString()).build());
     }
 }
