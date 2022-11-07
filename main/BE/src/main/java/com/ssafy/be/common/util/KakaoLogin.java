@@ -13,12 +13,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
 
 @Service
-@PropertySource("classpath:application.properties")
+@PropertySource(value = "classpath:application.properties",encoding = "UTF-8")
 public class KakaoLogin {
-    @Value("${kakao.login.redirectURI}")
-    private String redirectURI;
+//    @Value("${kakao.login.redirectURI}")
+//    private String redirectURI;
     @Value("${kakao.api.key}")
     private String ApiKey;
     public String getKaKaoAccessToken(String code){
@@ -35,7 +36,8 @@ public class KakaoLogin {
             sb.append("&client_id=");
             sb.append(ApiKey);
             sb.append("&redirect_uri=");
-            sb.append(redirectURI);
+            //sb.append(redirectURI);
+            sb.append("https://나랏말싸피.com/oauth/callback/kakao");
             sb.append("&code=");
             sb.append(code);
             bw.write(sb.toString());
