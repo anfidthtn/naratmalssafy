@@ -2,6 +2,7 @@ package com.ssafy.be.api.service;
 
 import com.ssafy.be.api.dto.Creator;
 import com.ssafy.be.api.dto.TotalResFont;
+import com.ssafy.be.api.request.RegistDownloadHistoryReq;
 import com.ssafy.be.api.response.CheckFontNameRes;
 import com.ssafy.be.api.response.GetFontDetailRes;
 import com.ssafy.be.api.response.GetFontsRes;
@@ -19,6 +20,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -28,9 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class FontServiceImpl implements FontService {
@@ -45,6 +45,8 @@ public class FontServiceImpl implements FontService {
     UserRepository userRepository;
     @Value("${users.handwriteImg.savePath}")
     private String saveFolderPath;
+    @Value("${fastapi.request.url}")
+    private String url;
     @Override
     public GetFontsRes getFonts(User user, Pageable pageable, String flag, String keyword) {
         Page<Font> fontAll;
@@ -188,7 +190,7 @@ public class FontServiceImpl implements FontService {
         String path;
         File file;
         String contentType;
-        String url = "http://localhost:8081/api/font";
+
         //String absolutePath = new File("").getAbsolutePath() + "\\";
         String absolutePath = System.getProperty("user.dir");;
         for(MultipartFile img : uploadImg){
@@ -220,11 +222,11 @@ public class FontServiceImpl implements FontService {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        MultiValueMap<String,Object> body = new LinkedMultiValueMap<>();
-        body.add("fontSeq",fontSeq);
-        body.add("fontName",fontName);
+        Map<String,Object> body = new HashMap<>();
+        body.put("fontSeq",fontSeq.longValue());
+        body.put("fontName",fontName);
         HttpEntity<?> requestMessage = new HttpEntity<>(body,httpHeaders);
-        String res = restTemplate.getForObject(url,String.class,requestMessage);
+        ResponseEntity<String> res = restTemplate.postForEntity(url,requestMessage,String.class);
         return 0L;
     }
 
