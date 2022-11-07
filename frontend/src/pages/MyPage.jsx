@@ -13,13 +13,10 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import TextField from '@mui/material/TextField';
 
-import { dummyDataSet } from '../store/dummy.js'
 
 import { useNavigate } from 'react-router-dom'
 
 
-
-const dummyfontfile= dummyDataSet
 const token = localStorage.getItem('token')
 const MyPage = () => {
     const navigate = useNavigate()
@@ -47,11 +44,12 @@ const MyPage = () => {
             if (res.data.myFonts.length === 0){
                 setIsmyfontsempty(true)
             }
+            console.log(res.data)
         })
         .catch(err => {
             console.log(err)
         })
-    })
+    }, [])
 
 
 // 내폰트, 다운로드, 즐겨찾기중 어떤걸로 볼지 #################################################################
@@ -161,8 +159,9 @@ const handleNicknameCheck=()=>{
     return(
         <div className='Mypage'>
             <div className='Mypage__Profile'>
-                <div>닉네임 : {userinfo.userLocation}_{userinfo.userName}_{userinfo.userNickname}</div>
-                <div>이메일 : {userinfo.userEmail}</div>
+                <div className='Mypage__Profile__Title'>마이 페이지</div>
+                <div className='Mypage__Profile__Content'>닉네임 : {userinfo.userLocation}_{userinfo.userName}_{userinfo.userNickname}</div>
+                <div className='Mypage__Profile__Content'>이메일 : {userinfo.userEmail}</div>
             </div>
             <div className='Mypage__Fontselect'>
                 <div className='Mypage__Fontselect__Edit' onClick={showedit}>회원정보수정</div>
@@ -213,8 +212,8 @@ const handleNicknameCheck=()=>{
                     ismyfontshow &&
                     <div className='Mypage__Myfont'>
                     <Grid container spacing={3}>
-                        {dummyfontfile.map((data, idx) =>
-                        dummyfontfile.length - 1 === idx ? (
+                        {userinfo.myFonts.map((data, idx) =>
+                        userinfo.myFonts.length - 1 === idx ? (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFont
                                 idx={idx}
@@ -241,8 +240,8 @@ const handleNicknameCheck=()=>{
                     isfavoriteshow &&
                     <div className='Mypage__Myfavoritesfont'>
                     <Grid container spacing={3}>
-                        {dummyfontfile.map((data, idx) =>
-                        dummyfontfile.length - 1 === idx ? (
+                        {userinfo.likeFonts.map((data, idx) =>
+                        userinfo.likeFonts.length - 1 === idx ? (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFavoritesFont
                                 idx={idx}
@@ -269,8 +268,8 @@ const handleNicknameCheck=()=>{
                     isdownloadshow &&
                     <div className='Mypage__Mydownloadfont'>
                     <Grid container spacing={3}>
-                        {dummyfontfile.map((data, idx) =>
-                        dummyfontfile.length - 1 === idx ? (
+                        {userinfo.downloadFonts.map((data, idx) =>
+                        userinfo.downloadFonts.length - 1 === idx ? (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyDownloadFont
                                 idx={idx}

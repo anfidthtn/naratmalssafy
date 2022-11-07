@@ -2,12 +2,18 @@ import { useState, useEffect } from "react";
 import Modal from './Modal.jsx'
 import axios from 'axios'
 import PostDaejeonItem from "./PostDaejeonItem.jsx";
-import { Grid } from "@mui/material";
+import { Divider,Grid } from "@mui/material";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
+import { useNavigate } from "react-router-dom";
 
 const PostDaejeon = () => {
+    const navigate= useNavigate()
     const token = localStorage.getItem('token')
     const [userinfo, setUserinfo] = useState('')
+    const [postinfo, setPostinfo] = useState([])
+    const [ispostinfoempty, setIspostinfoempty] = useState(false)
+    const [isfontinfoempty, setIsfontinfoempty] = useState(false)
     useEffect(() => {
         axios({
             url: '/api/user',
@@ -19,58 +25,40 @@ const PostDaejeon = () => {
         })
         .then(res => {
             setUserinfo(res.data)
+            if (res.data.downloadFonts.length === 0 && res.data.myFonts.length === 0) {
+                setIsfontinfoempty(true)
+                console.log('여왔다')
+            }
+            else{
+                setIsfontinfoempty(false)
+            }
         })
         .catch(err => {
             console.log(err)
         })
-    })
+        axios({
+            url: '/api/padlet/daejeon',
+            method: 'GET',
+            headers: {
+                'Content-Type':'application/json'
+            } 
+        })
+        .then(res => {
+            setPostinfo(res)
+            console.log(res.data.padletList.length)
+            if(res.data.padletList.length === 0){
+                setIspostinfoempty(true)
+            }
+            else{
+                setIspostinfoempty(false)
+            }
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }, [])
     const [modalOpen, setModalOpen] = useState(false)
-    const [dummyPostInfo, setDummyPostInfo] = useState([
-        {
-            padlet_contents_writer : '가수왕',
-            padlet_contents_comments : '모두 좋은 곳에 취직해서 행복하자',
-            padlet_contents_location : '서울',
-            padlet_contents_font : 'https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap',
-            fontFamilyName: "Do Hyeon",
-        },
-        {
-            padlet_contents_writer : '한제규',
-            padlet_contents_comments : '알고리즘이 곧 답이다! 알고리즘짱짱맨',
-            padlet_contents_location : '서울',
-            padlet_contents_font : 'https://fonts.googleapis.com/css2?family=Poor+Story&display=swap',
-            fontFamilyName: "Poor Story",
-        },
-        {
-            padlet_contents_writer : '유지홍',
-            padlet_contents_comments : '소주없인 못살아~ 정말못살아~',
-            padlet_contents_location : '서울',
-            padlet_contents_font : 'https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap',
-            fontFamilyName: "Black Han Sans",
-
-        },
-        {
-            padlet_contents_writer : '임현탁',
-            padlet_contents_comments : '여행지 추천좀....',
-            padlet_contents_location : '서울',
-            padlet_contents_font : 'https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap',
-            fontFamilyName: "Nanum Pen Script",
-        },
-        {
-            padlet_contents_writer : '채민지',
-            padlet_contents_comments : '그리울 거에용 모두들',
-            padlet_contents_location : '서울',
-            padlet_contents_font : 'https://fonts.googleapis.com/css2?family=Gamja+Flower&display=swap',
-            fontFamilyName: "Gamja Flower",
-
-        },
-        {
-            padlet_contents_writer : '조경수',
-            padlet_contents_comments : '싸피 끝났으니 푹 자야지 ^^',
-            padlet_contents_location : '서울',
-            padlet_contents_font : 'https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap',
-            fontFamilyName: "Black And White Picture",
-        }
-    ])
+    
     const showModal = () => {
         setModalOpen(true)
     }
@@ -79,30 +67,60 @@ const PostDaejeon = () => {
     }
     return(
         <div className="Post">
-            <div>대전 패들릿</div>
-            <div>
-            <Grid container spacing={3}>
-                {dummyPostInfo.map((data,idx) =>
-                    dummyPostInfo.length -1 === idx ? (
-                        <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
-                        <PostDaejeonItem
-                            idx={idx}
-                            postData={data}
-                        />
-                        </Grid>
-                    ): (
-                        <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
-                        <PostDaejeonItem
-                            idx={idx}
-                            postData={data}
-                        />
-                        </Grid>
-                    )
-
-                )}
-            </Grid>
+            <div className="Post__Title">
+                <div className="Post__Title__Title">대전 패들릿</div>
+                <div className="Post__Title__Content">싸피와의 추억을 동기들과 나누어 보아요.</div>
+                <div className="Post__Title__Content">아쉬웠던 기억, 후련한 기억, 공유하고 싶은 말을 남겨주세요!</div>
             </div>
-            <button className="Post__Create" onClick={showModal}>생성</button>
+            <div className="custom_m_y_10">
+                    <Divider />
+            </div>
+            { isfontinfoempty &&
+                <div className="Post__FontEmpty">
+                    <div className="Post__FontEmpty__Title">안녕하세요, {userinfo.userLocation}_{userinfo.userName}_{userinfo.userNickname}님!!!</div>
+                    <div className="Post__FontEmpty__Content">아직 회원님만의 폰트나 다운로드한 폰트가 없어요  ˃̣̣̥᷄⌓˂̣̣̥᷅ </div>
+                    <div className="Post__FontEmpty__Content">패들릿 작성전 폰트제작이나 다운로드를 해보아요 !!!</div>
+                    <div className="Post__FontEmpty__Button"onClick={()=> navigate('/make-font')}>폰트제작하기</div>
+                    <div className="Post__FontEmpty__Button"onClick={()=> navigate('/search')}>폰트보러가기</div>
+                </div>
+            }
+            { !isfontinfoempty &&
+            <div>
+                { ispostinfoempty && 
+                <div className="Post__PostEmpty">
+                    <div className="Post__FontEmpty__Title">안녕하세요, {userinfo.userLocation}_{userinfo.userName}_{userinfo.userNickname}님</div>
+                    <div className="Post__FontEmpty__Content">아직 대전 패들릿이 비어있어요!!!</div>
+                    <div className="Post__FontEmpty__Content">가장 먼저 대전 패들릿에 글을 남겨 보아요 ˃́▿˂̀ </div>
+                    <div className="Post__FontEmpty__Button" onClick={showModal}>첫 패들릿 남기기</div>
+                </div>
+                }
+                { !ispostinfoempty &&
+                <div>
+                <Grid container spacing={3}>
+                    {postinfo.map((data,idx) =>
+                        postinfo.length -1 === idx ? (
+                            <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
+                            <PostDaejeonItem
+                                idx={idx}
+                                postData={data}
+                            />
+                            </Grid>
+                        ): (
+                            <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
+                            <PostDaejeonItem
+                                idx={idx}
+                                postData={data}
+                            />
+                            </Grid>
+                        )
+
+                    )}
+                </Grid>
+                <div className="Post__Create" onClick={showModal}><AddCircleOutlineIcon/></div>
+                </div>
+                }
+            </div>
+            }
             <button className="Post__Back" onClick={goBack}>뒤로</button>
             {modalOpen && <Modal setModalOpen={setModalOpen} userinfo={userinfo}/>}
         </div>
