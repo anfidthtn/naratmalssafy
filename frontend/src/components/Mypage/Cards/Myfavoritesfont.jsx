@@ -18,12 +18,12 @@ const MyFavoritesFont = ({idx, fontData }) => {
   }, []);
   return(
       <div className="fontData" id={`fontData_${idx}`}>
-        <link rel="stylesheet" type="text/css" href={fontData.fontDownloadAddress}/>
+        <link rel="stylesheet" type="text/css" href={fontData.fontPath}/>
       <div className="textarea_box">
         <textarea className="textarea" id={`fontData_textarea_${idx}`}>안녕하세요 반갑습니다</textarea>
       </div>
       <div className="info_box"         onClick={() => {
-              navigate(`/detail/${fontData.id}`);
+              navigate(`/detail/${fontData.fontSeq}`);
             }}>
         <div className="font_info">
           <div className="font_first_row_box">
@@ -31,7 +31,7 @@ const MyFavoritesFont = ({idx, fontData }) => {
             <div className="font_favorite_download_info">
               <div className="favorite_info">
                 <span className="icon">{BsFillStarFill()}</span>
-                <span className="num"> {fontData.favoriteCount}</span>
+                <span className="num"> {fontData.favCount}</span>
               </div>
               <div className="download_info">
                 <span className="icon">{FiDownload()}</span>
@@ -42,7 +42,7 @@ const MyFavoritesFont = ({idx, fontData }) => {
           <div className="font_user_info">
             <span style={{ fontSize: "10px" }}>Designed By.</span>
             <span style={{ fontWeight: "bold", fontSize: "12px" }}>
-              {fontData.fontUser}
+              {fontData.creator.location}_{fontData.creator.name}_{fontData.creator.nickname}
             </span>
           </div>
         </div>
