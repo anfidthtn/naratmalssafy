@@ -225,7 +225,7 @@ public class FontServiceImpl implements FontService {
         body.add("fontName",fontName);
         HttpEntity<?> requestMessage = new HttpEntity<>(body,httpHeaders);
         String res = restTemplate.getForObject(url,String.class,requestMessage);
-        return null;
+        return 0L;
     }
 
 

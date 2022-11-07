@@ -66,11 +66,11 @@ public class FontController {
         }
         Long fontSeq = fontService.registFontInfo(req.getFontName(),req.getDescription(),user);
         logger.info("registFont requestUser: ["+user.getUserEmail()+"] "+" fontName: ["+req.getFontName()+"]");
-        if(fontSeq == -1L){
+        if(fontSeq == -1){
             return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(false).msg("이미 사용중인 폰트 이름입니다.").build());
         }
         Long res = fontService.createFont(req.getUploadImg(),fontSeq,req.getFontName());
-        if(res==-2L){
+        if(res==-2){
             return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(false).msg("이미지 업로드 오류! 비어있는 파일입니다.").build());
         }
         else if(res==-3){
