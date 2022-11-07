@@ -16,7 +16,7 @@ import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
-@RequestMapping("/api/user")
+@RequestMapping("/user")
 @RestController
 
 public class UserController {

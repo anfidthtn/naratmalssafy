@@ -19,7 +19,7 @@ import springfox.documentation.annotations.ApiIgnore;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/font")
+@RequestMapping("/font")
 public class FontController {
     @Autowired
     FontService fontService;

@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
-@RequestMapping("/api/padlet")
+@RequestMapping("/padlet")
 public class PadletController {
     @Autowired
     PadletService padletService;
