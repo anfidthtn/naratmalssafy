@@ -22,7 +22,7 @@ with open(os.path.join(pwd, "config", "mysql_conf.json")) as f:
     mysql_config = json.load(f)
 
 
-@app.get("/")
+@app.post("/")
 def read_root():
     maker = FontMaker('fontname')
     
