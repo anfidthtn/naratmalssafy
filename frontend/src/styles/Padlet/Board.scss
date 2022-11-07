@@ -4,7 +4,7 @@
     justify-content: center;
     &__main{
         padding-top: 5%;
-        height: 80%;
+        height: 100%;
     }
     &__West{
         display: flex;
@@ -12,23 +12,26 @@
         &__Seoul{
             width: 200px;
             height: 200px;
+            cursor: pointer;
         }
         &__Seoul:hover{
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
         &__Daejeon{
             width: 200px;
             height: 200px;
+            cursor: pointer;
         }
         &__Daejeon:hover{
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
         &__Gwangju{
             width: 200px;
             height: 200px;
+            cursor: pointer;
         }
         &__Gwangju:hover{
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
     }
     &__East{
@@ -37,16 +40,18 @@
         &__Gumi{
             width: 200px;
             height: 200px;
+            cursor: pointer;
         }
         &__Gumi:hover{
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
         &__Busan{
             width: 200px;
             height: 200px;
+            cursor: pointer;
         }
         &__Busan:hover{
-            transform: scale(1.1);
+            transform: scale(1.05);
         }
     }
 }

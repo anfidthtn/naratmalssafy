@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import "../../../styles/FontSearchPage/FontSearchItem.scss";
 
 const PostSeoulItem = ({ idx, postData}) => {
-  const [subFontEditorText, setSubFontEditorText] = useState(postData.padlet_contents_comments);
+  const [subFontEditorText, setSubFontEditorText] = useState(postData.content);
   useEffect(() => {
-    setSubFontEditorText(postData.padlet_contents_comments);
-  }, [postData.padlet_contents_comments]);
+    setSubFontEditorText(postData.content);
+  }, [postData.content]);
 
   useEffect(() => {
     const fontDataDiv = document.getElementById(`postData_${idx}`);
@@ -23,7 +23,7 @@ const PostSeoulItem = ({ idx, postData}) => {
       <link
         rel="stylesheet"
         type="text/css"
-        href={postData.padlet_contents_font}
+        href={postData.fontPath}
       />
       <div className="textarea_box">
         <textarea
@@ -41,7 +41,7 @@ const PostSeoulItem = ({ idx, postData}) => {
           <div className="font_user_info">
             <span style={{ fontSize: "10px" }}>Designed By.</span>
             <span style={{ fontWeight: "bold", fontSize: "16px" }}>
-              {postData.padlet_contents_writer}
+              {postData.userLocation}_{postData.userName}_{postData.userNickname}
             </span>
           </div>
         </div>

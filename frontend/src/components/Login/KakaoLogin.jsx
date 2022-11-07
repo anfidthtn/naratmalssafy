@@ -4,9 +4,7 @@ import axios from 'axios'
 
 
 const KakaoRedirectHandler = () => {
-    console.log('hello')
     const location = useLocation();
-    console.log(location)
     const KAKAO_CODE = location.search.split('=')[1]
     const client_id = process.env.REACT_APP_KAKAO_CLIENT_ID
     const redirect_uri = process.env.REACT_APP_KAKAO_REDIRECT_URI
@@ -19,7 +17,6 @@ const KakaoRedirectHandler = () => {
             data: {'code' : KAKAO_CODE}
         })
         .then(res => {
-            console.log(res)
             if(res.data.loginResult !== '' && res.data.loginResult.substr(0, 7) === 'eyJ0eXA'){
                 localStorage.setItem('token', res.data.loginResult)
                 window.location.href = '/'
@@ -34,7 +31,7 @@ const KakaoRedirectHandler = () => {
         // }
     })
         .catch(err => 
-            console.log(err, "tq")
+            console.log(err)
         )
     }
 
