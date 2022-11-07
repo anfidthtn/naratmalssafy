@@ -43,6 +43,7 @@ public class KakaoLogin {
 
             int responseCode = connection.getResponseCode();
             if(responseCode!=200){
+                System.out.println(redirectURI);
                 System.out.println(responseCode);
                 return "Connection Fail";
             }
