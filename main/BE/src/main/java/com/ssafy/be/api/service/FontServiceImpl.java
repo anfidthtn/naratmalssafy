@@ -16,7 +16,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -183,6 +188,7 @@ public class FontServiceImpl implements FontService {
         String path;
         File file;
         String contentType;
+        String url = "http://localhost:8081/api/font";
         //String absolutePath = new File("").getAbsolutePath() + "\\";
         String absolutePath = System.getProperty("user.dir");;
         for(MultipartFile img : uploadImg){
@@ -212,6 +218,13 @@ public class FontServiceImpl implements FontService {
         }
         //fast API fontSeq 전달하기
         RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
+        MultiValueMap<String,Object> body = new LinkedMultiValueMap<>();
+        body.add("fontSeq",fontSeq);
+        body.add("fontName",fontName);
+        HttpEntity<?> requestMessage = new HttpEntity<>(body,httpHeaders);
+        String res = restTemplate.getForObject(url,String.class,requestMessage);
         return null;
     }
 
