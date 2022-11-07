@@ -1,9 +1,12 @@
-FROM python:3.7.0
+From python:3.6.13
+ 
+COPY ./ ./AI/
 
-COPY ./ ./
+WORKDIR ./AI/app
 
-WORKDIR /AI/app/
+RUN pip install --use-deprecated=legacy-resolver -r requirements.txt
 
-RUN pip install -r requirements.txt
+RUN pip install --use-deprecated=legacy-resolver -r fontmaker/requirements.txt
 
-CMD uvicorn --host=0.0.0.0 --port 18000 main:app
+
+CMD ["uvicorn", "main:app", "--port", "18080"]
