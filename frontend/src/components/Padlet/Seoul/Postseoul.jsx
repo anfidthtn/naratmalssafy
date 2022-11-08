@@ -3,7 +3,6 @@ import axios from 'axios'
 import Modal from './Modal.jsx'
 import PostSeoulItem from './PostSeoulItem.jsx'
 import {  Divider, Grid } from "@mui/material";
-import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import { useNavigate } from "react-router-dom";
 
@@ -11,120 +10,7 @@ const PostSeoul = () => {
     const navigate= useNavigate()
     const token = localStorage.getItem('token')
     const [userinfo, setUserinfo] = useState('')
-    const [postinfo, setPostinfo] = useState([    
-    //     {
-    //     "color": "red",
-    //     "content": "안녕안녕 나는 현탁이라고 해",
-    //     "fontName": "현탁막걸리체",
-    //     "fontPath": "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
-    //     "fontFamilyName": "Black And White Picture",
-    //     "fontSeq": 0,
-    //     "seq": 0,
-    //     "title": "안뇽",
-    //     "userEmail": "seoktak123@naver.com",
-    //     "userLocation": "구미",
-    //     "userName": "임현탁",
-    //     "userNickname": "연딱콩"
-    //   },
-    //   {
-    //     "color": "red",
-    //     "content": "안녕안녕 나는 현탁이라고 해",
-    //     "fontName": "현탁막걸리체",
-    //     "fontPath": "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
-    //     "fontFamilyName": "Black And White Picture",
-    //     "fontSeq": 0,
-    //     "seq": 0,
-    //     "title": "안뇽",
-    //     "userEmail": "seoktak123@naver.com",
-    //     "userLocation": "구미",
-    //     "userName": "임현탁",
-    //     "userNickname": "연딱콩"
-    //   },
-    //   {
-    //     "color": "red",
-    //     "content": "안녕안녕 나는 현탁이라고 해",
-    //     "fontName": "현탁막걸리체",
-    //     "fontPath": "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
-    //     "fontFamilyName": "Black And White Picture",
-    //     "fontSeq": 0,
-    //     "seq": 0,
-    //     "title": "안뇽",
-    //     "userEmail": "seoktak123@naver.com",
-    //     "userLocation": "구미",
-    //     "userName": "임현탁",
-    //     "userNickname": "연딱콩"
-    //   },
-    //   {
-    //     "color": "red",
-    //     "content": "안녕안녕 나는 현탁이라고 해",
-    //     "fontName": "현탁막걸리체",
-    //     "fontPath": "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
-    //     "fontFamilyName": "Black And White Picture",
-    //     "fontSeq": 0,
-    //     "seq": 0,
-    //     "title": "안뇽",
-    //     "userEmail": "seoktak123@naver.com",
-    //     "userLocation": "구미",
-    //     "userName": "임현탁",
-    //     "userNickname": "연딱콩"
-    //   },
-    //   {
-    //     "color": "red",
-    //     "content": "안녕안녕 나는 현탁이라고 해",
-    //     "fontName": "현탁막걸리체",
-    //     "fontPath": "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
-    //     "fontFamilyName": "Black And White Picture",
-    //     "fontSeq": 0,
-    //     "seq": 0,
-    //     "title": "안뇽",
-    //     "userEmail": "seoktak123@naver.com",
-    //     "userLocation": "구미",
-    //     "userName": "임현탁",
-    //     "userNickname": "연딱콩"
-    //   },
-    //   {
-    //     "color": "red",
-    //     "content": "안녕안녕 나는 현탁이라고 해",
-    //     "fontName": "현탁막걸리체",
-    //     "fontPath": "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
-    //     "fontFamilyName": "Black And White Picture",
-    //     "fontSeq": 0,
-    //     "seq": 0,
-    //     "title": "안뇽",
-    //     "userEmail": "seoktak123@naver.com",
-    //     "userLocation": "구미",
-    //     "userName": "임현탁",
-    //     "userNickname": "연딱콩"
-    //   },
-    //   {
-    //     "color": "red",
-    //     "content": "안녕안녕 나는 현탁이라고 해",
-    //     "fontName": "현탁막걸리체",
-    //     "fontPath": "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
-    //     "fontFamilyName": "Black And White Picture",
-    //     "fontSeq": 0,
-    //     "seq": 0,
-    //     "title": "안뇽",
-    //     "userEmail": "seoktak123@naver.com",
-    //     "userLocation": "구미",
-    //     "userName": "임현탁",
-    //     "userNickname": "연딱콩"
-    //   },
-    //   {
-    //     "color": "red",
-    //     "content": "안녕안녕 나는 현탁이라고 해",
-    //     "fontName": "현탁막걸리체",
-    //     "fontPath": "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
-    //     "fontFamilyName": "Black And White Picture",
-    //     "fontSeq": 0,
-    //     "seq": 0,
-    //     "title": "안뇽",
-    //     "userEmail": "seoktak123@naver.com",
-    //     "userLocation": "구미",
-    //     "userName": "임현탁",
-    //     "userNickname": "연딱콩"
-    //   }
-    ])
+    const [postinfo, setPostinfo] = useState([])
     const [ispostinfoempty, setIspostinfoempty] = useState(false)
     const [isfontinfoempty, setIsfontinfoempty] = useState(false)
     useEffect(() => {
@@ -182,7 +68,20 @@ const PostSeoul = () => {
             <div className="Post__Title">
                 <div className="Post__Title__Title">서울 패들릿</div>
                 <div className="Post__Title__Content">싸피와의 추억을 동기들과 나누어 보아요.</div>
-                <div className="Post__Title__Content">아쉬웠던 기억, 후련한 기억, 공유하고 싶은 말을 남겨주세요!</div>
+                <div className="Post__Title__Content1">
+                    <div>아쉬웠던 기억, 후련한 기억, 공유하고 싶은 말을 남겨주세요!</div>
+                    <div className="Post__Title__Content1__2">
+                        <div className="Post__Back" onClick={goBack}>뒤로</div>
+                        { !isfontinfoempty &&
+                        <div>
+                            { !ispostinfoempty && 
+                                <div className="Post__Create" onClick={showModal}>생성</div>
+                            }
+                        </div>
+                        }
+                    </div>
+                    
+                </div>
             </div>
             <div className="custom_m_y_10">
                     <Divider />
@@ -230,12 +129,11 @@ const PostSeoul = () => {
                     )}
                 </Grid>
                 </div>
-                <div className="Post__Create" onClick={showModal}><AddCircleOutlineIcon/></div>
                 </div>
                 }
             </div>
             }
-            <button className="Post__Back" onClick={goBack}>뒤로</button>
+            <div className="Post__Create" onClick={showModal}>생성</div>
             {modalOpen && <Modal setModalOpen={setModalOpen} userinfo={userinfo}/>}
         </div>
     );
