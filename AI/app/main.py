@@ -12,14 +12,22 @@ sys.path.append(os.path.join(os.path.dirname(__file__), "fontmaker"))
 
 from fontmaker.generate import FontMaker
 
+from pydantic import BaseModel
+
+
 app = FastAPI()
+
+class Item(BaseModel):
+    fontSeq: int
+    fontName: str
 
 pwd = os.path.dirname(os.path.realpath(__file__))
 
 
-
-@app.post("/")
-def read_root():
-    maker = FontMaker('fontname')
+@app.post("/makefont/")
+def read_root(data : Item):
+    print(data)
+    print(data.fontName)
+    maker = FontMaker(data.fontName)
     
     return {"a" : "a"}

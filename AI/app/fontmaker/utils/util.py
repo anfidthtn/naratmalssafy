@@ -23,9 +23,9 @@ def custom_img(PATH):
   ## Load Image
   character_list = os.listdir(PATH) # character_list = 입력 이미지들
   i=1
-  plt.figure(figsize=(16,10)) # 창 생성, 가로 세로 설정
+  # plt.figure(figsize=(16,10)) # 창 생성, 가로 세로 설정
   for c in character_list:
-    plt.subplot(6,10,i) # 글자를 계속 옆에 이어붙임
+    # plt.subplot(6,10,i) # 글자를 계속 옆에 이어붙임
     img = Image.open(os.path.join(PATH,c)).convert("L") # 256단계 흑백 이미지로 변경 후 저장
     enhancer = ImageEnhance.Brightness(img) # 밝게
     img = enhancer.enhance(1.4) # 배경 제거
@@ -37,7 +37,7 @@ def custom_img(PATH):
     img = np.array(img)
     size = max(img.shape)
     tmp = np.where(img!=255) # 흰색 아닌 부분의 위치들 저장
-    print("tmp",tmp)
+    # print("tmp",tmp)
     ws,we,hs,he = max(min(tmp[0]-5),0), min(max(tmp[0]+5),size), max(min(tmp[1])-5,0), min(max(tmp[1]+5),size)
     img = img[ws:we,hs:he] # 완전 일부 떼어오기?
 
@@ -52,7 +52,7 @@ def custom_img(PATH):
     img = Image.fromarray(np.uint8(img))
     img = img.resize((32,32))
     img = np.asarray(img)
-    plt.imshow(img, cmap='gray')
+    # plt.imshow(img, cmap='gray')
     
     i+=1
     custom_char.append((img,c.split('.')[0]))
