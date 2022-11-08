@@ -24,7 +24,7 @@ class Item(BaseModel):
 pwd = os.path.dirname(os.path.realpath(__file__))
 
 
-@app.post("/makefont/")
+@app.post("/fastapi/makefont/")
 def read_root(data : Item):
     print(data)
     maker = FontMaker(data.fontName)
