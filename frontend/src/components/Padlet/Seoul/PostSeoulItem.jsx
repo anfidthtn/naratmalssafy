@@ -12,8 +12,10 @@ const PostSeoulItem = ({ idx, postData}) => {
     const fontDataTextArea = document.getElementById(
       `postData_textarea_${idx}`
     );
+    const postColor = document.getElementById(`postColor_${idx}`)
     fontDataDiv.style.fontFamily = postData.fontFamilyName;
     fontDataTextArea.style.fontFamily = postData.fontFamilyName;
+    postColor.style.backgroundColor = postData.color
   }, []);
 
 
@@ -33,7 +35,7 @@ const PostSeoulItem = ({ idx, postData}) => {
         ></textarea>
       </div>
       <div
-        className="info_box"
+        className="info_box" id={`postColor_${idx}`}
       >
         <div className="font_info">
           <div className="font_first_row_box">

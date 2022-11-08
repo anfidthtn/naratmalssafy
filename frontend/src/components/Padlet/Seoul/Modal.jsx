@@ -7,7 +7,8 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import axios from 'axios'
 
 const Modal = ({setModalOpen, userinfo }) => {
-    const userfont = userinfo.downloadFonts
+    const downloadFonts = userinfo.downloadFonts
+    const myFonts= userinfo.myFonts
     const token = localStorage.getItem('token')
     const [color, setColor] = useState('')
     const [font, setFont] = useState('')
@@ -31,8 +32,7 @@ const Modal = ({setModalOpen, userinfo }) => {
             data: {
                 "color": `${color}`,
                 "content": `${content}`,
-                // "fontSeq": `${font}`,
-                "fontSeq":0,
+                "fontSeq": `${font}`,
                 "location": "seoul",
                 "title": `${title}`
             }
@@ -68,8 +68,8 @@ const Modal = ({setModalOpen, userinfo }) => {
         <div className='Modal'>
             <div className='Modal__Body'>
             <div className='Modal__Top'>패들릿 생성</div>
-            <input type='text' defaultValue='제목입력' onChange={handletitle} className="Modal__Title"></input>
-            <textarea onChange={handlecontent} className="Modal__Content">내용입력</textarea>
+            <input type='text' placeholder='제목' onChange={handletitle} className="Modal__Title"></input>
+            <textarea onChange={handlecontent} className="Modal__Content" placeholder="아름다운 추억을 나누어 보아요..."></textarea>
             <div className='Modal__Space'></div>
             <FormControl fullWidth className='Modal__Select__Font'>
                 <InputLabel id="demo-simple-select-label">폰트 선택</InputLabel>
@@ -80,7 +80,10 @@ const Modal = ({setModalOpen, userinfo }) => {
                 label="Font"
                 onChange={handlefont}
                 >
-                    {userfont.map((data) =>
+                    {downloadFonts.map((data) =>
+                        <MenuItem value={data.fontSeq}>{data.fontName}</MenuItem>    
+                    )}
+                    {myFonts.map((data) =>
                         <MenuItem value={data.fontSeq}>{data.fontName}</MenuItem>    
                     )}
                 </Select>

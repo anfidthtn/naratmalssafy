@@ -50,13 +50,16 @@ export default function TopNav() {
         {!isMobile1024 ? (
           <div className="TopNav__LinkBox">
             <ul>
-              <li
-                onClick={() => {
-                  navigate("/make-font");
-                }}
-              >
-                폰트제작
-              </li>
+              {
+                  !isloginshow &&
+                  <li
+                    onClick={() => {
+                      navigate("/make-font");
+                    }}
+                  >
+                    폰트제작
+                  </li>
+              }
               <li
                 onClick={() => {
                   navigate("/search");
@@ -64,18 +67,27 @@ export default function TopNav() {
               >
                 폰트검색
               </li>
-              <li
-                onClick={() => {
-                  navigate("/padlet");
-                }}
-              >
-                ForSSAFY
-              </li>
-              <li>서명만들기</li>
-              <li
-                onClick={() => {
-                  navigate("/mypage");
-                }}>마이페이지</li>
+              {
+                  !isloginshow &&
+                  <li
+                    onClick={() => {
+                      navigate("/padlet");
+                    }}
+                  >
+                    ForSSAFY
+                  </li>
+              }
+              {
+                  !isloginshow &&
+                  <li>서명만들기</li>
+              }
+              {
+                !isloginshow &&    
+                <li
+                  onClick={() => {
+                    navigate("/mypage");
+                  }}>마이페이지</li>
+                }    
                 {
                   isloginshow &&
                   <li onClick={handlelogin}>로그인</li>
