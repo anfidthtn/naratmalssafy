@@ -27,7 +27,8 @@ pwd = os.path.dirname(os.path.realpath(__file__))
 @app.post("/makefont/")
 def read_root(data : Item):
     print(data)
-    print(data.fontName)
     maker = FontMaker(data.fontName)
+    print(maker)
+    maker.makeTTF(data.fontSeq, data.fontName)
     
     return {"a" : "a"}
