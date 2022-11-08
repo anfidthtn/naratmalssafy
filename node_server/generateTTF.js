@@ -45,17 +45,48 @@ var genFont = function generate(fontName)
 
     var files = fs.readdirSync(`./${dir_name}/flipped_result`);
 
-    var option = {    
-            'ltres' : 1,
-            'qtres' : 1,
-            'strokewidth' : 0.5,
-            'pathomit' : 8,
-            'blurradius' : 0,
-            'blurdelta' : 10 
-        };
+    // var option = {    
+    //         'ltres' : 1,
+    //         'qtres' : 1,
+    //         'strokewidth' : 0.5,
+    //         'pathomit' : 8,
+    //         'blurradius' : 0,
+    //         'blurdelta' : 10 
+    //     };
+    var option = {
+        // Tracing
+        corsenabled : false,
+        ltres : 1,
+        qtres : 2,
+        pathomit : 8,
+        rightangleenhance : true,
+        
+        // Color quantization
+        colorsampling : 2,
+        numberofcolors : 16,
+        mincolorratio : 0,
+        colorquantcycles : 3,
+        
+        // Layering method
+        layering : 0,
+        
+        // SVG rendering
+        strokewidth : 1,
+        linefilter : true,
+        scale : 1,
+        roundcoords : 2,
+        viewbox : false,
+        desc : false,
+        lcpr : 0,
+        qcpr : 0,
+        
+        // Blur
+        blurradius : 5,
+        blurdelta : 64
+    }
 
     option.pal = [{r:0,g:0,b:0,a:255},{r:255,g:255,b:255,a:255}];
-    option.linefilter=true;
+    // option.linefilter=true;
 
     var sources = [];
     var fileName = [];
@@ -80,12 +111,13 @@ var genFont = function generate(fontName)
             var png = PNG.sync.read(data);
 
             var myImageData = {width:png.width, height:png.height, data:png.data};
-            var options = {ltres:option.ltres, strokewidth:option.strokewidth, qtres:option.qtres, pathomit:option.pathomit, blurradius:option.blurradius, blurdelta:option.blurdelta};
+            // var options = {ltres:option.ltres, strokewidth:option.strokewidth, qtres:option.qtres, pathomit:option.pathomit, blurradius:option.blurradius, blurdelta:option.blurdelta};
 
-            options.pal = [{r:0,g:0,b:0,a:255},{r:255,g:255,b:255,a:255}];
-            options.linefilter=true;
+            // options.pal = [{r:0,g:0,b:0,a:255},{r:255,g:255,b:255,a:255}];
+            // options.linefilter=true;
             
-            var svgstring = ImageTracer.imagedataToSVG( myImageData, options);
+            // var svgstring = ImageTracer.imagedataToSVG( myImageData, options);
+            var svgstring = ImageTracer.imagedataToSVG( myImageData, option);
 
             fs.writeFileSync(`./${dir_name}/svg/` + fileName[j] + '.svg', svgstring);
     }
@@ -112,5 +144,5 @@ var genFont = function generate(fontName)
     fontStream.end();
 }
 
-// app('fontname');
+// genFont('fontname');
 module.exports = genFont;
