@@ -20,13 +20,15 @@ import java.net.URLEncoder;
 public class KakaoLogin {
     @Value("${kakao.login.redirectURI}")
     private String redirectURI;
+
+    private String changeURI;
     //String redirectURI="";
 
     @Value("${kakao.api.key}")
     private String ApiKey;
     public String getKaKaoAccessToken(String code){
         try{
-            redirectURI=URLEncoder.encode(redirectURI,"UTF-8");
+            changeURI=URLEncoder.encode(redirectURI,"UTF-8");
         }
         catch (Exception e){
             e.printStackTrace();
@@ -45,7 +47,7 @@ public class KakaoLogin {
             sb.append("&client_id=");
             sb.append(ApiKey);
             sb.append("&redirect_uri=");
-            sb.append(redirectURI);
+            sb.append(changeURI);
             sb.append("&code=");
             sb.append(code);
             bw.write(sb.toString());
