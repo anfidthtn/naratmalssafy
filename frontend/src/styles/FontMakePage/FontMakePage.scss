@@ -203,6 +203,110 @@
     font-weight: bold;
   }
 
+  & .crop_check_info_box {
+    border-radius: 20px;
+    border: 3px solid #d4b099;
+    margin-top: 100px;
+    margin-bottom: 30px;
+  }
+
+  & .crop_check_info_row {
+    margin: 10px 20px;
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  & .selected_images_grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(20%, auto));
+    gap: 10px;
+    padding: 20px 0;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5),
+      0 4px 6px -2px rgba(0, 0, 0, 0.55);
+    border-radius: 20px;
+  }
+
+  & .crop_img_box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  & .crop_img {
+    max-width: 100px;
+    max-height: 150px;
+  }
+
+  & .selected_word_header {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    border: 1px solid gray;
+    border-radius: 10px;
+    padding: 5px;
+  }
+
+  & .font_introduce_textarea_box {
+    border: 1px solid gray;
+    border-bottom: none;
+
+    border-color: rgba(228, 228, 231, 1);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3),
+      0 4px 6px -2px rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+  }
+
+  & .font_introduce_textarea_box textarea {
+    resize: none;
+    border: none;
+    height: 300px;
+    padding: 20px;
+    font-size: 1.85rem;
+    line-height: 50px;
+    background-color: transparent;
+    max-width: 100%;
+    width: 100%;
+    outline: none;
+    box-sizing: border-box;
+  }
+
+  & .completed_box {
+    border: 1px solid gray;
+    border-bottom: none;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    border-color: rgba(228, 228, 231, 1);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3),
+      0 4px 6px -2px rgba(0, 0, 0, 0.6);
+    border-radius: 20px;
+    box-sizing: border-box;
+    max-height: 600px;
+    padding: 30px;
+
+    display: flex;
+    flex-direction: column;
+  }
+
+  & .completed_header {
+    font-weight: bold;
+    font-size: 30px;
+    text-align: center;
+  }
+
+  & .complted_info_text_box {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .completed_info_text {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 20px;
+  }
+
   & .prev_next_button_box {
     display: flex;
     justify-content: space-evenly;

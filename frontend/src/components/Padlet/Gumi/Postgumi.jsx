@@ -27,7 +27,6 @@ const PostGumi = () => {
             setUserinfo(res.data)
             if (res.data.downloadFonts.length === 0 && res.data.myFonts.length === 0) {
                 setIsfontinfoempty(true)
-                console.log('여왔다')
             }
             else{
                 setIsfontinfoempty(false)
@@ -70,7 +69,20 @@ const PostGumi = () => {
             <div className="Post__Title">
                 <div className="Post__Title__Title">구미 패들릿</div>
                 <div className="Post__Title__Content">싸피와의 추억을 동기들과 나누어 보아요.</div>
-                <div className="Post__Title__Content">아쉬웠던 기억, 후련한 기억, 공유하고 싶은 말을 남겨주세요!</div>
+                <div className="Post__Title__Content1">
+                    <div>아쉬웠던 기억, 후련한 기억, 공유하고 싶은 말을 남겨주세요!</div>
+                    <div className="Post__Title__Content1__2">
+                        <div className="Post__Back" onClick={goBack}>뒤로</div>
+                        { !isfontinfoempty &&
+                        <div>
+                            { !ispostinfoempty && 
+                                <div className="Post__Create" onClick={showModal}>생성</div>
+                            }
+                        </div>
+                        }
+                    </div>
+                    
+                </div>
             </div>
             <div className="custom_m_y_10">
                     <Divider />
@@ -96,6 +108,7 @@ const PostGumi = () => {
                 }
                 { !ispostinfoempty &&
                 <div>
+                <div className="Post__Card">
                 <Grid container spacing={3}>
                     {postinfo.map((data,idx) =>
                         postinfo.length -1 === idx ? (
@@ -116,12 +129,11 @@ const PostGumi = () => {
 
                     )}
                 </Grid>
-                <div className="Post__Create" onClick={showModal}><AddCircleOutlineIcon/></div>
+                </div>
                 </div>
                 }
             </div>
             }
-            <button className="Post__Back" onClick={goBack}>뒤로</button>
             {modalOpen && <Modal setModalOpen={setModalOpen} userinfo={userinfo}/>}
         </div>
     );
