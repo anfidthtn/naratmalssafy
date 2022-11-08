@@ -133,7 +133,7 @@ const PostSeoul = () => {
                 }
             </div>
             }
-            <div className="Post__Create" onClick={showModal}>생성</div>
+            {/* <div className="Post__Create" onClick={showModal}>생성</div> */}
             {modalOpen && <Modal setModalOpen={setModalOpen} userinfo={userinfo}/>}
         </div>
     );
