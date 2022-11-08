@@ -34,6 +34,7 @@ public class KakaoLogin {
         String AccessToken = "";
         String reqURL = "https://kauth.kakao.com/oauth/token";
         try{
+            System.out.println(redirectURI);
             URL url = new URL(reqURL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");

@@ -36,7 +36,6 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<UserLoginRes> login(@RequestBody UserLoginReq loginReq){
         UserLoginRes res = userService.login(loginReq.getCode());
-        logger.info("login loginCode: ["+loginReq.getCode()+"]");
         return ResponseEntity.status(200).body(res);
     }
 
