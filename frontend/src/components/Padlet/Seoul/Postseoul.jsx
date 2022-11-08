@@ -11,7 +11,120 @@ const PostSeoul = () => {
     const navigate= useNavigate()
     const token = localStorage.getItem('token')
     const [userinfo, setUserinfo] = useState('')
-    const [postinfo, setPostinfo] = useState([])
+    const [postinfo, setPostinfo] = useState([    
+    //     {
+    //     "color": "red",
+    //     "content": "안녕안녕 나는 현탁이라고 해",
+    //     "fontName": "현탁막걸리체",
+    //     "fontPath": "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
+    //     "fontFamilyName": "Black And White Picture",
+    //     "fontSeq": 0,
+    //     "seq": 0,
+    //     "title": "안뇽",
+    //     "userEmail": "seoktak123@naver.com",
+    //     "userLocation": "구미",
+    //     "userName": "임현탁",
+    //     "userNickname": "연딱콩"
+    //   },
+    //   {
+    //     "color": "red",
+    //     "content": "안녕안녕 나는 현탁이라고 해",
+    //     "fontName": "현탁막걸리체",
+    //     "fontPath": "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
+    //     "fontFamilyName": "Black And White Picture",
+    //     "fontSeq": 0,
+    //     "seq": 0,
+    //     "title": "안뇽",
+    //     "userEmail": "seoktak123@naver.com",
+    //     "userLocation": "구미",
+    //     "userName": "임현탁",
+    //     "userNickname": "연딱콩"
+    //   },
+    //   {
+    //     "color": "red",
+    //     "content": "안녕안녕 나는 현탁이라고 해",
+    //     "fontName": "현탁막걸리체",
+    //     "fontPath": "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
+    //     "fontFamilyName": "Black And White Picture",
+    //     "fontSeq": 0,
+    //     "seq": 0,
+    //     "title": "안뇽",
+    //     "userEmail": "seoktak123@naver.com",
+    //     "userLocation": "구미",
+    //     "userName": "임현탁",
+    //     "userNickname": "연딱콩"
+    //   },
+    //   {
+    //     "color": "red",
+    //     "content": "안녕안녕 나는 현탁이라고 해",
+    //     "fontName": "현탁막걸리체",
+    //     "fontPath": "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
+    //     "fontFamilyName": "Black And White Picture",
+    //     "fontSeq": 0,
+    //     "seq": 0,
+    //     "title": "안뇽",
+    //     "userEmail": "seoktak123@naver.com",
+    //     "userLocation": "구미",
+    //     "userName": "임현탁",
+    //     "userNickname": "연딱콩"
+    //   },
+    //   {
+    //     "color": "red",
+    //     "content": "안녕안녕 나는 현탁이라고 해",
+    //     "fontName": "현탁막걸리체",
+    //     "fontPath": "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
+    //     "fontFamilyName": "Black And White Picture",
+    //     "fontSeq": 0,
+    //     "seq": 0,
+    //     "title": "안뇽",
+    //     "userEmail": "seoktak123@naver.com",
+    //     "userLocation": "구미",
+    //     "userName": "임현탁",
+    //     "userNickname": "연딱콩"
+    //   },
+    //   {
+    //     "color": "red",
+    //     "content": "안녕안녕 나는 현탁이라고 해",
+    //     "fontName": "현탁막걸리체",
+    //     "fontPath": "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
+    //     "fontFamilyName": "Black And White Picture",
+    //     "fontSeq": 0,
+    //     "seq": 0,
+    //     "title": "안뇽",
+    //     "userEmail": "seoktak123@naver.com",
+    //     "userLocation": "구미",
+    //     "userName": "임현탁",
+    //     "userNickname": "연딱콩"
+    //   },
+    //   {
+    //     "color": "red",
+    //     "content": "안녕안녕 나는 현탁이라고 해",
+    //     "fontName": "현탁막걸리체",
+    //     "fontPath": "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
+    //     "fontFamilyName": "Black And White Picture",
+    //     "fontSeq": 0,
+    //     "seq": 0,
+    //     "title": "안뇽",
+    //     "userEmail": "seoktak123@naver.com",
+    //     "userLocation": "구미",
+    //     "userName": "임현탁",
+    //     "userNickname": "연딱콩"
+    //   },
+    //   {
+    //     "color": "red",
+    //     "content": "안녕안녕 나는 현탁이라고 해",
+    //     "fontName": "현탁막걸리체",
+    //     "fontPath": "https://fonts.googleapis.com/css2?family=Black+And+White+Picture&display=swap",
+    //     "fontFamilyName": "Black And White Picture",
+    //     "fontSeq": 0,
+    //     "seq": 0,
+    //     "title": "안뇽",
+    //     "userEmail": "seoktak123@naver.com",
+    //     "userLocation": "구미",
+    //     "userName": "임현탁",
+    //     "userNickname": "연딱콩"
+    //   }
+    ])
     const [ispostinfoempty, setIspostinfoempty] = useState(false)
     const [isfontinfoempty, setIsfontinfoempty] = useState(false)
     useEffect(() => {
@@ -95,6 +208,7 @@ const PostSeoul = () => {
                 }
                 { !ispostinfoempty &&
                 <div>
+                <div className="Post__Card">
                 <Grid container spacing={3}>
                     {postinfo.map((data,idx) =>
                         postinfo.length -1 === idx ? (
@@ -115,6 +229,7 @@ const PostSeoul = () => {
 
                     )}
                 </Grid>
+                </div>
                 <div className="Post__Create" onClick={showModal}><AddCircleOutlineIcon/></div>
                 </div>
                 }

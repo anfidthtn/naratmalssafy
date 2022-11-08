@@ -31,8 +31,7 @@ const Modal = ({setModalOpen, userinfo }) => {
             data: {
                 "color": `${color}`,
                 "content": `${content}`,
-                // "fontSeq": `${font}`,
-                "fontSeq":0,
+                "fontSeq": `${font}`,
                 "location": "seoul",
                 "title": `${title}`
             }

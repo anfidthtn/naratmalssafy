@@ -96,6 +96,7 @@ const PostDaejeon = () => {
                 }
                 { !ispostinfoempty &&
                 <div>
+                <div className="Post__Card">                    
                 <Grid container spacing={3}>
                     {postinfo.map((data,idx) =>
                         postinfo.length -1 === idx ? (
@@ -116,6 +117,7 @@ const PostDaejeon = () => {
 
                     )}
                 </Grid>
+                </div>
                 <div className="Post__Create" onClick={showModal}><AddCircleOutlineIcon/></div>
                 </div>
                 }
