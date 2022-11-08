@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const genFont = require('../generateTTF');
 
-router.get('/makefont', (req, res) => {
-    genFont(req.query.fontname);
-    let seq = req.query.fontseq;
-    res.json(seq);
+router.post('/makefont', (req, res) => {
+    console.log(req.body)
+    genFont(req.body.fontName);
+    let seq = req.body.fontseq;
 });
 
 module.exports = router;

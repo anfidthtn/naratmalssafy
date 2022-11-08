@@ -3,6 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const ejs = require('ejs');
 const morgan = require('morgan');
+const bodyParser = require('body-parser');
 
 const indexRouter = require('./routes/index');
 
@@ -16,6 +17,8 @@ app.set('port', process.env.PORT || 28080);
 app.use(morgan('dev')); // logging
 app.use(express.static(path.join(__dirname, 'public'))); 
 // app.use(express.static(path.join(__dirname, 'font_python'))); 
+
+app.use(bodyParser.json());
 
 
 // 라우터 등록
