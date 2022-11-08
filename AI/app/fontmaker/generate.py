@@ -15,12 +15,13 @@ from models.AutoEncoder import AutoEncoder
 from models.GAN import GeneativeModel
 import cv2
 import os
+import requests
 
 class FontMaker():
     
     def __init__(self, fontname):
         self.fontname = fontname
-
+        return
         self.model, self.dataloader = self.finetuning()
         self.font_gen = self.generate(self.model, self.dataloader)
 
@@ -182,4 +183,7 @@ class FontMaker():
                     plt.imshow(font_gen[common_han.index(gen[row][c])], cmap='gray')
                 plt.axis('off')
         plt.show()
-    
+        
+    def makeTTF(self, fontSeq, fontName):
+        # requests('post', 'https://나랏말싸피.com:28080/makefont', body={'fontName' : fo   ntName}, headers={})
+        requests.post('http://나랏말싸피:28080/makefont/', json={'fontSeq' : fontSeq, 'fontName' : fontName})
