@@ -51,7 +51,7 @@ class FontMaker():
                 category_layer="download/category_emb.npz",
                 gen_weight="download/gen_weight.pt",
                 source_font_npz="fonts/source_font.npz",
-                epochs=10,
+                epochs=1,
                 learning_rate=5e-5,
                 display_sample=False):
         self.nowDir = os.path.dirname(__file__)
@@ -182,3 +182,4 @@ class FontMaker():
                     plt.imshow(font_gen[common_han.index(gen[row][c])], cmap='gray')
                 plt.axis('off')
         plt.show()
+    

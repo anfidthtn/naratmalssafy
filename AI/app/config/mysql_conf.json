@@ -1,8 +1,0 @@
-{
-    "host": "k7d110.p.ssafy.io",
-    "port": 13306,
-    "user": "root",
-    "passwd": "k7d110mysqlrootpw!@#",
-    "db": "ai_test",
-    "charset": "utf8"
-}
