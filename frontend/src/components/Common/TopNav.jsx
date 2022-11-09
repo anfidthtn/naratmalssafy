@@ -4,6 +4,7 @@ import navicon from "../../assets/navicon.png";
 import { useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import swal from "sweetalert";
 
 export default function TopNav() {
   const isMobile1024 = useMediaQuery("(max-width:1024px)");
@@ -31,8 +32,13 @@ export default function TopNav() {
     setIstoken(token);
     setIsloginshow(true);
     localStorage.removeItem("token");
-    alert("로그아웃 되었습니다!");
-    navigate("/");
+    swal({
+      text: "성공적으로 로그아웃되었습니다.",
+      icon: "success",
+      button: "확인",
+    }).then(() => {
+      navigate('/')
+    });
   };
 
   return (
