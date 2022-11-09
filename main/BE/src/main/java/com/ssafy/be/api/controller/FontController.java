@@ -94,8 +94,12 @@ public class FontController {
     public ResponseEntity<GetFontDetailRes> updateFontInfo(@ApiIgnore Authentication authentication, UpdateFontInfoReq req){
         UserDetail userDetail = (UserDetail) authentication.getDetails();
         User user= userDetail.getUser();
-        GetFontDetailRes res = fontService.updateFontInfo(req.getFontName(),req.getFontDescription(),user);
-        return ResponseEntity.status(200).body(null);
+        Long resUpdate = fontService.updateFontInfo(req.getFontName(),req.getFontDescription(),user);
+        if (resUpdate == -1L){
+            return ResponseEntity.status(901).body(null);
+        }
+        GetFontDetailRes res = fontService.getFont(user,resUpdate);
+        return ResponseEntity.status(200).body(res);
     }
 
     @PostMapping("/test")

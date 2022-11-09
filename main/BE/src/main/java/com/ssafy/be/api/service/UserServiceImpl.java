@@ -112,9 +112,10 @@ public class UserServiceImpl implements UserService {
                             .nickname(temp.getFontCreator().getUserNickname())
                             .build())
                     .description(temp.getFontDescription())
-                   // .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
-                    .FontName(temp.getFontName())
-                    .fontPath(temp.getFontPath())
+                    .fontDownloadPath(temp.getFontDownloadFile().getFileSavedPath())
+                    .fontName(temp.getFontName())
+                    .fontFamilyName(temp.getFontName())
+                    .webFontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
                     .fontSeq(temp.getFontSeq())
                     .downloadCount(temp.getFontDownloadCount())
@@ -134,9 +135,10 @@ public class UserServiceImpl implements UserService {
                             .nickname(temp.getFontCreator().getUserNickname())
                             .build())
                     .description(temp.getFontDescription())
-                   // .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
-                    .FontName(temp.getFontName())
-                    .fontPath(temp.getFontPath())
+                    .fontDownloadPath(temp.getFontDownloadFile().getFileSavedPath())
+                    .fontName(temp.getFontName())
+                    .fontFamilyName(temp.getFontName())
+                    .webFontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
                     .fontSeq(temp.getFontSeq())
                     .downloadCount(temp.getFontDownloadCount())
@@ -155,9 +157,10 @@ public class UserServiceImpl implements UserService {
                             .nickname(temp.getFontCreator().getUserNickname())
                             .build())
                     .description(temp.getFontDescription())
-                   // .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
-                    .FontName(temp.getFontName())
-                    .fontPath(temp.getFontPath())
+                    .fontDownloadPath(temp.getFontDownloadFile().getFileSavedPath())
+                    .fontName(temp.getFontName())
+                    .fontFamilyName(temp.getFontName())
+                    .webFontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
                     .fontSeq(temp.getFontSeq())
                     .build();
@@ -228,7 +231,7 @@ public class UserServiceImpl implements UserService {
         for(FontDownloadHistory t : downloadFonts){
             String path = t.getDownloadFont().getFontPath();
             String name = t.getDownloadFont().getFontName();
-            res.add(GetDownloadFontsRes.builder().fontName(name).fontPath(path).build());
+            res.add(GetDownloadFontsRes.builder().fontName(name).fontFamilyName(name).webFontPath(path).build());
         }
         return res;
     }

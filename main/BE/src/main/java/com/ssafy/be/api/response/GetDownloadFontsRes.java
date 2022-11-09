@@ -9,5 +9,6 @@ import java.util.List;
 @Builder
 public class GetDownloadFontsRes {
     String fontName;
-    String fontPath;
+    String webFontPath;
+    String fontFamilyName;
 }

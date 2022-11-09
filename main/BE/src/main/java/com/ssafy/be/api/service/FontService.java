@@ -17,5 +17,5 @@ public interface FontService {
     public CheckFontNameRes checkFontName(String fontName);
     public Long registFontInfo(String fontName, String fontDescription, User user);
     public Long createFont(List<MultipartFile> uploadImg, String fontDescription, String fontName, User user);
-    public GetFontDetailRes updateFontInfo(String fontName, String fontDescription, User user);
+    public Long updateFontInfo(String fontName, String fontDescription, User user);
 }
