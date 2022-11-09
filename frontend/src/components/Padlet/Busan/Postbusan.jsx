@@ -6,6 +6,7 @@ import { Divider,Grid } from "@mui/material";
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 const PostBusan = () => {
     const navigate= useNavigate()
@@ -14,6 +15,19 @@ const PostBusan = () => {
     const [postinfo, setPostinfo] = useState([])
     const [ispostinfoempty, setIspostinfoempty] = useState(false)
     const [isfontinfoempty, setIsfontinfoempty] = useState(false)
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          swal({
+            title: "필요",
+            text: "로그인이 필요합니다!",
+            icon: "warning",
+            button: "확인",
+          }).then(() => {
+            navigate("/login");
+          });
+        }
+      }, []);
     useEffect(() => {
         axios({
             url: '/api/user',
