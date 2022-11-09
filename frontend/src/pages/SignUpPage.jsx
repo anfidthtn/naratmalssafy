@@ -68,7 +68,7 @@ const SignUpPage = () => {
                 icon: "success",
                 button: "확인",
               }).then(() => {
-                navigate("/");
+                window.location.href='/'
               });
         })
         .catch(err => {
@@ -124,6 +124,10 @@ const SignUpPage = () => {
                         alt="mainlogo"
                         width={"80%"}
                     />
+            </div>
+            <div className='Signup__Top'>
+                <div className='Signup__Top__Title'>나랏말싸피 회원가입</div>
+                <div className='Signup__Top__Content'>회원가입을 하세요! 아이디 하나로 다양한 서비스를 경험해 보세요!</div>
             </div>
             <div className='Signup__Content'>
             <Box>

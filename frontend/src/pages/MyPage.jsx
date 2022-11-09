@@ -17,7 +17,6 @@ import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom'
 import swal from "sweetalert";
 
-const token = localStorage.getItem('token')
 const MyPage = () => {
     const navigate = useNavigate()
     const [userinfo, setUserinfo] = useState('')
@@ -40,6 +39,7 @@ const MyPage = () => {
       }, []);
     
     useEffect(() => {
+        const token = localStorage.getItem('token')
         axios({
             url: '/api/user',
             method: 'GET',
@@ -119,6 +119,7 @@ const handleNickname = (event) => {
     setChange(false)
 }
 const handleEdit = () => {
+    const token = localStorage.getItem('token')
     const userInfo={
         'userLocation' : region,
         'userName' : name,
@@ -203,6 +204,8 @@ const handleNicknameCheck=()=>{
                     <Divider />
             </div>
                 {iseditshow &&
+                <div>
+                <div className='Mypage__EditTitle'>회원정보수정</div>
                 <div className='Mypage__Edituserinfo'>
                 <Box>
                     <FormControl fullWidth className='Mypage__Edituserinfo__Location'>
@@ -235,6 +238,7 @@ const handleNicknameCheck=()=>{
                 </Box>
                 <div><div className="Nickname" onClick={handleNicknameCheck}>중복체크</div></div>
             </div>
+            </div>
                 }
                 { !ismyfontsempty &&
                 <div>
@@ -246,14 +250,12 @@ const handleNicknameCheck=()=>{
                         userinfo.myFonts.length - 1 === idx ? (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>
                         ) : (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>
@@ -274,14 +276,12 @@ const handleNicknameCheck=()=>{
                         userinfo.likeFonts.length - 1 === idx ? (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFavoritesFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>
                         ) : (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFavoritesFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>
@@ -302,14 +302,12 @@ const handleNicknameCheck=()=>{
                         userinfo.downloadFonts.length - 1 === idx ? (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyDownloadFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>
                         ) : (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyDownloadFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>
