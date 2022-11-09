@@ -22,8 +22,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -238,8 +236,11 @@ public class FontServiceImpl implements FontService {
     }
 
     @Override
-    public Long updateFontInfo(String fontName, String fontDescription, User user) {
-        Font font = fontRepository.findByFontName(fontName);
+    public Long updateFontInfo(Long fontSeq,String fontName, String fontDescription, User user) {
+        Font font = fontRepository.findById(fontSeq).get();
+        if(font.getFontDownloadFile()==null){
+            return-2L;
+        }
         if(!user.getUserEmail().equals(font.getFontCreator().getUserEmail())){
             return -1L;
         }

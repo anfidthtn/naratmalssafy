@@ -1,5 +1,6 @@
 package com.ssafy.be.api.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
@@ -18,5 +19,6 @@ public class TotalResFont {
     String description;
     Long downloadCount;
     LocalDateTime regDate;
+    @JsonProperty(value="isLike")
     boolean isLike;
 }
