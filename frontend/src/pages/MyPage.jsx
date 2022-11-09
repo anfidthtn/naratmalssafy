@@ -17,7 +17,6 @@ import TextField from '@mui/material/TextField';
 import { useNavigate } from 'react-router-dom'
 import swal from "sweetalert";
 
-const token = localStorage.getItem('token')
 const MyPage = () => {
     const navigate = useNavigate()
     const [userinfo, setUserinfo] = useState('')
@@ -40,6 +39,7 @@ const MyPage = () => {
       }, []);
     
     useEffect(() => {
+        const token = localStorage.getItem('token')
         axios({
             url: '/api/user',
             method: 'GET',
@@ -119,6 +119,7 @@ const handleNickname = (event) => {
     setChange(false)
 }
 const handleEdit = () => {
+    const token = localStorage.getItem('token')
     const userInfo={
         'userLocation' : region,
         'userName' : name,
@@ -203,6 +204,8 @@ const handleNicknameCheck=()=>{
                     <Divider />
             </div>
                 {iseditshow &&
+                <div>
+                <div className='Mypage__EditTitle'>회원정보수정</div>
                 <div className='Mypage__Edituserinfo'>
                 <Box>
                     <FormControl fullWidth className='Mypage__Edituserinfo__Location'>
@@ -234,6 +237,7 @@ const handleNicknameCheck=()=>{
                     { change && <div className="checkNicknamecenter"><div className="checkNickname"  onClick={handleEdit}>정보수정하기</div></div>}
                 </Box>
                 <div><div className="Nickname" onClick={handleNicknameCheck}>중복체크</div></div>
+            </div>
             </div>
                 }
                 { !ismyfontsempty &&
