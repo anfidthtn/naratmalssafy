@@ -246,14 +246,12 @@ const handleNicknameCheck=()=>{
                         userinfo.myFonts.length - 1 === idx ? (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>
                         ) : (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>
@@ -274,14 +272,12 @@ const handleNicknameCheck=()=>{
                         userinfo.likeFonts.length - 1 === idx ? (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFavoritesFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>
                         ) : (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFavoritesFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>
@@ -302,14 +298,12 @@ const handleNicknameCheck=()=>{
                         userinfo.downloadFonts.length - 1 === idx ? (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyDownloadFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>
                         ) : (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyDownloadFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>
