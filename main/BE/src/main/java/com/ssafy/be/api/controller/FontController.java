@@ -8,6 +8,8 @@ import com.ssafy.be.api.service.FontService;
 import com.ssafy.be.api.service.UserService;
 import com.ssafy.be.common.auth.UserDetail;
 import com.ssafy.be.db.entity.User;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,11 +93,23 @@ public class FontController {
     }
 
     @PutMapping()
+    @ApiResponses({
+            @ApiResponse(code = 901, message = "return null, 폰트 등록자와 수정요청 사용자가 다를때 발생"),
+            @ApiResponse(code = 902, message = "return null, 폰트 파일이 생성되지 않고 정보만 등록되어있을 때 발생")
+    })
+
     public ResponseEntity<GetFontDetailRes> updateFontInfo(@ApiIgnore Authentication authentication, UpdateFontInfoReq req){
         UserDetail userDetail = (UserDetail) authentication.getDetails();
         User user= userDetail.getUser();
-        GetFontDetailRes res = fontService.updateFontInfo(req.getFontName(),req.getFontDescription(),user);
-        return ResponseEntity.status(200).body(null);
+        Long resUpdate = fontService.updateFontInfo(req.getFontSeq(),req.getFontName(),req.getFontDescription(),user);
+        if (resUpdate == -1L){
+            return ResponseEntity.status(901).body(null);
+        }
+        else if (resUpdate==-2L){
+            return ResponseEntity.status(902).body(null);
+        }
+        GetFontDetailRes res = fontService.getFont(user,resUpdate);
+        return ResponseEntity.status(200).body(res);
     }
 
     @PostMapping("/test")

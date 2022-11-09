@@ -11,10 +11,11 @@ import java.time.LocalDateTime;
 public class GetFontDetailRes {
     Creator creator;
     Long fontSeq;
-    String FontName;
-    String fontPath;
+    String fontName;
+    String fontFamilyName;
+    String fontDownloadPath;
+    String webFontPath;
     Long favCount;
-    String downloadFile;
     String fileName;
     String description;
     Long downloadCount;

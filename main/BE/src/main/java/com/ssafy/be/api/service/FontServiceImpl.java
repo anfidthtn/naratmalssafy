@@ -22,8 +22,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -80,9 +78,10 @@ public class FontServiceImpl implements FontService {
                                 .nickname(temp.getFontCreator().getUserNickname())
                                 .build())
                         .description(temp.getFontDescription())
-                        //.downloadFile(temp.getFontDownloadFile().getFileSavedPath())
-                        .FontName(temp.getFontName())
-                        .fontPath(temp.getFontPath())
+                        .fontDownloadPath(temp.getFontDownloadFile().getFileSavedPath())
+                        .fontName(temp.getFontName())
+                        .webFontPath(temp.getFontPath())
+                        .fontFamilyName(temp.getFontName())
                         .favCount(temp.getFontFavCount())
                         .fontSeq(temp.getFontSeq())
                         .downloadCount(temp.getFontDownloadCount())
@@ -103,9 +102,10 @@ public class FontServiceImpl implements FontService {
                                 .nickname(temp.getFontCreator().getUserNickname())
                                 .build())
                         .description(temp.getFontDescription())
-                        //.downloadFile(temp.getFontDownloadFile().getFileSavedPath())
-                        .FontName(temp.getFontName())
-                        .fontPath(temp.getFontPath())
+                        .fontDownloadPath(temp.getFontDownloadFile().getFileSavedPath())
+                        .fontName(temp.getFontName())
+                        .fontFamilyName(temp.getFontName())
+                        .webFontPath(temp.getFontPath())
                         .favCount(temp.getFontFavCount())
                         .fontSeq(temp.getFontSeq())
                         .downloadCount(temp.getFontDownloadCount())
@@ -137,12 +137,13 @@ public class FontServiceImpl implements FontService {
                         .build())
                 .description(target.getFontDescription())
                 .downloadCount(target.getFontDownloadCount())
-                .downloadFile(target.getFontDownloadFile().getFileSavedPath())
                 .fontSeq(target.getFontSeq())
                 .favCount(target.getFontFavCount())
                 .fileName(target.getFontDownloadFile().getFileSavedName())
-                .FontName(target.getFontName())
-                .fontPath(target.getFontPath())
+                .fontName(target.getFontName())
+                .fontFamilyName(target.getFontName())
+                .fontDownloadPath(target.getFontDownloadFile().getFileSavedPath())
+                .webFontPath(target.getFontPath())
                 .isDownload(isDownload)
                 .isLike(isLike)
                 .regDate(target.getFontRegDate())
@@ -235,9 +236,17 @@ public class FontServiceImpl implements FontService {
     }
 
     @Override
-    public GetFontDetailRes updateFontInfo(String fontName, String fontDescription, User user) {
-        //Font font = fontRepository.findByFontName()
-        return null;
+    public Long updateFontInfo(Long fontSeq,String fontName, String fontDescription, User user) {
+        Font font = fontRepository.findById(fontSeq).get();
+        if(font.getFontDownloadFile()==null){
+            return-2L;
+        }
+        if(!user.getUserEmail().equals(font.getFontCreator().getUserEmail())){
+            return -1L;
+        }
+        font.updateInfo(fontName,fontDescription);
+        Font updatedFont = fontRepository.save(font);
+        return updatedFont.getFontSeq();
     }
 
 
