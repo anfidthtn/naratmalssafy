@@ -30,6 +30,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.*;
 
 @Service
@@ -219,6 +220,14 @@ public class FontServiceImpl implements FontService {
             }
         }
         //fast API fontSeq 전달하기
+
+        String reqUrl="";
+        try{
+            reqUrl = URLEncoder.encode(url,"UTF-8");
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.setContentType(MediaType.APPLICATION_JSON);
@@ -226,7 +235,7 @@ public class FontServiceImpl implements FontService {
         body.put("fontSeq",fontSeq.longValue());
         body.put("fontName",fontName);
         HttpEntity<?> requestMessage = new HttpEntity<>(body,httpHeaders);
-        ResponseEntity<String> res = restTemplate.postForEntity(url,requestMessage,String.class);
+        ResponseEntity<String> res = restTemplate.postForEntity(reqUrl,requestMessage,String.class);
         return 0L;
     }
 
