@@ -21,7 +21,7 @@ const MyFont = ({ idx, fontData}) => {
         <div className="fontData" id={`fontData_${idx}`}>
           <link rel="stylesheet" type="text/css" href={fontData.fontPath}/>
         <div className="textarea_box">
-          <textarea className="textarea" id={`fontData_textarea_${idx}`}>안녕하세요 반갑습니다</textarea>
+          <textarea className="textarea" id={`fontData_textarea_${idx}`}>{fontData.description}</textarea>
         </div>
         <div className="info_box"         onClick={() => {
               navigate(`/detail/${fontData.fontSeq}`);

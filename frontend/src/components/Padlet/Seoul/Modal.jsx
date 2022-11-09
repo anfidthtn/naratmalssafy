@@ -5,8 +5,15 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import axios from 'axios'
+import { makeStyles } from '@mui/styles';
+
 
 const Modal = ({setModalOpen, userinfo }) => {
+    const useStyles = makeStyles({
+        menuitems: {
+            display:'flex',
+        }
+    });
     const downloadFonts = userinfo.downloadFonts
     const myFonts= userinfo.myFonts
     const token = localStorage.getItem('token')
@@ -64,6 +71,7 @@ const Modal = ({setModalOpen, userinfo }) => {
         console.log(color)
     }
 
+    // const classes = useStyles();
     return(
         <div className='Modal'>
             <div className='Modal__Body'>
@@ -99,7 +107,7 @@ const Modal = ({setModalOpen, userinfo }) => {
                 onChange={handlecolor}
                 >
                     {colorlist.map((data) =>
-                        <MenuItem value={data}>{data}</MenuItem>    
+                        <MenuItem value={data}><div className="Colorexample" style={{backgroundColor:`${data}`}}></div>{data}</MenuItem>    
                     )}
                 </Select>
             </FormControl>

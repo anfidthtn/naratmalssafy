@@ -24,11 +24,6 @@ const KakaoRedirectHandler = () => {
             else if (res.data.loginResult !== ''){
                 window.location.href = '/signup?userEmail=' + res.data.loginResult
             }
-            // if(res.data.isSignUp === true){
-            //     if(res.data.loginResult === ''){
-            //         // window.location.href = '/signup'
-            //     }
-        // }
     })
         .catch(err => 
             console.log(err)
