@@ -48,6 +48,11 @@ const Modal = ({setModalOpen, userinfo}) => {
         })
         .catch(err => {
             console.log(err)
+            swal({
+                text: "패들릿 정보를 확인하세요!",
+                icon: "error",
+                button: "확인",
+              })
         })
         setModalOpen(false)
     }
