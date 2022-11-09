@@ -43,7 +43,7 @@ var genFont = function generate(fontName)
         fs.mkdirSync(ttf_dir)
     }
 
-    var files = fs.readdirSync(`./${dir_name}/flipped_result`);
+    var files = fs.readdirSync(`./${dir_name}/img`);
 
     // var option = {    
     //         'ltres' : 1,
@@ -106,7 +106,7 @@ var genFont = function generate(fontName)
       for(var i=0; i<files.length; i++) {
             let j = i;
 
-            var data = fs.readFileSync(__dirname+`/${dir_name}/flipped_result/`+fileName[j]+'.png');
+            var data = fs.readFileSync(__dirname+`/${dir_name}/img/`+fileName[j]+'.png');
 
             var png = PNG.sync.read(data);
 
