@@ -23,6 +23,4 @@ file_type varchar(45)*/
     String fileSavedName;
     @Column(name = "file_saved_path")
     String fileSavedPath;
-    @Column(name = "file_type")
-    String fileType;
 }
