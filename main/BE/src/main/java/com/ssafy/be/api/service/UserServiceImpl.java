@@ -54,8 +54,8 @@ public class UserServiceImpl implements UserService {
         if(user==null){
             return UserLoginRes.builder()
                     .isSignUp(true)
-                    .loginResult("Not Regist")
-                    .email("Not Regist")
+                    .loginResult(email)
+                    .email("NotRegist")
                     .build();
         }
         else {
@@ -75,6 +75,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserLoginRes registUser(String email, String location, String name, String nickname) {
+        if(!checkNickname(nickname)){
+            return UserLoginRes.builder().loginResult("already_using_nickname").isSignUp(false).build();
+        }
         User user = User.builder()
                 .userEmail(email)
                 .userLocation(location)
