@@ -257,6 +257,25 @@
     border-radius: 20px;
   }
 
+  & .font_name_input_box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  & .font_name_input_box input {
+    padding: 20px;
+    width: 360px;
+    font-size: 1.05rem;
+    background-color: transparent;
+    box-sizing: border-box;
+    outline: none;
+    border: 1px solid #cbcbcb;
+    border-radius: 10px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.25),
+      0 4px 6px -2px rgba(0, 0, 0, 0.3);
+  }
+
   & .font_introduce_textarea_box textarea {
     resize: none;
     border: none;

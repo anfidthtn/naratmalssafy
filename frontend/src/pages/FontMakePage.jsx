@@ -12,6 +12,7 @@ import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
+import axios from "axios";
 
 const FontMakePage = () => {
   const navigate = useNavigate();
@@ -19,6 +20,7 @@ const FontMakePage = () => {
   const [currentStep, setCurrentStep] = useState(1);
   const [uploadImage, setUploadImage] = useState(null);
   const [introduction, setIntroduction] = useState("");
+  const [fontName, setFontName] = useState("");
 
   const [cropStep, setCropStep] = useState(0);
 
@@ -125,6 +127,7 @@ const FontMakePage = () => {
       setCroppedImageUrl([]);
       setUploadImage(null);
       setIntroduction("");
+      setFontName("");
       setCropStep(0);
       setCrop({
         aspect: 1280 / 300,
@@ -135,9 +138,52 @@ const FontMakePage = () => {
         unit: "px",
       });
     } else if (type === "next" && currentStep === 8) {
-      console.log("완료 버튼 클릭");
+      if (fontName.length < 2 || fontName.length > 10) {
+        alert("폰트 이름은 2~10자로 입력해주세요!");
+        setCurrentStep(currentStep);
+        return;
+      }
 
+      if (introduction.length < 5) {
+        alert("폰트 소개는 최소 5자 이상 입력해주세요!");
+        setCurrentStep(currentStep);
+        return;
+      }
+      const formData = new FormData();
+
+      for (let index = 0; index < croppedImageUrl.length; index++) {
+        const imgDataUrl = croppedImageUrl[index];
+        const blobBin = atob(imgDataUrl.split(",")[1]);
+
+        const array = [];
+        for (let i = 0; i < blobBin.length; i++) {
+          array.push(blobBin.charCodeAt(i));
+        }
+
+        const file = new Blob([new Uint8Array(array)], { type: "image/png" });
+        formData.append("uploadImg", file);
+      }
+
+      formData.append("fontName", fontName);
+      formData.append("description", introduction);
       //axios로 백엔드에 정보들 보내기
+
+      axios({
+        method: "POST",
+        url: "/api/font",
+        mode: "cors",
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        data: formData,
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }
 
@@ -156,6 +202,8 @@ const FontMakePage = () => {
       return;
     }
 
+    setFontName("");
+    setIntroduction("");
     setCroppedImageUrl([]);
     setCropStep(0);
     setCrop({
@@ -417,15 +465,37 @@ const FontMakePage = () => {
                 상세페이지에서 언제든지 수정할 수 있습니다.
               </div>
               <div className="crop_check_info_row">
+                <span style={{ color: "#d4b099" }}>폰트이름</span>은 2~10자로
+                제한되며, 맨마지막 '체'라는 글자는 자동으로 붙여줍니다.
+              </div>
+              <div className="crop_check_info_row">
+                <span style={{ color: "#d4b099" }}>ex{") "}</span>
+                <span style={{ fontWeight: "normal" }}>수료 기념체</span>
+              </div>
+              <div className="crop_check_info_row">
                 <span style={{ color: "#d4b099" }}>ex{") "}</span>
                 <span style={{ fontWeight: "normal" }}>
                   이 폰트는 싸피를 수료를 기념하기 위한 폰트입니다.!!
                 </span>
               </div>
             </div>
+            <div className="font_name_input_box">
+              <input
+                type="text"
+                value={fontName}
+                placeholder="원하는 폰트 이름을 입력하세요(2~10자)"
+                onChange={(e) => {
+                  if (e.target.value.length > 10) {
+                    return;
+                  }
+                  setFontName(e.target.value);
+                }}
+              />
+              <div style={{ fontSize: "25px", marginLeft: "10px" }}>"체"</div>
+            </div>
             <div className="font_introduce_textarea_box">
               <textarea
-                placeholder="소개하는 글을 쓰신 후 다음을 눌러주세요!"
+                placeholder="소개하는 글을 쓰신 후 완료를 눌러주세요!(최소 5자 이상)"
                 value={introduction}
                 onChange={(e) => setIntroduction(e.target.value)}
               ></textarea>
