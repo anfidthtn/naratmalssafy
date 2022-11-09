@@ -201,7 +201,7 @@ public class FontServiceImpl implements FontService {
             if(img.isEmpty()){
                 return -2L;
             }
-            path = saveFolderPath + fontName;
+            path = saveFolderPath + fontName + "/targetimg";
             file  = new File(path);
             if(!file.exists()){
                 file.mkdirs();
@@ -232,6 +232,12 @@ public class FontServiceImpl implements FontService {
         HttpEntity<?> requestMessage = new HttpEntity<>(body,httpHeaders);
         ResponseEntity<String> res = restTemplate.postForEntity(url,requestMessage,String.class);
         return 0L;
+    }
+
+    @Override
+    public GetFontDetailRes updateFontInfo(String fontName, String fontDescription, User user) {
+        //Font font = fontRepository.findByFontName()
+        return null;
     }
 
 
