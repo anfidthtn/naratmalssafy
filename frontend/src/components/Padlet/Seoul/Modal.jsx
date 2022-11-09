@@ -5,15 +5,10 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import axios from 'axios'
-import { makeStyles } from '@mui/styles';
+import swal from "sweetalert";
 
 
 const Modal = ({setModalOpen, userinfo }) => {
-    const useStyles = makeStyles({
-        menuitems: {
-            display:'flex',
-        }
-    });
     const downloadFonts = userinfo.downloadFonts
     const myFonts= userinfo.myFonts
     const token = localStorage.getItem('token')
@@ -23,7 +18,7 @@ const Modal = ({setModalOpen, userinfo }) => {
     const [title, setTitle] = useState('')
 
     const colorlist = [
-        'red', 'blue', 'black', 'green', 'skyblue', 'gray', 'pink', 'brown', 'white', 'orange', 'yellow', 'purple'
+        'red', 'blue', 'green', 'skyblue', 'gray', 'pink', 'brown', 'orange', 'yellow', 'purple'
     ]
     const closeModal = () => {
         setModalOpen(false)
@@ -46,6 +41,11 @@ const Modal = ({setModalOpen, userinfo }) => {
         })
         .then(res => {
             console.log(res)
+            swal({
+                text: "패들릿이 성공적으로 생성되었습니다.",
+                icon: "success",
+                button: "확인",
+              })
         })
         .catch(err => {
             console.log(err)
@@ -71,11 +71,16 @@ const Modal = ({setModalOpen, userinfo }) => {
         console.log(color)
     }
 
-    // const classes = useStyles();
     return(
         <div className='Modal'>
             <div className='Modal__Body'>
-            <div className='Modal__Top'>패들릿 생성</div>
+            <div className='Modal__Top'>
+                <div className='Modal__Top__Title'>패들릿 생성</div>
+                <div className='Modal__Top__Button'>
+                    <div className='Modal__Top__Button__Make' onClick={createPost}>생성</div>
+                    <div className='Modal__Top__Button__Close' onClick={closeModal}>닫기</div>
+                </div>
+            </div>
             <input type='text' placeholder='제목' onChange={handletitle} className="Modal__Title"></input>
             <textarea onChange={handlecontent} className="Modal__Content" placeholder="아름다운 추억을 나누어 보아요..."></textarea>
             <div className='Modal__Space'></div>
@@ -107,15 +112,11 @@ const Modal = ({setModalOpen, userinfo }) => {
                 onChange={handlecolor}
                 >
                     {colorlist.map((data) =>
-                        <MenuItem value={data}><div className="Colorexample" style={{backgroundColor:`${data}`}}></div>{data}</MenuItem>    
+                        <MenuItem value={data}><div className='menuitems'><div className="Colorexample" style={{backgroundColor:`${data}`}}></div><div>{data}</div></div></MenuItem>    
                     )}
                 </Select>
             </FormControl>
             <div className='Modal__Space'></div>
-            <div className='Modal__Bottom'>
-                <div className='Modal__Bottom__Make' onClick={createPost}>생성</div>
-                <div className='Modal__Bottom__Close' onClick={closeModal}>닫기</div>
-            </div>
             </div>
         </div>
     );
