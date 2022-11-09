@@ -35,7 +35,7 @@ class FontMaker():
             img = np.pad(img[hs:he + 1,ws:we + 1], pad_width=2, mode='constant', constant_values=255)
             imgs.append(img)
             maxH = max(maxH, img.shape[0])
-        ratio = 256 / maxH
+        ratio = 128 / maxH
         
         if not os.path.isdir(os.path.join(self.nowDir, 'FONT', self.fontname, 'img')):
             os.mkdir(os.path.join(self.nowDir, 'FONT', self.fontname, 'img'))
@@ -188,4 +188,5 @@ class FontMaker():
         
     def makeTTF(self, fontSeq, fontName):
         # requests('post', 'https://나랏말싸피.com:28080/makefont', body={'fontName' : fo   ntName}, headers={})
-        requests.post('https://xn--910b35kqzb51p93w.com/nodeexpress/makefont/', json={'fontSeq' : fontSeq, 'fontName' : fontName})
+        # requests.post('https://xn--910b35kqzb51p93w.com/nodeexpress/makefont/', json={'fontSeq' : fontSeq, 'fontName' : fontName})
+        pass
