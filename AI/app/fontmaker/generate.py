@@ -21,7 +21,6 @@ class FontMaker():
     
     def __init__(self, fontname):
         self.fontname = fontname
-        return
         self.model, self.dataloader = self.finetuning()
         self.font_gen = self.generate(self.model, self.dataloader)
 
@@ -186,4 +185,4 @@ class FontMaker():
         
     def makeTTF(self, fontSeq, fontName):
         # requests('post', 'https://나랏말싸피.com:28080/makefont', body={'fontName' : fo   ntName}, headers={})
-        requests.post('http://나랏말싸피:28080/makefont/', json={'fontSeq' : fontSeq, 'fontName' : fontName})
+        requests.post('https://xn--910b35kqzb51p93w.com/nodeexpress/makefont/', json={'fontSeq' : fontSeq, 'fontName' : fontName})
