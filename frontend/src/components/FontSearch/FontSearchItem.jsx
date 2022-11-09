@@ -24,11 +24,7 @@ const FontSearchItem = ({ idx, fontData, fontEditorText }) => {
 
   return (
     <div className="fontData" id={`fontData_${idx}`}>
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href={fontData.fontDownloadAddress}
-      />
+      <link rel="stylesheet" type="text/css" href={fontData.webFontPath} />
       <div className="textarea_box">
         <textarea
           id={`fontData_textarea_${idx}`}
@@ -42,7 +38,7 @@ const FontSearchItem = ({ idx, fontData, fontEditorText }) => {
       <div
         className="info_box"
         onClick={() => {
-          navigate(`/detail/${fontData.id}`);
+          navigate(`/detail/${fontData.fontSeq}`);
         }}
       >
         <div className="font_info">
@@ -51,7 +47,7 @@ const FontSearchItem = ({ idx, fontData, fontEditorText }) => {
             <div className="font_favorite_download_info">
               <div className="favorite_info">
                 <span className="icon">{BsFillStarFill()}</span>
-                <span className="num"> {fontData.favoriteCount}</span>
+                <span className="num"> {fontData.favCount}</span>
               </div>
               <div className="download_info">
                 <span className="icon">{FiDownload()}</span>
@@ -62,7 +58,11 @@ const FontSearchItem = ({ idx, fontData, fontEditorText }) => {
           <div className="font_user_info">
             <span style={{ fontSize: "10px" }}>Designed By.</span>
             <span style={{ fontWeight: "bold", fontSize: "16px" }}>
-              {fontData.fontUser}
+              {fontData.Creator.location +
+                "_" +
+                fontData.Creator.name +
+                "_" +
+                fontData.Creator.nickname}
             </span>
           </div>
         </div>

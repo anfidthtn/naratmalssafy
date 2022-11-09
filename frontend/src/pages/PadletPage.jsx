@@ -2,9 +2,23 @@ import '../styles/Padlet/Board.scss'
 import map from '../assets/map.png'
 import pointer from '../assets/pointer.png'
 import { useNavigate } from 'react-router-dom'
-
+import swal from "sweetalert";
+import { useEffect } from 'react'
 
 const PadletPage = () => {
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          swal({
+            title: "필요",
+            text: "로그인이 필요합니다!",
+            icon: "warning",
+            button: "확인",
+          }).then(() => {
+            navigate("/login");
+          });
+        }
+      }, []);
 
     const navigate = useNavigate()
     function navitoSeoul () {

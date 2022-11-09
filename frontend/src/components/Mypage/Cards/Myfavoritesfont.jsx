@@ -5,22 +5,22 @@ import { BsFillStarFill } from "react-icons/bs";
 import { FiDownload } from "react-icons/fi";
 import { useEffect } from 'react';
 
-const MyFavoritesFont = ({idx, fontData }) => {
+const MyFavoritesFont = ({ fontData }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fontDataDiv = document.getElementById(`fontData_${idx}`);
+    const fontDataDiv = document.getElementById(`fontData_${fontData.fontSeq}`);
     const fontDataTextArea = document.getElementById(
-      `fontData_textarea_${idx}`
+      `fontData_textarea_${fontData.fontSeq}`
     );
     fontDataDiv.style.fontFamily = fontData.fontFamilyName;
     fontDataTextArea.style.fontFamily = fontData.fontFamilyName;
   }, []);
   return(
-      <div className="fontData" id={`fontData_${idx}`}>
-        <link rel="stylesheet" type="text/css" href={fontData.fontPath}/>
+      <div className="fontData" id={`fontData_${fontData.fontSeq}`}>
+        <link rel="stylesheet" type="text/css" href={fontData.webFontPath}/>
       <div className="textarea_box">
-        <textarea className="textarea" id={`fontData_textarea_${idx}`}>안녕하세요 반갑습니다</textarea>
+        <textarea className="textarea" id={`fontData_textarea_${fontData.fontSeq}`}>{fontData.description}</textarea>
       </div>
       <div className="info_box"         onClick={() => {
               navigate(`/detail/${fontData.fontSeq}`);

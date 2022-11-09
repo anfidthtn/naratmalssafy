@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
@@ -9,14 +9,29 @@ import TextField from '@mui/material/TextField';
 import { Button } from '@mui/material';
 import axios from 'axios'
 import '../styles/Sign/SignUp.scss'
+import { useNavigate } from 'react-router-dom'
 
 import mainLogo from "../assets/mainicon.png";
+import swal from "sweetalert";
 
 const SignUpPage = () => {
+    const navigate = useNavigate()
+    useEffect(() => {
+        const userEmail = location.search.split('=')[1]
+        if (!userEmail) {
+          swal({
+            text: "잘못된 접근 방식입니다!",
+            icon: "error",
+            button: "확인",
+          }).then(() => {
+            navigate("/");
+          });
+        }
+      }, []);
     const location = useLocation();
-    const userEmail = location.search.split('=')[1]
     const [region, setRegion] = useState('')
     const [name, setName] = useState('')
+    const userEmail = location.search.split('=')[1]
     const [nickname, setNickname] = useState('')
     const [signup, setSignup] = useState(false)
     const handleRegion = (event) => {
@@ -27,6 +42,7 @@ const SignUpPage = () => {
     }
     const handleNickname = (event) => {
         setNickname(event.target.value)
+        setSignup(false)
     }
 
 // 회원가입 #########################################################################################
@@ -47,8 +63,13 @@ const SignUpPage = () => {
         .then(res => {
             console.log(res)
             localStorage.setItem('token', res.data.loginResult)
-            alert("회원님 환영합니다!")
-            window.location.href = '/'
+            swal({
+                text: "환영합니다 회원님!!",
+                icon: "success",
+                button: "확인",
+              }).then(() => {
+                window.location.href='/'
+              });
         })
         .catch(err => {
             console.log(err)
@@ -70,11 +91,19 @@ const SignUpPage = () => {
             console.log(res.data)
             if (res.data === true){
                 setSignup(res.data)
-                alert("사용 가능한 닉네임입니다!")
+                swal({
+                    text: "사용 가능한 닉네임입니다.",
+                    icon: "info",
+                    button: "확인",
+                  })
             }
             else{
                 setSignup(res.data)
-                alert("중복된 닉네임이 있습니다! 다른 닉네임을 입력해주세요.")
+                swal({
+                    text: "중복된 닉네임이 존재합니다! 다른 닉네임을 선택해 주세요!",
+                    icon: "warning",
+                    button: "확인",
+                  })
             }
             console.log(signup)
         })
@@ -95,6 +124,10 @@ const SignUpPage = () => {
                         alt="mainlogo"
                         width={"80%"}
                     />
+            </div>
+            <div className='Signup__Top'>
+                <div className='Signup__Top__Title'>나랏말싸피 회원가입</div>
+                <div className='Signup__Top__Content'>회원가입을 하세요! 아이디 하나로 다양한 서비스를 경험해 보세요!</div>
             </div>
             <div className='Signup__Content'>
             <Box>

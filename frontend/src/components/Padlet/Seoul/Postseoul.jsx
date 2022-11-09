@@ -5,6 +5,7 @@ import PostSeoulItem from './PostSeoulItem.jsx'
 import {  Divider, Grid } from "@mui/material";
 
 import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 const PostSeoul = () => {
     const navigate= useNavigate()
@@ -13,6 +14,19 @@ const PostSeoul = () => {
     const [postinfo, setPostinfo] = useState([])
     const [ispostinfoempty, setIspostinfoempty] = useState(false)
     const [isfontinfoempty, setIsfontinfoempty] = useState(false)
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          swal({
+            title: "필요",
+            text: "로그인이 필요합니다!",
+            icon: "warning",
+            button: "확인",
+          }).then(() => {
+            navigate("/login");
+          });
+        }
+      }, []);
     useEffect(() => {
         axios({
             url: '/api/user',
@@ -42,7 +56,7 @@ const PostSeoul = () => {
             } 
         })
         .then(res => {
-            setPostinfo(res)
+            setPostinfo(res.data.padletList)
             console.log(res.data.padletList.length)
             if(res.data.padletList.length === 0){
                 setIspostinfoempty(true)
@@ -113,14 +127,12 @@ const PostSeoul = () => {
                         postinfo.length -1 === idx ? (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <PostSeoulItem
-                                idx={idx}
                                 postData={data}
                             />
                             </Grid>
                         ): (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <PostSeoulItem
-                                idx={idx}
                                 postData={data}
                             />
                             </Grid>

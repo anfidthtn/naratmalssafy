@@ -31,7 +31,7 @@ const Footer = () => {
             className="brand_info custom_m_t_30"
             style={{ fontWeight: "bold" }}
           >
-            © 2022 나랏말사피. All Rights Reserved.
+            © 2022 나랏말싸피. All Rights Reserved.
           </div>
         </div>
         <div className="precaution_info_box">

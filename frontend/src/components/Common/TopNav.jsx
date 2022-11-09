@@ -4,37 +4,42 @@ import navicon from "../../assets/navicon.png";
 import { useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import swal from "sweetalert";
 
 export default function TopNav() {
   const isMobile1024 = useMediaQuery("(max-width:1024px)");
   const navigate = useNavigate();
-  const [isloginshow, setIsloginshow] = useState(true)
-  const [istoken, setIstoken] = useState('')
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-    setIstoken(token)
-    if (istoken === null || istoken === '') {
-      setIsloginshow(true)
-    }
-    else{
-      setIsloginshow(false)
-    }
-  })
+  const [isloginshow, setIsloginshow] = useState(true);
+  const [istoken, setIstoken] = useState("");
 
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIstoken(token);
+    if (istoken === null || istoken === "") {
+      setIsloginshow(true);
+    } else {
+      setIsloginshow(false);
+    }
+  });
 
   const handlelogin = () => {
-    const token = localStorage.getItem('token')
-    setIstoken(token)
-    navigate('/login')
-  }
+    const token = localStorage.getItem("token");
+    setIstoken(token);
+    navigate("/login");
+  };
   const handlelogout = () => {
-    const token = localStorage.getItem('token')
-    setIstoken(token)
-    setIsloginshow(true)
-    localStorage.setItem('token', '')
-    alert('로그아웃 되었습니다!')
-    navigate('/')
-  }
+    const token = localStorage.getItem("token");
+    setIstoken(token);
+    setIsloginshow(true);
+    localStorage.removeItem("token");
+    swal({
+      text: "성공적으로 로그아웃되었습니다.",
+      icon: "success",
+      button: "확인",
+    }).then(() => {
+      navigate('/')
+    });
+  };
 
   return (
     <div className="TopNav">
@@ -50,16 +55,15 @@ export default function TopNav() {
         {!isMobile1024 ? (
           <div className="TopNav__LinkBox">
             <ul>
-              {
-                  !isloginshow &&
-                  <li
-                    onClick={() => {
-                      navigate("/make-font");
-                    }}
-                  >
-                    폰트제작
-                  </li>
-              }
+              {!isloginshow && (
+                <li
+                  onClick={() => {
+                    navigate("/make-font");
+                  }}
+                >
+                  폰트제작
+                </li>
+              )}
               <li
                 onClick={() => {
                   navigate("/search");
@@ -67,35 +71,27 @@ export default function TopNav() {
               >
                 폰트검색
               </li>
-              {
-                  !isloginshow &&
-                  <li
-                    onClick={() => {
-                      navigate("/padlet");
-                    }}
-                  >
-                    ForSSAFY
-                  </li>
-              }
-              {
-                  !isloginshow &&
-                  <li>서명만들기</li>
-              }
-              {
-                !isloginshow &&    
+              {!isloginshow && (
+                <li
+                  onClick={() => {
+                    navigate("/padlet");
+                  }}
+                >
+                  ForSSAFY
+                </li>
+              )}
+              {!isloginshow && <li>서명만들기</li>}
+              {!isloginshow && (
                 <li
                   onClick={() => {
                     navigate("/mypage");
-                  }}>마이페이지</li>
-                }    
-                {
-                  isloginshow &&
-                  <li onClick={handlelogin}>로그인</li>
-                }
-                {
-                  !isloginshow &&
-                  <li onClick={handlelogout}>로그아웃</li>
-                }
+                  }}
+                >
+                  마이페이지
+                </li>
+              )}
+              {isloginshow && <li onClick={handlelogin}>로그인</li>}
+              {!isloginshow && <li onClick={handlelogout}>로그아웃</li>}
             </ul>
           </div>
         ) : (

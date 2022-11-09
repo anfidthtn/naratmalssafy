@@ -217,7 +217,12 @@ const MainPage = () => {
               </ul>
             </div>
             <div className="font_make_info_button_box">
-              <button className="custom_button">나만의 폰트 제작하기</button>
+              <button
+                className="custom_button"
+                onClick={() => navigate("/make-font")}
+              >
+                나만의 폰트 제작하기
+              </button>
             </div>
           </div>
           <div className="font_make_info_carousel">
@@ -265,7 +270,12 @@ const MainPage = () => {
         </>
       )}
       <div className="font_extend_button_box">
-        <button className="font_extend_button">폰트 둘러보기</button>
+        <button
+          className="font_extend_button"
+          onClick={() => navigate("/search")}
+        >
+          폰트 둘러보기
+        </button>
       </div>
       <div className="custom_m_t_30">
         <Divider />

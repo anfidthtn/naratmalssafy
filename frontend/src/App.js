@@ -18,12 +18,14 @@ import FontSearchPage from "./pages/FontSearchPage.jsx";
 import FontDetailPage from "./pages/FontDetailPage.jsx";
 import FontMakePage from "./pages/FontMakePage.jsx";
 import TestPage from "./pages/TestPage.jsx";
+import ScrollToTop from "./components/Common/ScrollToTop.jsx";
 
 function App() {
   return (
     <div className="App">
       <BrowserRouter>
         <TopNav />
+        <ScrollToTop />
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/oauth/callback/kakao" element={<KakaoLogin />} />

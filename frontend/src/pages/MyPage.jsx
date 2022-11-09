@@ -15,16 +15,31 @@ import TextField from '@mui/material/TextField';
 
 
 import { useNavigate } from 'react-router-dom'
+import swal from "sweetalert";
 
-
-const token = localStorage.getItem('token')
 const MyPage = () => {
     const navigate = useNavigate()
     const [userinfo, setUserinfo] = useState('')
     const [ismyfontsempty, setIsmyfontsempty] = useState(false)
     const [isdownloadfontsempty, setIsdownloadfontsempty] = useState(false)
     const [islikefontsempty, setIslikefontsempty] = useState(false)
+    
     useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          swal({
+            title: "필요",
+            text: "로그인이 필요합니다!",
+            icon: "warning",
+            button: "확인",
+          }).then(() => {
+            navigate("/login");
+          });
+        }
+      }, []);
+    
+    useEffect(() => {
+        const token = localStorage.getItem('token')
         axios({
             url: '/api/user',
             method: 'GET',
@@ -101,8 +116,10 @@ const handleName = (event) => {
 }
 const handleNickname = (event) => {
     setNickname(event.target.value)
+    setChange(false)
 }
 const handleEdit = () => {
+    const token = localStorage.getItem('token')
     const userInfo={
         'userLocation' : region,
         'userName' : name,
@@ -120,7 +137,13 @@ const handleEdit = () => {
     })
     .then(res => {
         console.log(res)
-        window.location.href='/'
+        swal({
+            text: "정보가 수정되었습니다!",
+            icon: "success",
+            button: "확인",
+          }).then(() => {
+            navigate("/");
+          });
     })
     .catch(err => {
         console.log(err)
@@ -140,11 +163,19 @@ const handleNicknameCheck=()=>{
     .then(res => {
         if (res.data === true){
             setChange(res.data)
-            alert("사용 가능한 닉네임입니다!")
+            swal({
+                text: "사용 가능한 닉네임입니다.",
+                icon: "info",
+                button: "확인",
+              })
         }
         else{
             setChange(res.data)
-            alert("중복된 닉네임이 있습니다! 다른 닉네임을 입력해주세요.")
+            swal({
+                text: "중복된 닉네임이 존재합니다! 다른 닉네임을 선택해 주세요!",
+                icon: "warning",
+                button: "확인",
+              })
         }
     })
     .catch(err => {
@@ -173,6 +204,8 @@ const handleNicknameCheck=()=>{
                     <Divider />
             </div>
                 {iseditshow &&
+                <div>
+                <div className='Mypage__EditTitle'>회원정보수정</div>
                 <div className='Mypage__Edituserinfo'>
                 <Box>
                     <FormControl fullWidth className='Mypage__Edituserinfo__Location'>
@@ -205,6 +238,7 @@ const handleNicknameCheck=()=>{
                 </Box>
                 <div><div className="Nickname" onClick={handleNicknameCheck}>중복체크</div></div>
             </div>
+            </div>
                 }
                 { !ismyfontsempty &&
                 <div>
@@ -216,14 +250,12 @@ const handleNicknameCheck=()=>{
                         userinfo.myFonts.length - 1 === idx ? (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>
                         ) : (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>
@@ -244,14 +276,12 @@ const handleNicknameCheck=()=>{
                         userinfo.likeFonts.length - 1 === idx ? (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFavoritesFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>
                         ) : (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFavoritesFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>
@@ -272,14 +302,12 @@ const handleNicknameCheck=()=>{
                         userinfo.downloadFonts.length - 1 === idx ? (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyDownloadFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>
                         ) : (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyDownloadFont
-                                idx={idx}
                                 fontData={data}
                             />
                             </Grid>

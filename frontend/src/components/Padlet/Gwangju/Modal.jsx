@@ -5,6 +5,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import axios from 'axios'
+import swal from "sweetalert";
 
 const Modal = ({setModalOpen, userinfo}) => {
     const downloadFonts = userinfo.downloadFonts
@@ -16,7 +17,7 @@ const Modal = ({setModalOpen, userinfo}) => {
     const [title, setTitle] = useState('')
 
     const colorlist = [
-        'red', 'blue', 'black', 'green', 'skyblue', 'gray', 'pink', 'brown', 'white', 'orange', 'yellow', 'purple'
+        'red', 'blue', 'green', 'skyblue', 'gray', 'pink', 'brown', 'orange', 'yellow', 'purple'
     ]
 
     const closeModal = () => {
@@ -40,9 +41,19 @@ const Modal = ({setModalOpen, userinfo}) => {
         })
         .then(res => {
             console.log(res)
+            swal({
+                text: "패들릿이 성공적으로 생성되었습니다.",
+                icon: "success",
+                button: "확인",
+              })
         })
         .catch(err => {
             console.log(err)
+            swal({
+                text: "패들릿 정보를 확인하세요!",
+                icon: "error",
+                button: "확인",
+              })
         })
         setModalOpen(false)
     }
@@ -68,7 +79,13 @@ const Modal = ({setModalOpen, userinfo}) => {
     return(
         <div className='Modal'>
             <div className='Modal__Body'>
-            <div className='Modal__Top'>패들릿 생성</div>
+            <div className='Modal__Top'>
+                <div className='Modal__Top__Title'>패들릿 생성</div>
+                <div className='Modal__Top__Button'>
+                    <div className='Modal__Top__Button__Make' onClick={createPost}>생성</div>
+                    <div className='Modal__Top__Button__Close' onClick={closeModal}>닫기</div>
+                </div>
+            </div>
             <input type='text' placeholder='제목' onChange={handletitle} className="Modal__Title"></input>
             <textarea onChange={handlecontent} className="Modal__Content" placeholder="아름다운 추억을 나누어 보아요..."></textarea>
             <div className='Modal__Space'></div>
