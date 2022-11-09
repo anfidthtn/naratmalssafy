@@ -15,7 +15,7 @@ import TextField from '@mui/material/TextField';
 
 
 import { useNavigate } from 'react-router-dom'
-
+import swal from "sweetalert";
 
 const token = localStorage.getItem('token')
 const MyPage = () => {
@@ -24,6 +24,21 @@ const MyPage = () => {
     const [ismyfontsempty, setIsmyfontsempty] = useState(false)
     const [isdownloadfontsempty, setIsdownloadfontsempty] = useState(false)
     const [islikefontsempty, setIslikefontsempty] = useState(false)
+    
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          swal({
+            title: "필요",
+            text: "로그인이 필요합니다!",
+            icon: "warning",
+            button: "확인",
+          }).then(() => {
+            navigate("/login");
+          });
+        }
+      }, []);
+    
     useEffect(() => {
         axios({
             url: '/api/user',
@@ -101,6 +116,7 @@ const handleName = (event) => {
 }
 const handleNickname = (event) => {
     setNickname(event.target.value)
+    setChange(false)
 }
 const handleEdit = () => {
     const userInfo={
@@ -120,7 +136,13 @@ const handleEdit = () => {
     })
     .then(res => {
         console.log(res)
-        window.location.href='/'
+        swal({
+            text: "정보가 수정되었습니다!",
+            icon: "success",
+            button: "확인",
+          }).then(() => {
+            navigate("/");
+          });
     })
     .catch(err => {
         console.log(err)
@@ -140,11 +162,19 @@ const handleNicknameCheck=()=>{
     .then(res => {
         if (res.data === true){
             setChange(res.data)
-            alert("사용 가능한 닉네임입니다!")
+            swal({
+                text: "사용 가능한 닉네임입니다.",
+                icon: "info",
+                button: "확인",
+              })
         }
         else{
             setChange(res.data)
-            alert("중복된 닉네임이 있습니다! 다른 닉네임을 입력해주세요.")
+            swal({
+                text: "중복된 닉네임이 존재합니다! 다른 닉네임을 선택해 주세요!",
+                icon: "warning",
+                button: "확인",
+              })
         }
     })
     .catch(err => {
