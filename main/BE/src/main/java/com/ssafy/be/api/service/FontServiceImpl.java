@@ -43,6 +43,7 @@ public class FontServiceImpl implements FontService {
     FontDownloadHistoryRepository fontDownloadHistoryRepository;
     @Autowired
     UserRepository userRepository;
+
     @Value("${users.handwriteImg.savePath}")
     private String saveFolderPath;
     @Value("${fastapi.request.url}")
@@ -185,12 +186,15 @@ public class FontServiceImpl implements FontService {
     }
 
     @Override
-    public Long createFont(List<MultipartFile> uploadImg, Long fontSeq, String fontName) {
+    public Long createFont(List<MultipartFile> uploadImg, String fontDescription, String fontName,User user) {
         //사진 저장하기
         String path;
         File file;
         String contentType;
-
+        Long fontSeq = registFontInfo(fontName,fontDescription,user);
+        if(fontSeq==-1L){
+            return -1L;
+        }
         //String absolutePath = new File("").getAbsolutePath() + "\\";
         String absolutePath = System.getProperty("user.dir");;
         for(MultipartFile img : uploadImg){

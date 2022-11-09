@@ -54,7 +54,8 @@ public class UserServiceImpl implements UserService {
         if(user==null){
             return UserLoginRes.builder()
                     .isSignUp(true)
-                    .loginResult(email)
+                    .loginResult("Not Regist")
+                    .email("Not Regist")
                     .build();
         }
         else {
@@ -63,6 +64,7 @@ public class UserServiceImpl implements UserService {
             return UserLoginRes.builder()
                     .isSignUp(false)
                     .loginResult(accessToken)
+                    .email(user.getUserEmail())
                     .build();
         }
     }
@@ -87,7 +89,7 @@ public class UserServiceImpl implements UserService {
                 return UserLoginRes.builder().loginResult("fail_regist").isSignUp(false).build();
             }
             String token = JwtTokenUtil.getToken(registedUser.getUserEmail());
-            return UserLoginRes.builder().loginResult(token).isSignUp(false).build();
+            return UserLoginRes.builder().loginResult(token).isSignUp(false).email(registedUser.getUserEmail()).build();
     }
 
     @Override
