@@ -18,7 +18,7 @@ public class TotalResFont {
     Long favCount;
     String description;
     Long downloadCount;
-    LocalDateTime regDate;
+    String regDate;
     @JsonProperty(value="isLike")
     boolean isLike;
 }
