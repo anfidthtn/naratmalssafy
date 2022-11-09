@@ -10,8 +10,12 @@ import { useEffect } from "react";
 import { useRef } from "react";
 import ReactCrop from "react-image-crop";
 import "react-image-crop/dist/ReactCrop.css";
+import { useNavigate } from "react-router-dom";
+import swal from "sweetalert";
 
 const FontMakePage = () => {
+  const navigate = useNavigate();
+
   const [currentStep, setCurrentStep] = useState(1);
   const [uploadImage, setUploadImage] = useState(null);
   const [introduction, setIntroduction] = useState("");
@@ -34,6 +38,20 @@ const FontMakePage = () => {
     height: 118,
     unit: "px",
   });
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      swal({
+        title: "필요",
+        text: "로그인이 필요합니다!",
+        icon: "warning",
+        button: "확인",
+      }).then(() => {
+        navigate("/login");
+      });
+    }
+  }, []);
 
   const [croppedImageUrl, setCroppedImageUrl] = useState([]);
 
