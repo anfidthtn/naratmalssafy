@@ -197,7 +197,7 @@ public class FontServiceImpl implements FontService {
         String path;
         File file;
         String contentType;
-        String [] fileNames = {"다","람","쥐","헌","쳇","바","퀴","타","고","파"};
+        String [] fileNames = {"다","람","쥐","헌","쳇","바","퀴","에","타","고","파"};
         int idx = 0;
         Long fontSeq = registFontInfo(fontName,fontDescription,user);
         if(fontSeq==-1L){
