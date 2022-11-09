@@ -57,7 +57,7 @@ const PostGwangju = () => {
             } 
         })
         .then(res => {
-            setPostinfo(res)
+            setPostinfo(res.data.padletList)
             console.log(res.data.padletList.length)
             if(res.data.padletList.length === 0){
                 setIspostinfoempty(true)
@@ -128,14 +128,12 @@ const PostGwangju = () => {
                         postinfo.length -1 === idx ? (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <PostGwangjuItem
-                                idx={idx}
                                 postData={data}
                             />
                             </Grid>
                         ): (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <PostGwangjuItem
-                                idx={idx}
                                 postData={data}
                             />
                             </Grid>

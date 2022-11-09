@@ -32,6 +32,10 @@ const LoginPage = () => {
             width={"80%"}
           />
         </div>
+        <div className='Login__Top'>
+                <div className='Login__Top__Title'>나랏말싸피 로그인</div>
+                <div className='Login__Top__Content'>로그인을 하세요! 로그인을 통해 더 많고 다양한 서비스를 경험할 수 있어요!</div>
+            </div>
         <div className="Login__Button" onClick={Kakaologin}>
           <img className="Login__Button__Kakao" src={kakao} alt="카카오"></img>
           카카오 계정으로 계속하기

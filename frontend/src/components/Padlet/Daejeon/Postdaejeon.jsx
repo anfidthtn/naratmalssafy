@@ -58,8 +58,7 @@ const PostDaejeon = () => {
             } 
         })
         .then(res => {
-            setPostinfo(res)
-            console.log(res.data.padletList.length)
+            setPostinfo(res.data.padletList)
             if(res.data.padletList.length === 0){
                 setIspostinfoempty(true)
             }
@@ -129,14 +128,12 @@ const PostDaejeon = () => {
                         postinfo.length -1 === idx ? (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <PostDaejeonItem
-                                idx={idx}
                                 postData={data}
                             />
                             </Grid>
                         ): (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <PostDaejeonItem
-                                idx={idx}
                                 postData={data}
                             />
                             </Grid>
