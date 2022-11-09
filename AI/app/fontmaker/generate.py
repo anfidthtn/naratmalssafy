@@ -37,6 +37,9 @@ class FontMaker():
             maxH = max(maxH, img.shape[0])
         ratio = 256 / maxH
         
+        if not os.path.isdir(os.path.join(self.nowDir, 'FONT', self.fontname, 'img')):
+            os.mkdir(os.path.join(self.nowDir, 'FONT', self.fontname, 'img'))
+        
         for i in range(len(imgs)):
             img = imgs[i]
             newH = max(int(img.shape[0] * ratio), 1)
