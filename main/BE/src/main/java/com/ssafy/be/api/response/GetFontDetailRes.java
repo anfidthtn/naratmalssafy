@@ -19,7 +19,7 @@ public class GetFontDetailRes {
     String fileName;
     String description;
     Long downloadCount;
-    LocalDateTime regDate;
+    String regDate;
     boolean isLike;
     boolean isDownload;
 }

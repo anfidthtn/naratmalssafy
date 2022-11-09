@@ -22,5 +22,5 @@ public class ResFont
     Long favCount;
     String description;
     Long downloadCount;
-    LocalDateTime regDate;
+    String regDate;
 }

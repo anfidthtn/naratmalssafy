@@ -6,6 +6,7 @@ import com.ssafy.be.api.request.RegistDownloadHistoryReq;
 import com.ssafy.be.api.response.CheckFontNameRes;
 import com.ssafy.be.api.response.GetFontDetailRes;
 import com.ssafy.be.api.response.GetFontsRes;
+import com.ssafy.be.common.util.RequestCreateFont;
 import com.ssafy.be.db.entity.Font;
 import com.ssafy.be.db.entity.User;
 import com.ssafy.be.db.entity.UserFont;
@@ -21,13 +22,16 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -41,11 +45,12 @@ public class FontServiceImpl implements FontService {
     FontDownloadHistoryRepository fontDownloadHistoryRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    RequestCreateFont requestCreateFont;
 
     @Value("${users.handwriteImg.savePath}")
     private String saveFolderPath;
-    @Value("${fastapi.request.url}")
-    private String url;
+
     @Override
     public GetFontsRes getFonts(User user, Pageable pageable, String flag, String keyword) {
         Page<Font> fontAll;
@@ -57,7 +62,6 @@ public class FontServiceImpl implements FontService {
             fontAll = fontRepository.findByFontCreatorIn(pageable,creators);
         }
         else{
-
             fontAll =  fontRepository.findAll(pageable);
         }
 
@@ -85,7 +89,7 @@ public class FontServiceImpl implements FontService {
                         .favCount(temp.getFontFavCount())
                         .fontSeq(temp.getFontSeq())
                         .downloadCount(temp.getFontDownloadCount())
-                        .regDate(temp.getFontRegDate())
+                        .regDate(temp.getFontRegDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                         .isLike(forCheck.contains(temp.getFontSeq()))
                         .build();
                 resInput.add(totalResFont);
@@ -109,7 +113,7 @@ public class FontServiceImpl implements FontService {
                         .favCount(temp.getFontFavCount())
                         .fontSeq(temp.getFontSeq())
                         .downloadCount(temp.getFontDownloadCount())
-                        .regDate(temp.getFontRegDate())
+                        .regDate(temp.getFontRegDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                         .isLike(false)
                         .build();
                 resInput.add(totalResFont);
@@ -146,7 +150,7 @@ public class FontServiceImpl implements FontService {
                 .webFontPath(target.getFontPath())
                 .isDownload(isDownload)
                 .isLike(isLike)
-                .regDate(target.getFontRegDate())
+                .regDate(target.getFontRegDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 .build();
 
         //폰트 반환해
@@ -187,11 +191,14 @@ public class FontServiceImpl implements FontService {
     }
 
     @Override
+    @Transactional
     public Long createFont(List<MultipartFile> uploadImg, String fontDescription, String fontName,User user) {
         //사진 저장하기
         String path;
         File file;
         String contentType;
+        String [] fileNames = {"다","람","쥐","헌","쳇","바","퀴","타","고","파"};
+        int idx = 0;
         Long fontSeq = registFontInfo(fontName,fontDescription,user);
         if(fontSeq==-1L){
             return -1L;
@@ -214,8 +221,8 @@ public class FontServiceImpl implements FontService {
             if(!contentType.contains("image/png")){
                 return -4L;
             }
-            String fileName = img.getOriginalFilename();
-            file = new File(absolutePath+path+"/"+fileName);
+            file = new File(absolutePath+path+"/"+fileNames[idx]+".png");
+            idx++;
             try{
                 img.transferTo(file);
             } catch (IOException e){
@@ -224,14 +231,7 @@ public class FontServiceImpl implements FontService {
             }
         }
         //fast API fontSeq 전달하기
-        RestTemplate restTemplate = new RestTemplate();
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-        Map<String,Object> body = new HashMap<>();
-        body.put("fontSeq",fontSeq.longValue());
-        body.put("fontName",fontName);
-        HttpEntity<?> requestMessage = new HttpEntity<>(body,httpHeaders);
-        ResponseEntity<String> res = restTemplate.postForEntity(url,requestMessage,String.class);
+        requestCreateFont.requestToFastAPI(fontSeq,fontName);
         return 0L;
     }
 

@@ -43,9 +43,7 @@ font_download_file bigint
     Long fontDownloadCount;
     @Column(name = "font_reg_date")
     LocalDateTime fontRegDate;
-    @OneToOne
-    @JoinColumn(name = "font_preview",referencedColumnName = "file_seq")
-    File fontPreview;
+
     @OneToOne
     @JoinColumn(name = "font_download_file",referencedColumnName = "file_seq")
     File fontDownloadFile;

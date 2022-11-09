@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -119,7 +120,7 @@ public class UserServiceImpl implements UserService {
                     .favCount(temp.getFontFavCount())
                     .fontSeq(temp.getFontSeq())
                     .downloadCount(temp.getFontDownloadCount())
-                    .regDate(temp.getFontRegDate())
+                    .regDate(temp.getFontRegDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                     .build();
             resLike.add(resFont);
         }
@@ -142,7 +143,7 @@ public class UserServiceImpl implements UserService {
                     .favCount(temp.getFontFavCount())
                     .fontSeq(temp.getFontSeq())
                     .downloadCount(temp.getFontDownloadCount())
-                    .regDate(temp.getFontRegDate())
+                    .regDate(temp.getFontRegDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                     .build();
             resDownload.add(resFont);
         }
