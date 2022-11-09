@@ -37,6 +37,7 @@
 
   & .search_icon_box:hover {
     border: 1px solid gray;
+    box-sizing: border-box;
     border-radius: 10px;
   }
 
@@ -91,7 +92,7 @@
     align-items: center;
     flex-grow: 1;
     text-align: center;
-    border: 1px solid #dadde0;
+    border: 1px solid #919191;
     height: 40px;
     padding: 0 14px;
   }

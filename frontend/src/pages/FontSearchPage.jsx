@@ -129,7 +129,7 @@ const FontSearchPage = () => {
               id="standard-basic"
               label={
                 searchCondition === "nickName"
-                  ? "닉네임 or 지역 or 이름을 입력해주세요"
+                  ? "원하는 닉네임, 지역, 이름 중 하나를 입력해주세요"
                   : "폰트 이름을 입력해주세요"
               }
               variant="standard"

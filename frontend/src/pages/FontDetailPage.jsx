@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { dummyDataSet } from "../store/dummy";
 import "../styles/FontDetailPage/FontDetailPage.scss";
 import { BiStar } from "react-icons/bi";
@@ -14,6 +14,7 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Grid, Slider } from "@mui/material";
+import swal from "sweetalert";
 
 import bgImage_1 from "../assets/textarea_img/background_1.jpg";
 import bgImage_2 from "../assets/textarea_img/background_2.jpg";
@@ -23,9 +24,11 @@ import bgImage_4 from "../assets/textarea_img/background_4.jpg";
 import kakaoImg from "../assets/sns_icon/kakao_img.png";
 import linkImg from "../assets/sns_icon/link.png";
 
-import { useScript } from "../hooks"
+import { useScript } from "../hooks";
 
 const FontDetailPage = () => {
+  const navigate = useNavigate();
+
   const [fontData, setfontData] = useState({});
   const [fontTrialConfig, setFontTrialConfig] = useState({
     color: "#000000",
@@ -41,20 +44,23 @@ const FontDetailPage = () => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const currentUrl = window.location.href;
+
+  const currentUserEmail = localStorage.getItem("email") || null;
+
   let clipboardModal = null;
 
   // 파라미터로 넘어오는 id 값 받기
   const { id } = useParams();
-
   useEffect(() => {
     // axios로 폰트 데이터 요청
+
     setfontData(dummyDataSet[id - 1]);
-    setOneLineText(dummyDataSet[id - 1].fontOnelineText);
-    setIsFavorite(dummyDataSet[id - 1].isFavorite);
+    setOneLineText(dummyDataSet[id - 1].description);
+    setIsFavorite(dummyDataSet[id - 1].isLike);
 
     const fontDetailPage = document.getElementById("FontDetailPage");
     const textarea = document.getElementById(
-      `FontDetailPage_textarea_${fontData.id}`
+      `FontDetailPage_textarea_${fontData.fontSeq}`
     );
     const dummyData = dummyDataSet[id - 1];
 
@@ -64,7 +70,7 @@ const FontDetailPage = () => {
 
   useEffect(() => {
     const textarea = document.getElementById(
-      `FontDetailPage_textarea_${fontData.id}`
+      `FontDetailPage_textarea_${fontData.fontSeq}`
     );
 
     textarea.style.fontSize = fontTrialConfig.size + "px";
@@ -151,7 +157,7 @@ const FontDetailPage = () => {
 
   function imageClick(e) {
     const textarea = document.getElementById(
-      `FontDetailPage_textarea_${fontData.id}`
+      `FontDetailPage_textarea_${fontData.fontSeq}`
     );
 
     let bgImage = null;
@@ -175,88 +181,125 @@ const FontDetailPage = () => {
   }
 
   function fontDownloadClick() {
+    if (!localStorage.getItem("token")) {
+      swal({
+        title: "필요",
+        text: "로그인이 필요합니다!",
+        icon: "warning",
+        button: "확인",
+      }).then(() => {
+        navigate("/login");
+      });
+      return;
+    }
+
     // axios로 다운로드 받은 폰트번호 서버로 보내기
 
     // 만약 다운로드가 성공한다면
     setfontData({ ...fontData, downloadCount: ++fontData.downloadCount });
 
     //다운로드 페이지 이동
-    window.location.href =
-      "https://ownglyph-out-bucket.s3.ap-northeast-2.amazonaws.com/70470e04-293f-41da-8fb2-a90934921f2b/%EC%98%A8%EA%B8%80%EC%9E%8E%20%EC%9C%A8%ED%95%98%EC%B2%B4.ttf";
+    window.location.href = fontData.fontDownloadPath;
   }
 
   function clickModifyTextButton() {
     // 변경사항 서버로 axios 보내기
 
     // 정상적인 응답이 오면
-    fontData.fontOnelineText = oneLineText;
+    fontData.description = oneLineText;
     setModifyText(false);
   }
 
   function clickFavoriteButton() {
+    if (!localStorage.getItem("token")) {
+      swal({
+        title: "필요",
+        text: "로그인이 필요합니다!",
+        icon: "warning",
+        button: "확인",
+      }).then(() => {
+        navigate("/login");
+      });
+      return;
+    }
+
     // Favorite 버튼 클릭 API 요청
 
     // 만약 성공했다면
     setIsFavorite(!isFavorite);
 
     if (isFavorite) {
-      fontData.favoriteCount -= 1;
+      fontData.favCount -= 1;
     } else {
-      fontData.favoriteCount += 1;
+      fontData.favCount += 1;
     }
   }
   // 카카오 공유 버튼######################################################################################################
-  const status = useScript("https://developers.kakao.com/sdk/js/kakao.js")
+  const status = useScript("https://developers.kakao.com/sdk/js/kakao.js");
   useEffect(() => {
     if (status === "ready" && window.Kakao) {
-			// 중복 initialization 방지
-			if (!window.Kakao.isInitialized()) {
-				// 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
-				window.Kakao.init("143701b766fa03b8b23aa8b170cdf655");
-			}
-		}
-  }, [status])
+      // 중복 initialization 방지
+      if (!window.Kakao.isInitialized()) {
+        // 두번째 step 에서 가져온 javascript key 를 이용하여 initialize
+        window.Kakao.init("143701b766fa03b8b23aa8b170cdf655");
+      }
+    }
+  }, [status]);
 
   const handleKakaoButton = () => {
     window.Kakao.Link.sendDefault({
-        objectType: 'feed',
-        content: {
-            title: `${fontData.fontUser}님의 폰트를 구경해보세요!`,
-            // 폰트 만든사람 이름 넣어서 보내면 됨.
-            description: '#폰트 #나만의 #싸피 #SSAFY #추억 #선물',
-            imageUrl:
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTemP_0duhHjJ0tjzZtz_AKErxLKTuaKteuw&usqp=CAU',
-            link: {
-              mobileWebUrl: window.location.href,
-              webUrl: window.location.href,
-            },
+      objectType: "feed",
+      content: {
+        title: `${
+          fontData.Creator.location +
+          "_" +
+          fontData.Creator.name +
+          "_" +
+          fontData.Creator.nickname
+        }님의 폰트를 구경해보세요!`,
+        // 폰트 만든사람 이름 넣어서 보내면 됨.
+        description: "#폰트 #나만의 #싸피 #SSAFY #추억 #선물",
+        imageUrl:
+          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTemP_0duhHjJ0tjzZtz_AKErxLKTuaKteuw&usqp=CAU",
+        link: {
+          mobileWebUrl: window.location.href,
+          webUrl: window.location.href,
+        },
+      },
+      buttons: [
+        {
+          title: "자세히보기",
+          link: {
+            mobileWebUrl: window.location.href,
+            webUrl: window.location.href,
           },
-          buttons: [
-            {
-              title: '자세히보기',
-              link: {
-                mobileWebUrl: window.location.href,
-                webUrl: window.location.href,
-              },
-            },
-          ],
-    })
-}
+        },
+      ],
+    });
+  };
   // 카카오 공유 버튼######################################################################################################
 
   return (
     <div className="FontDetailPage" id="FontDetailPage">
-      <link
-        rel="stylesheet"
-        type="text/css"
-        href={fontData.fontDownloadAddress}
-      />
+      <link rel="stylesheet" type="text/css" href={fontData.webFontPath} />
       <div className="first_row_box">
         <div className="font_info_box">
           <div className="font_name">{fontData.fontName}</div>
           <div className="font_user">
             Designed By.{" "}
-            <span style={{ fontSize: "1.5rem" }}>{fontData.fontUser}</span>{" "}
+            <span style={{ fontSize: "1.5rem" }}>
+              {fontData.Creator?.location +
+                "_" +
+                fontData.Creator?.name +
+                "_" +
+                fontData.Creator?.nickname}
+            </span>{" "}
+          </div>
+          <div className="font_make_time">
+            제작일시:{" "}
+            <span style={{ fontSize: "1.4rem" }}>
+              {fontData.regDate?.split("T")[0]}
+            </span>
           </div>
         </div>
         <div className="font_popular_info_box">
@@ -279,7 +322,7 @@ const FontDetailPage = () => {
             <div className="font_favorite_count">
               <span className="font_size_20">즐겨찾기 수:</span>{" "}
               <span className="font_size_30 font_weight_bold">
-                {fontData.favoriteCount}
+                {fontData.favCount}
               </span>{" "}
             </div>
             <div className="font_download_count">
@@ -294,36 +337,38 @@ const FontDetailPage = () => {
       <div className="second_row_box">
         <div className="font_oneline_header">
           <span>폰트 한줄 설명</span>
-          {modifyText ? (
-            <div>
+          {currentUserEmail === fontData.Creator?.email &&
+            (modifyText ? (
+              <div>
+                <span
+                  className="font_oneline_fix"
+                  style={{ marginRight: "20px" }}
+                  onClick={() => {
+                    setOneLineText(fontData.description);
+                    setModifyText(false);
+                  }}
+                >
+                  취소하기
+                </span>
+                <span
+                  className="font_oneline_fix"
+                  onClick={clickModifyTextButton}
+                >
+                  수정완료
+                </span>
+              </div>
+            ) : (
               <span
                 className="font_oneline_fix"
-                style={{ marginRight: "20px" }}
                 onClick={() => {
-                  setOneLineText(fontData.fontOnelineText);
-                  setModifyText(false);
+                  setModifyText(!modifyText);
                 }}
               >
-                취소하기
+                수정하기
               </span>
-              <span
-                className="font_oneline_fix"
-                onClick={clickModifyTextButton}
-              >
-                수정완료
-              </span>
-            </div>
-          ) : (
-            <span
-              className="font_oneline_fix"
-              onClick={() => {
-                setModifyText(!modifyText);
-              }}
-            >
-              수정하기
-            </span>
-          )}
+            ))}
         </div>
+
         {modifyText ? (
           <textarea
             className="modify_oneline_textarea"
@@ -340,7 +385,7 @@ const FontDetailPage = () => {
       <div className="third_row_box">
         <div className="text_area_box">
           <textarea
-            id={`FontDetailPage_textarea_${fontData.id}`}
+            id={`FontDetailPage_textarea_${fontData.fontSeq}`}
             placeholder="원하는 글자를 작성해보세요"
           ></textarea>
         </div>
@@ -456,11 +501,8 @@ const FontDetailPage = () => {
           <div className="sns_box">
             <div className="sns_header">폰트 공유</div>
             {/* 카카오톡 버튼 공유 클릭 */}
-            <div
-              className="sns_icon_box"
-              onClick={handleKakaoButton}
-            >
-              <div className="sns_img_box">
+            <div className="sns_icon_box">
+              <div className="sns_img_box" onClick={handleKakaoButton}>
                 <img
                   src={kakaoImg}
                   alt="카카오"
@@ -502,7 +544,7 @@ const FontDetailPage = () => {
             <div
               className="font_make_button"
               onClick={() => {
-                console.log("제작하기 페이지로 이동");
+                navigate("/make-font");
               }}
             >
               내 폰트 제작하기

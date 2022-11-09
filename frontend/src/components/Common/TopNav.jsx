@@ -19,7 +19,7 @@ export default function TopNav() {
     } else {
       setIsloginshow(false);
     }
-  }, [istoken]);
+  });
 
   const handlelogin = () => {
     const token = localStorage.getItem("token");
