@@ -188,5 +188,4 @@ class FontMaker():
         
     def makeTTF(self, fontSeq, fontName):
         # requests('post', 'https://나랏말싸피.com:28080/makefont', body={'fontName' : fo   ntName}, headers={})
-        # requests.post('https://xn--910b35kqzb51p93w.com/nodeexpress/makefont/', json={'fontSeq' : fontSeq, 'fontName' : fontName})
-        pass
+        requests.post('https://xn--910b35kqzb51p93w.com/nodeexpress/makefont/', json={'fontSeq' : fontSeq, 'fontName' : fontName})
