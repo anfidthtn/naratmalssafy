@@ -31,7 +31,7 @@ pwd = os.path.dirname(os.path.realpath(__file__))
 s3 = s3_connection()
 
 
-@app.post("/fastapi/makefont/")
+@app.post("/fastapi/makefont")
 def read_root(data : Item):
     maker = FontMaker(data.fontName)
     savedURL = 'https://naratmalssafy.s3.ap-northeast-2.amazonaws.com/' + maker.fontname + '.ttf'
