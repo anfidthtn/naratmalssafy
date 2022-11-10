@@ -39,7 +39,7 @@ s3 = s3_connection()
 def read_root(data : Item):
     nameHash = hashlib.sha1(data.fontName.encode('utf-8')).hexdigest()
     maker = FontMaker(nameHash)
-    maker.makeTTF(data.fontSeq, maker.fontname)
+    maker.makeTTF(data.fontSeq, nameHash, data.fontName)
     ttfURL = 'https://naratmalssafy.s3.ap-northeast-2.amazonaws.com/' + maker.fontname + '.ttf'
     woffURL = 'https://naratmalssafy.s3.ap-northeast-2.amazonaws.com/' + maker.fontname + '.woff'
     try:
@@ -50,7 +50,7 @@ def read_root(data : Item):
 
     session = database.Session(database.engine)
     
-    db_file = models_.TFile(file_original_name=maker.fontname + '.ttf', file_saved_name=nameHash, file_saved_path=ttfURL, woff_saved_path=woffURL)
+    db_file = models_.TFile(file_original_name=data.fontName + '.ttf', file_saved_name=nameHash, file_saved_path=ttfURL, woff_saved_path=woffURL)
     
     session.add(db_file)
     db_font = session.query(models_.TFont).filter(models_.TFont.font_seq == data.fontSeq).first()
