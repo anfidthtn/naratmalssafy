@@ -233,15 +233,15 @@ public class FontServiceImpl implements FontService {
     }
 
     @Override
-    public Long updateFontInfo(Long fontSeq,String fontName, String fontDescription, User user) {
-        Font font = fontRepository.findById(fontSeq).get();
+    public Long updateFontInfo(String fontName, String fontDescription, User user) {
+        Font font = fontRepository.findByFontName(fontName);
         if(font.getFontDownloadFile()==null){
             return-2L;
         }
         if(!user.getUserEmail().equals(font.getFontCreator().getUserEmail())){
             return -1L;
         }
-        font.updateInfo(fontName,fontDescription);
+        font.updateInfo(fontDescription);
         Font updatedFont = fontRepository.save(font);
         return updatedFont.getFontSeq();
     }
