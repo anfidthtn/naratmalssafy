@@ -66,7 +66,7 @@ public class FontServiceImpl implements FontService {
                 forCheck.add(u.getFont().getFontSeq());
             }
             for(Font temp : fontAll.getContent()){
-                if(temp.getFontPath()==null) continue;
+                if(temp.getFontDownloadFile()==null) continue;
                 TotalResFont totalResFont = TotalResFont.builder()
                         .creator(Creator.builder()
                                 .email(temp.getFontCreator().getUserEmail())
@@ -77,7 +77,7 @@ public class FontServiceImpl implements FontService {
                         .description(temp.getFontDescription())
                         .fontDownloadPath(temp.getFontDownloadFile().getFileSavedPath())
                         .fontName(temp.getFontName())
-                        .webFontPath(temp.getFontPath())
+                        .webFontPath(temp.getFontDownloadFile().getWoffSavedPath())
                         .fontFamilyName(temp.getFontName())
                         .favCount(temp.getFontFavCount())
                         .fontSeq(temp.getFontSeq())
@@ -90,7 +90,7 @@ public class FontServiceImpl implements FontService {
         }
         else{
             for(Font temp : fontAll.getContent()){
-                if(temp.getFontPath()==null) continue;
+                if(temp.getFontDownloadFile()==null) continue;
                 TotalResFont totalResFont = TotalResFont.builder()
                         .creator(Creator.builder()
                                 .email(temp.getFontCreator().getUserEmail())
@@ -102,7 +102,7 @@ public class FontServiceImpl implements FontService {
                         .fontDownloadPath(temp.getFontDownloadFile().getFileSavedPath())
                         .fontName(temp.getFontName())
                         .fontFamilyName(temp.getFontName())
-                        .webFontPath(temp.getFontPath())
+                        .webFontPath(temp.getFontDownloadFile().getWoffSavedPath())
                         .favCount(temp.getFontFavCount())
                         .fontSeq(temp.getFontSeq())
                         .downloadCount(temp.getFontDownloadCount())
@@ -140,7 +140,7 @@ public class FontServiceImpl implements FontService {
                 .fontName(target.getFontName())
                 .fontFamilyName(target.getFontName())
                 .fontDownloadPath(target.getFontDownloadFile().getFileSavedPath())
-                .webFontPath(target.getFontPath())
+                .webFontPath(target.getFontDownloadFile().getWoffSavedPath())
                 .isDownload(isDownload)
                 .isLike(isLike)
                 .regDate(target.getFontRegDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
