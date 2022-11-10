@@ -21,7 +21,10 @@ class FontMaker():
     
     def __init__(self, fontname):
         self.fontname = fontname
+        print(fontname + "훈련 시작")
         self.model, self.dataloader = self.finetuning()
+        print(fontname + "훈련 완료")
+        print(fontname + "png 제작 시작")
         self.font_gen = self.generate(self.model, self.dataloader)
 
         imgs = []
@@ -46,6 +49,7 @@ class FontMaker():
             newW = int(newH * img.shape[1] / max(1, img.shape[0])) + 1
             img = Image.fromarray(cv2.resize(img.astype(np.uint8), (newW, newH), interpolation=cv2.INTER_CUBIC))
             img.save(os.path.join(self.nowDir, 'FONT', self.fontname, 'img', f'{hex(ord(common_han[i]))[2:].upper()}.png'), 'PNG')
+        print(fontname + "png 제작 완료")
         
 
     def finetuning(self, img_dir="targetimg", 
@@ -54,7 +58,7 @@ class FontMaker():
                 category_layer="download/category_emb.npz",
                 gen_weight="download/gen_weight.pt",
                 source_font_npz="fonts/source_font.npz",
-                epochs=1,
+                epochs=30,
                 learning_rate=5e-5,
                 display_sample=False):
         self.nowDir = os.path.dirname(__file__)
@@ -187,5 +191,7 @@ class FontMaker():
         plt.show()
         
     def makeTTF(self, fontSeq, fontName):
-        # requests('post', 'https://나랏말싸피.com:28080/makefont', body={'fontName' : fo   ntName}, headers={})
+        print(self.fontname + "ttf 제작 시작")
         requests.post('https://xn--910b35kqzb51p93w.com/nodeexpress/makefont/', json={'fontSeq' : fontSeq, 'fontName' : fontName})
+        print(self.fontname + "ttf 제작 완료")
+        # requests.post('http://localhost:28080/nodeexpress/makefont/', json={'fontSeq' : fontSeq, 'fontName' : fontName})

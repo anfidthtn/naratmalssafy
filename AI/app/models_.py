@@ -14,6 +14,7 @@ class TFile(Base):
     file_original_name = Column(String(45), nullable=False, unique=True)
     file_saved_name = Column(String(45), nullable=False, unique=True)
     file_saved_path = Column(String(100), nullable=False)
+    woff_saved_path = Column(String(100), nullable=False)
 
 
 class TUser(Base):
@@ -31,7 +32,6 @@ class TFont(Base):
 
     font_seq = Column(BigInteger, primary_key=True)
     font_name = Column(String(45), nullable=False, unique=True)
-    font_path = Column(String(100))
     font_description = Column(String(45))
     font_fav_count = Column(BigInteger, nullable=False, server_default=text("'0'"))
     font_download_file = Column(ForeignKey('t_file.file_seq'), index=True)
