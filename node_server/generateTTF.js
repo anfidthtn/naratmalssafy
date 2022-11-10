@@ -1,4 +1,4 @@
-var genFont = function generate(fontNameHash, fontName)
+var genFont = function generate(fontNameHash, fontName, res)
 {
     var express = require('express');
     var router = express.Router();
@@ -124,14 +124,20 @@ var genFont = function generate(fontNameHash, fontName)
 
             fs.writeFileSync(`./${dir_name}/svg/` + fileName[j] + '.svg', svgstring);
     }
-    
-    fontStream.pipe(fs.createWriteStream( `./${dir_name}/svg_fonts/font_ss.svg`));
-    // .on('finish',function() {
-    //     console.log('순서1');
-    // })
-    // .on('error',function(err) {
-    //     console.log(err);
-    // });
+    var fssss = fs.createWriteStream( `./${dir_name}/svg_fonts/font_ss.svg`)
+    fontStream.pipe(fssss)
+    fssss.on('finish',function() {
+        console.log('fontsvg to ttf 시작');
+        var ttf = svg2ttf(fs.readFileSync( `./${dir_name}/svg_fonts/font_ss.svg`, 'utf8'), {});
+        fs.writeFileSync(`./${dir_name}/ttf_fonts/${fontNameHash}.ttf`, new Buffer.from(ttf.buffer));
+        console.log('ttf to woff 시작');
+        shelljs.exec(`ttf2woff ./${dir_name}/ttf_fonts/${fontNameHash}.ttf ./${dir_name}/ttf_fonts/${fontNameHash}.woff`);
+        console.log('ttf to woff 종료');
+        res.end();
+    })
+    fssss.on('error',function(err) {
+        console.log(err);
+    });
     console.log('svg to fontsvg 시작');
     for (var i=0; i < sources.length; i++) {
         
@@ -144,12 +150,6 @@ var genFont = function generate(fontNameHash, fontName)
         fontStream.write(glyph1);
     }
     fontStream.end();
-    console.log('fontsvg to ttf 시작');
-    var ttf = svg2ttf(fs.readFileSync( `./${dir_name}/svg_fonts/font_ss.svg`, 'utf8'), {});
-    fs.writeFileSync(`./${dir_name}/ttf_fonts/${fontNameHash}.ttf`, new Buffer.from(ttf.buffer));
-    console.log('ttf to woff 시작');
-    shelljs.exec(`ttf2woff ./${dir_name}/ttf_fonts/${fontNameHash}.ttf ./${dir_name}/ttf_fonts/${fontNameHash}.woff`)
-    console.log('ttf to woff 종료');
 }
 
 // genFont('fontname');
