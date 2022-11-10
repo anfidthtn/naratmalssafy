@@ -199,7 +199,10 @@ public class FontServiceImpl implements FontService {
         //String absolutePath = new File("").getAbsolutePath() + "\\";
         String absolutePath = System.getProperty("user.dir");;
         for(MultipartFile img : uploadImg){
-            if(idx==7) continue;
+            if(idx==7) {
+                idx++;
+                continue;
+            }
             if(img.isEmpty()){
                 return -2L;
             }
