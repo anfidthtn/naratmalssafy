@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +56,7 @@ public class UserServiceImpl implements UserService {
             return UserLoginRes.builder()
                     .isSignUp(true)
                     .loginResult(email)
+                    .email("NotRegist")
                     .build();
         }
         else {
@@ -63,6 +65,7 @@ public class UserServiceImpl implements UserService {
             return UserLoginRes.builder()
                     .isSignUp(false)
                     .loginResult(accessToken)
+                    .email(user.getUserEmail())
                     .build();
         }
     }
@@ -73,6 +76,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserLoginRes registUser(String email, String location, String name, String nickname) {
+        if(!checkNickname(nickname)){
+            return UserLoginRes.builder().loginResult("already_using_nickname").isSignUp(false).build();
+        }
         User user = User.builder()
                 .userEmail(email)
                 .userLocation(location)
@@ -87,7 +93,7 @@ public class UserServiceImpl implements UserService {
                 return UserLoginRes.builder().loginResult("fail_regist").isSignUp(false).build();
             }
             String token = JwtTokenUtil.getToken(registedUser.getUserEmail());
-            return UserLoginRes.builder().loginResult(token).isSignUp(false).build();
+            return UserLoginRes.builder().loginResult(token).isSignUp(false).email(registedUser.getUserEmail()).build();
     }
 
     @Override
@@ -107,13 +113,14 @@ public class UserServiceImpl implements UserService {
                             .nickname(temp.getFontCreator().getUserNickname())
                             .build())
                     .description(temp.getFontDescription())
-                   // .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
-                    .FontName(temp.getFontName())
-                    .fontPath(temp.getFontPath())
+                    .fontDownloadPath(temp.getFontDownloadFile().getFileSavedPath())
+                    .fontName(temp.getFontName())
+                    .fontFamilyName(temp.getFontName())
+                    .webFontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
                     .fontSeq(temp.getFontSeq())
                     .downloadCount(temp.getFontDownloadCount())
-                    .regDate(temp.getFontRegDate())
+                    .regDate(temp.getFontRegDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                     .build();
             resLike.add(resFont);
         }
@@ -129,13 +136,14 @@ public class UserServiceImpl implements UserService {
                             .nickname(temp.getFontCreator().getUserNickname())
                             .build())
                     .description(temp.getFontDescription())
-                   // .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
-                    .FontName(temp.getFontName())
-                    .fontPath(temp.getFontPath())
+                    .fontDownloadPath(temp.getFontDownloadFile().getFileSavedPath())
+                    .fontName(temp.getFontName())
+                    .fontFamilyName(temp.getFontName())
+                    .webFontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
                     .fontSeq(temp.getFontSeq())
                     .downloadCount(temp.getFontDownloadCount())
-                    .regDate(temp.getFontRegDate())
+                    .regDate(temp.getFontRegDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                     .build();
             resDownload.add(resFont);
         }
@@ -150,9 +158,10 @@ public class UserServiceImpl implements UserService {
                             .nickname(temp.getFontCreator().getUserNickname())
                             .build())
                     .description(temp.getFontDescription())
-                   // .downloadFile(temp.getFontDownloadFile().getFileSavedPath())
-                    .FontName(temp.getFontName())
-                    .fontPath(temp.getFontPath())
+                    .fontDownloadPath(temp.getFontDownloadFile().getFileSavedPath())
+                    .fontName(temp.getFontName())
+                    .fontFamilyName(temp.getFontName())
+                    .webFontPath(temp.getFontPath())
                     .favCount(temp.getFontFavCount())
                     .fontSeq(temp.getFontSeq())
                     .build();
@@ -223,7 +232,7 @@ public class UserServiceImpl implements UserService {
         for(FontDownloadHistory t : downloadFonts){
             String path = t.getDownloadFont().getFontPath();
             String name = t.getDownloadFont().getFontName();
-            res.add(GetDownloadFontsRes.builder().fontName(name).fontPath(path).build());
+            res.add(GetDownloadFontsRes.builder().fontName(name).fontFamilyName(name).webFontPath(path).build());
         }
         return res;
     }

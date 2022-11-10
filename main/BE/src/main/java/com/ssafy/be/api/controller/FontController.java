@@ -2,11 +2,14 @@ package com.ssafy.be.api.controller;
 
 import com.ssafy.be.api.request.RegistDownloadHistoryReq;
 import com.ssafy.be.api.request.RegistFontReq;
+import com.ssafy.be.api.request.UpdateFontInfoReq;
 import com.ssafy.be.api.response.*;
 import com.ssafy.be.api.service.FontService;
 import com.ssafy.be.api.service.UserService;
 import com.ssafy.be.common.auth.UserDetail;
 import com.ssafy.be.db.entity.User;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,13 +70,14 @@ public class FontController {
         if(req.getUploadImg()==null){
             return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(false).msg("이미지 업로드 오류! 비어있는 파일입니다.").build());
         }
-        Long fontSeq = fontService.registFontInfo(req.getFontName(),req.getDescription(),user);
+
         logger.info("registFont requestUser: ["+user.getUserEmail()+"] "+" fontName: ["+req.getFontName()+"]");
-        if(fontSeq == -1){
+
+        Long res = fontService.createFont(req.getUploadImg(), req.getDescription(), req.getFontName(),user);
+        if(res == -1){
             return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(false).msg("이미 사용중인 폰트 이름입니다.").build());
         }
-        Long res = fontService.createFont(req.getUploadImg(),fontSeq,req.getFontName());
-        if(res==-2){
+        else if(res==-2){
             return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(false).msg("이미지 업로드 오류! 비어있는 파일입니다.").build());
         }
         else if(res==-3){
@@ -86,6 +90,26 @@ public class FontController {
             return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(false).msg("이미지 업로드 오류! 파일 저장중 에러가 발생했습니다.").build());
         }
         return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(true).msg("폰트제작 요청이 완료되었습니다.").build());
+    }
+
+    @PutMapping()
+    @ApiResponses({
+            @ApiResponse(code = 901, message = "return null, 폰트 등록자와 수정요청 사용자가 다를때 발생"),
+            @ApiResponse(code = 902, message = "return null, 폰트 파일이 생성되지 않고 정보만 등록되어있을 때 발생")
+    })
+
+    public ResponseEntity<GetFontDetailRes> updateFontInfo(@ApiIgnore Authentication authentication, UpdateFontInfoReq req){
+        UserDetail userDetail = (UserDetail) authentication.getDetails();
+        User user= userDetail.getUser();
+        Long resUpdate = fontService.updateFontInfo(req.getFontSeq(),req.getFontName(),req.getFontDescription(),user);
+        if (resUpdate == -1L){
+            return ResponseEntity.status(901).body(null);
+        }
+        else if (resUpdate==-2L){
+            return ResponseEntity.status(902).body(null);
+        }
+        GetFontDetailRes res = fontService.getFont(user,resUpdate);
+        return ResponseEntity.status(200).body(res);
     }
 
     @PostMapping("/test")

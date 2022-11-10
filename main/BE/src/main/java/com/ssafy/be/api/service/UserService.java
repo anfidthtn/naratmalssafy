@@ -13,6 +13,6 @@ public interface UserService {
     UserLoginRes registUser(String email, String location, String name, String nickname);
     GetUserInfoRes getUserInfo(User user);
     UpdateUserInfoRes updateUserInfo(Long seq,String email, String location, String name, String nickname);
-    IsSuccessRes toggleLikeFont(User user, Long targetId);
+    public IsSuccessRes toggleLikeFont(User user, Long targetId);
     List<GetDownloadFontsRes> getDownloadFonts(User user);
 }

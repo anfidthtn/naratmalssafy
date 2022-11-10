@@ -43,9 +43,7 @@ font_download_file bigint
     Long fontDownloadCount;
     @Column(name = "font_reg_date")
     LocalDateTime fontRegDate;
-    @OneToOne
-    @JoinColumn(name = "font_preview",referencedColumnName = "file_seq")
-    File fontPreview;
+
     @OneToOne
     @JoinColumn(name = "font_download_file",referencedColumnName = "file_seq")
     File fontDownloadFile;
@@ -75,6 +73,10 @@ font_download_file bigint
         else if("FavClear".equals(flag)){
             this.fontFavCount-=1;
         }
+    }
+    public void updateInfo(String fontName, String fontDescription){
+        this.fontName = fontName;
+        this.fontDescription = fontDescription;
     }
     public void updateDownloadCount(){
         this.fontDownloadCount +=1;
