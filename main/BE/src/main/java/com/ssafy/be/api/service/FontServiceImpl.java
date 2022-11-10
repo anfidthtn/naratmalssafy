@@ -2,7 +2,6 @@ package com.ssafy.be.api.service;
 
 import com.ssafy.be.api.dto.Creator;
 import com.ssafy.be.api.dto.TotalResFont;
-import com.ssafy.be.api.request.RegistDownloadHistoryReq;
 import com.ssafy.be.api.response.CheckFontNameRes;
 import com.ssafy.be.api.response.GetFontDetailRes;
 import com.ssafy.be.api.response.GetFontsRes;
@@ -18,15 +17,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -206,6 +199,7 @@ public class FontServiceImpl implements FontService {
         //String absolutePath = new File("").getAbsolutePath() + "\\";
         String absolutePath = System.getProperty("user.dir");;
         for(MultipartFile img : uploadImg){
+            if(idx==7) continue;
             if(img.isEmpty()){
                 return -2L;
             }
@@ -248,6 +242,4 @@ public class FontServiceImpl implements FontService {
         Font updatedFont = fontRepository.save(font);
         return updatedFont.getFontSeq();
     }
-
-
 }
