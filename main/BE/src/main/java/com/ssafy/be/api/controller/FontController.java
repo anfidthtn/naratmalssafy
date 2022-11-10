@@ -7,6 +7,7 @@ import com.ssafy.be.api.response.*;
 import com.ssafy.be.api.service.FontService;
 import com.ssafy.be.api.service.UserService;
 import com.ssafy.be.common.auth.UserDetail;
+import com.ssafy.be.common.util.EncodeFontName;
 import com.ssafy.be.db.entity.User;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -28,6 +29,8 @@ public class FontController {
     FontService fontService;
     @Autowired
     UserService userService;
+    @Autowired
+    EncodeFontName encodeFontName;
     private final Logger logger = LogManager.getLogger(FontController.class);
     @GetMapping()
     public ResponseEntity<GetFontsRes> getFonts(@ApiIgnore Authentication auth, Pageable page ,String flag, String keyword){
@@ -45,6 +48,7 @@ public class FontController {
 
         res = fontService.getFonts(user,page,flag,keyword);
         return ResponseEntity.status(200).body(res);
+
 
     }
     @GetMapping("/detail/{fontSeq}")
@@ -70,7 +74,7 @@ public class FontController {
             @ApiResponse(code = 903, message = "이미지 업로드 오류! contentType이 없습니다"),
             @ApiResponse(code = 904, message = "이미지 업로드 오류! png파일이 아닙니다."),
             @ApiResponse(code = 905, message = "이미지 업로드 오류! 파일 저장중 에러가 발생했습니다."),
-
+            @ApiResponse(code = 906, message = "폴더 이름 변환중 에러가 발생했습니다."),
     })
     public ResponseEntity<IsSuccessRes> registFont(@ApiIgnore Authentication authentication, RegistFontReq req){
         UserDetail userDetail = (UserDetail) authentication.getDetails();
@@ -97,6 +101,9 @@ public class FontController {
         else if(res==-5){
             return ResponseEntity.status(905).body(IsSuccessRes.builder().isSuccess(false).msg("이미지 업로드 오류! 파일 저장중 에러가 발생했습니다.").build());
         }
+        else if(res==-6){
+            return ResponseEntity.status(905).body(IsSuccessRes.builder().isSuccess(false).msg("폴더 이름 변환중 에러가 발생했습니다.").build());
+        }
         return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(true).msg("폰트제작 요청이 완료되었습니다.").build());
     }
 
@@ -107,14 +114,10 @@ public class FontController {
             @ApiResponse(code = 903, message = "return null, 이미 등록된 폰트이름일때 발생")
 
     })
-
     public ResponseEntity<GetFontDetailRes> updateFontInfo(@ApiIgnore Authentication authentication, UpdateFontInfoReq req){
         UserDetail userDetail = (UserDetail) authentication.getDetails();
         User user= userDetail.getUser();
-        Long resUpdate = fontService.updateFontInfo(req.getFontSeq(),req.getFontName(),req.getFontDescription(),user);
-        if (!fontService.checkFontName(req.getFontName()).isUsable()){
-            return ResponseEntity.status(903).body(null);
-        }
+        Long resUpdate = fontService.updateFontInfo(req.getFontName(),req.getFontDescription(),user);
         if (resUpdate == -1L){
             return ResponseEntity.status(901).body(null);
         }
