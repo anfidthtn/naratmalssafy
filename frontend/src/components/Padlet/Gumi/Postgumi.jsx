@@ -129,12 +129,14 @@ const PostGumi = () => {
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <PostGumiItem
                                 postData={data}
+                                idx={idx}
                             />
                             </Grid>
                         ): (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <PostGumiItem
                                 postData={data}
+                                idx={idx}
                             />
                             </Grid>
                         )
@@ -146,6 +148,7 @@ const PostGumi = () => {
                 }
             </div>
             }
+            {/* <div className="Post__Create" onClick={showModal}>생성</div> */}
             {modalOpen && <Modal setModalOpen={setModalOpen} userinfo={userinfo}/>}
         </div>
     );
