@@ -1,4 +1,4 @@
-var genFont = function generate(fontName)
+var genFont = function generate(fontNameHash, fontName)
 {
     var express = require('express');
     var router = express.Router();
@@ -22,7 +22,7 @@ var genFont = function generate(fontName)
 
     var PNG = require('pngjs').PNG;
 
-    var dir_name = 'FONT/' + fontName
+    var dir_name = 'FONT/' + fontNameHash
     // var dir_name = +new Date()
 
     var img_dir = `./${dir_name}`
@@ -146,9 +146,9 @@ var genFont = function generate(fontName)
     fontStream.end();
     console.log('fontsvg to ttf 시작');
     var ttf = svg2ttf(fs.readFileSync( `./${dir_name}/svg_fonts/font_ss.svg`, 'utf8'), {});
-    fs.writeFileSync(`./${dir_name}/ttf_fonts/${fontName}.ttf`, new Buffer.from(ttf.buffer));
+    fs.writeFileSync(`./${dir_name}/ttf_fonts/${fontNameHash}.ttf`, new Buffer.from(ttf.buffer));
     console.log('ttf to woff 시작');
-    shelljs.exec(`ttf2woff ./${dir_name}/ttf_fonts/${fontName}.ttf ./${dir_name}/ttf_fonts/${fontName}.woff`)
+    shelljs.exec(`ttf2woff ./${dir_name}/ttf_fonts/${fontNameHash}.ttf ./${dir_name}/ttf_fonts/${fontNameHash}.woff`)
     console.log('ttf to woff 종료');
 }
 
