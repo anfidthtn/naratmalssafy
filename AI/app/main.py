@@ -34,6 +34,7 @@ s3 = s3_connection()
 @app.post("/fastapi/makefont")
 def read_root(data : Item):
     maker = FontMaker(data.fontName)
+    maker.makeTTF(data.fontSeq, maker.fontname)
     savedURL = 'https://naratmalssafy.s3.ap-northeast-2.amazonaws.com/' + maker.fontname + '.ttf'
     try:
         s3.upload_file(os.path.join("fontmaker", "FONT", maker.fontname, "ttf_fonts", maker.fontname + ".ttf"),"naratmalssafy", maker.fontname + ".ttf")
