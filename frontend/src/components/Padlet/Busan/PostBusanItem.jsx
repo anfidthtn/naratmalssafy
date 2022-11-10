@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "../../../styles/FontSearchPage/FontSearchItem.scss";
 
-const PostBusanItem = ({ postData }) => {
+const PostBusanItem = ({ idx, postData }) => {
     const [subFontEditorText, setSubFontEditorText] = useState(postData.content);
   
     useEffect(() => {
@@ -9,18 +9,37 @@ const PostBusanItem = ({ postData }) => {
     }, [postData.content]);
   
     useEffect(() => {
-      const fontDataDiv = document.getElementById(`postData_${postData.fontSeq}`);
+      const fontDataDiv = document.getElementById(`busan_${idx}`);
       const fontDataTextArea = document.getElementById(
-        `postData_textarea_${postData.fontSeq}`
+        `busan_textarea_${idx}`
       );
-      const postColor = document.getElementById(`postColor_${postData.fontSeq}`)
-      fontDataDiv.style.fontFamily = postData.fontFamilyName;
-      fontDataTextArea.style.fontFamily = postData.fontFamilyName;
-      postColor.style.backgroundColor = postData.color
+      const postColor = document.getElementById(`busan_color_${idx}`)
+          // 서버에서 웹폰트 넘겨줄 경우 폰트 다운로드 후 적용
+
+    // let font = new FontFace(
+    //   "Gamja Flower",
+    //   `url(https://fonts.gstatic.com/s/gamjaflower/v20/6NUR8FiKJg-Pa0rM6uN40Z4kzJdTdNPFFRJ7lwb-CZch2ydaLb0K.0.woff2) format("woff2")`
+    // );
+    // font
+    //   .load()
+    //   .then(function (loadedFont) {
+    //     document.fonts.add(loadedFont);
+    //     //do something after the font is loaded
+    //     console.log(loadedFont);
+    //   })
+    //   .catch(function (error) {
+    //     // error occurred
+    //   });
+
+
+    // fontDataDiv.style.fontFamily = "Gamja Flower";
+    fontDataDiv.style.fontFamily = postData.fontFamilyName;
+    fontDataTextArea.style.fontFamily = postData.fontFamilyName;
+    postColor.style.backgroundColor = postData.color
     }, []);
   
     return (
-      <div className="fontData" id={`postData_${postData.fontSeq}`}>
+      <div className="fontData" id={`busan_${idx}`}>
         <link
           rel="stylesheet"
           type="text/css"
@@ -28,13 +47,13 @@ const PostBusanItem = ({ postData }) => {
         />
         <div className="textarea_box">
           <textarea
-            id={`postData_textarea_${postData.fontSeq}`}
+            id={`busan_textarea_${idx}`}
             className="textarea"
             value={subFontEditorText}
           ></textarea>
         </div>
         <div
-          className="info_box" id={`postColor_${postData.fontSeq}`}
+          className="info_box" id={`busan_color_${idx}`}
         >
           <div className="font_info">
             <div className="font_first_row_box">
