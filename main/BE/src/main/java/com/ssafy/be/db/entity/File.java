@@ -23,4 +23,6 @@ file_type varchar(45)*/
     String fileSavedName;
     @Column(name = "file_saved_path")
     String fileSavedPath;
+    @Column(name = "woff_saved_path")
+    String woffSavedPath;
 }
