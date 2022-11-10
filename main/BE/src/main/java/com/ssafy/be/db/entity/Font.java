@@ -72,8 +72,7 @@ font_download_file bigint
             this.fontFavCount-=1;
         }
     }
-    public void updateInfo(String fontName, String fontDescription){
-        this.fontName = fontName;
+    public void updateInfo(String fontDescription){
         this.fontDescription = fontDescription;
     }
     public void updateDownloadCount(){

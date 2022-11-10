@@ -70,7 +70,6 @@ public class FontController {
             @ApiResponse(code = 903, message = "이미지 업로드 오류! contentType이 없습니다"),
             @ApiResponse(code = 904, message = "이미지 업로드 오류! png파일이 아닙니다."),
             @ApiResponse(code = 905, message = "이미지 업로드 오류! 파일 저장중 에러가 발생했습니다."),
-
     })
     public ResponseEntity<IsSuccessRes> registFont(@ApiIgnore Authentication authentication, RegistFontReq req){
         UserDetail userDetail = (UserDetail) authentication.getDetails();
@@ -107,14 +106,10 @@ public class FontController {
             @ApiResponse(code = 903, message = "return null, 이미 등록된 폰트이름일때 발생")
 
     })
-
     public ResponseEntity<GetFontDetailRes> updateFontInfo(@ApiIgnore Authentication authentication, UpdateFontInfoReq req){
         UserDetail userDetail = (UserDetail) authentication.getDetails();
         User user= userDetail.getUser();
-        Long resUpdate = fontService.updateFontInfo(req.getFontSeq(),req.getFontName(),req.getFontDescription(),user);
-        if (!fontService.checkFontName(req.getFontName()).isUsable()){
-            return ResponseEntity.status(903).body(null);
-        }
+        Long resUpdate = fontService.updateFontInfo(req.getFontName(),req.getFontDescription(),user);
         if (resUpdate == -1L){
             return ResponseEntity.status(901).body(null);
         }
