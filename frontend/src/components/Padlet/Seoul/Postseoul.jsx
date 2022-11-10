@@ -128,12 +128,14 @@ const PostSeoul = () => {
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <PostSeoulItem
                                 postData={data}
+                                idx={idx}
                             />
                             </Grid>
                         ): (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <PostSeoulItem
                                 postData={data}
+                                idx={idx}
                             />
                             </Grid>
                         )

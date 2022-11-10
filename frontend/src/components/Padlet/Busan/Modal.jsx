@@ -117,15 +117,11 @@ const Modal = ({setModalOpen, userinfo }) => {
                 onChange={handlecolor}
                 >
                     {colorlist.map((data) =>
-                        <MenuItem value={data}>{data}</MenuItem>    
+                        <MenuItem value={data}><div className='menuitems'><div className="Colorexample" style={{backgroundColor:`${data}`}}></div><div>{data}</div></div></MenuItem>   
                     )}
                 </Select>
             </FormControl>
             <div className='Modal__Space'></div>
-            <div className='Modal__Bottom'>
-                <div className='Modal__Bottom__Make' onClick={createPost}>생성</div>
-                <div className='Modal__Bottom__Close' onClick={closeModal}>닫기</div>
-            </div>
             </div>
         </div>
     );

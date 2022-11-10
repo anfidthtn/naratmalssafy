@@ -5,22 +5,41 @@ import { BsFillStarFill } from "react-icons/bs";
 import { FiDownload } from "react-icons/fi";
 import { useEffect } from 'react';
 
-const MyFavoritesFont = ({ fontData }) => {
+const MyFavoritesFont = ({ idx, fontData }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fontDataDiv = document.getElementById(`fontData_${fontData.fontSeq}`);
+    const fontDataDiv = document.getElementById(`myfavorite_${idx}`);
     const fontDataTextArea = document.getElementById(
-      `fontData_textarea_${fontData.fontSeq}`
+      `myfavorite_textarea_${idx}`
     );
-    fontDataDiv.style.fontFamily = fontData.fontFamilyName;
-    fontDataTextArea.style.fontFamily = fontData.fontFamilyName;
+          // 서버에서 웹폰트 넘겨줄 경우 폰트 다운로드 후 적용
+
+          let font = new FontFace(
+            `${fontData.fontFamilyName}`,
+            `url(${fontData.webFontPath}) format("woff2")`
+          );
+          font
+            .load()
+            .then(function (loadedFont) {
+              document.fonts.add(loadedFont);
+              //do something after the font is loaded
+              console.log(loadedFont);
+            })
+            .catch(function (error) {
+              // error occurred
+            });
+      
+      
+          // fontDataDiv.style.fontFamily = "Gamja Flower";
+          fontDataDiv.style.fontFamily = fontData.fontFamilyName;
+          fontDataTextArea.style.fontFamily = fontData.fontFamilyName;
   }, []);
   return(
-      <div className="fontData" id={`fontData_${fontData.fontSeq}`}>
+      <div className="fontData" id={`myfavorite_${idx}`}>
         <link rel="stylesheet" type="text/css" href={fontData.webFontPath}/>
       <div className="textarea_box">
-        <textarea className="textarea" id={`fontData_textarea_${fontData.fontSeq}`}>{fontData.description}</textarea>
+        <textarea className="textarea" id={`myfavorite_textarea_${idx}`}>{fontData.description}</textarea>
       </div>
       <div className="info_box"         onClick={() => {
               navigate(`/detail/${fontData.fontSeq}`);
