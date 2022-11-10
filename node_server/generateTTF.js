@@ -14,6 +14,8 @@ var genFont = function generate(fontName)
 
     var svgicons2svgfont = require('svgicons2svgfont');
 
+    var shelljs = require('shelljs');
+
     var fontStream = new svgicons2svgfont({
         fontName: fontName
     })
@@ -102,6 +104,7 @@ var genFont = function generate(fontName)
         // }
 
     }
+    console.log('svg 제작 시작');
       // png to svg
       for(var i=0; i<files.length; i++) {
             let j = i;
@@ -121,27 +124,32 @@ var genFont = function generate(fontName)
 
             fs.writeFileSync(`./${dir_name}/svg/` + fileName[j] + '.svg', svgstring);
     }
-
-    fontStream.pipe(fs.createWriteStream( `./${dir_name}/svg_fonts/font_ss.svg`))
-    .on('finish',function() {
-        var ttf = svg2ttf(fs.readFileSync( `./${dir_name}/svg_fonts/font_ss.svg`, 'utf8'), {});
-        fs.writeFileSync(`./${dir_name}/ttf_fonts/${fontName}.ttf`, new Buffer.from(ttf.buffer));
-    })
-    .on('error',function(err) {
-        console.log(err);
-    });
-
+    
+    fontStream.pipe(fs.createWriteStream( `./${dir_name}/svg_fonts/font_ss.svg`));
+    // .on('finish',function() {
+    //     console.log('순서1');
+    // })
+    // .on('error',function(err) {
+    //     console.log(err);
+    // });
+    console.log('svg to fontsvg 시작');
     for (var i=0; i < sources.length; i++) {
         
         let glyph1 = fs.createReadStream(`./${dir_name}/svg/` + fileName[i] + '.svg');
         glyph1.metadata = {
-        unicode: [String.fromCharCode((sources[i]).toString(10))],
-        name: 'uni' + sources[i]
+            unicode: [String.fromCharCode((sources[i]).toString(10))],
+            name: 'uni' + sources[i]
         };
-
+        
         fontStream.write(glyph1);
     }
     fontStream.end();
+    console.log('fontsvg to ttf 시작');
+    var ttf = svg2ttf(fs.readFileSync( `./${dir_name}/svg_fonts/font_ss.svg`, 'utf8'), {});
+    fs.writeFileSync(`./${dir_name}/ttf_fonts/${fontName}.ttf`, new Buffer.from(ttf.buffer));
+    console.log('ttf to woff 시작');
+    shelljs.exec(`ttf2woff ./${dir_name}/ttf_fonts/${fontName}.ttf ./${dir_name}/ttf_fonts/${fontName}.woff`)
+    console.log('ttf to woff 종료');
 }
 
 // genFont('fontname');
