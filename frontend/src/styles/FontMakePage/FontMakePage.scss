@@ -4,7 +4,7 @@
   justify-content: center;
   margin: 0 auto;
   margin-top: 100px;
-  height: 80vh;
+  // height: 80vh;
 
   & .current_step_box {
     margin-right: 30px;
@@ -137,7 +137,8 @@
   }
 
   & .image_upload_button {
-    height: 50%;
+    // height: 50%;
+    height: 300px;
     width: 100%;
 
     border-radius: 20px;
@@ -206,7 +207,7 @@
   & .crop_check_info_box {
     border-radius: 20px;
     border: 3px solid #d4b099;
-    margin-top: 100px;
+    // margin-top: 100px;
     margin-bottom: 30px;
   }
 

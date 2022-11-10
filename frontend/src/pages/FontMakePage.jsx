@@ -336,7 +336,7 @@ const FontMakePage = () => {
                   src={uploadImage}
                   alt="이미지를 업로드 해주세요"
                   width={"100%"}
-                  height={"100%"}
+                  height={"200px"}
                   style={{ borderRadius: "10px" }}
                 />
               ) : (
