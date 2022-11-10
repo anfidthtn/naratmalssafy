@@ -6,6 +6,8 @@ import com.ssafy.be.api.service.DownloadHistoryService;
 import com.ssafy.be.api.service.UserService;
 import com.ssafy.be.common.auth.UserDetail;
 import com.ssafy.be.db.entity.User;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +42,10 @@ public class UserController {
     }
 
     @PostMapping()
+    @ApiResponses({
+            @ApiResponse(code = 901, message = "등록 실패"),
+            @ApiResponse(code = 902, message = "이미 등록된 사용자"),
+    })
     public ResponseEntity<UserLoginRes> registUser(@RequestBody RegistUserReq userInfo){
         //사용자 정보 받아서 검증...?
         logger.info("signUp userEmail: ["+userInfo.getUserEmail()+"] userName: ["+ userInfo.getUserName()+"]");

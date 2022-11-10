@@ -5,6 +5,7 @@ import com.ssafy.be.api.dto.TotalResFont;
 import com.ssafy.be.api.response.CheckFontNameRes;
 import com.ssafy.be.api.response.GetFontDetailRes;
 import com.ssafy.be.api.response.GetFontsRes;
+import com.ssafy.be.common.util.EncodeFontName;
 import com.ssafy.be.common.util.RequestCreateFont;
 import com.ssafy.be.db.entity.Font;
 import com.ssafy.be.db.entity.User;
@@ -40,6 +41,8 @@ public class FontServiceImpl implements FontService {
     UserRepository userRepository;
     @Autowired
     RequestCreateFont requestCreateFont;
+    @Autowired
+    EncodeFontName encodeFontName;
 
     @Value("${users.handwriteImg.savePath}")
     private String saveFolderPath;
@@ -198,6 +201,19 @@ public class FontServiceImpl implements FontService {
         }
         //String absolutePath = new File("").getAbsolutePath() + "\\";
         String absolutePath = System.getProperty("user.dir");;
+        String dirName = "";
+        try{
+            dirName = encodeFontName.encodeFontName(fontName);
+        }catch (Exception e){
+            e.printStackTrace();
+            return -6L;
+        }
+
+        path = saveFolderPath + dirName + "/targetimg";
+        file  = new File(path);
+        if(!file.exists()){
+            file.mkdirs();
+        }
         for(MultipartFile img : uploadImg){
             if(idx==7) {
                 idx++;
@@ -205,11 +221,6 @@ public class FontServiceImpl implements FontService {
             }
             if(img.isEmpty()){
                 return -2L;
-            }
-            path = saveFolderPath + fontName + "/targetimg";
-            file  = new File(path);
-            if(!file.exists()){
-                file.mkdirs();
             }
             contentType = img.getContentType();
             if(ObjectUtils.isEmpty(contentType)){
