@@ -33,16 +33,17 @@ s3 = s3_connection()
 
 @app.post("/fastapi/makefont/")
 def read_root(data : Item):
-    savedURL = 'https://naratmalssafy.s3.ap-northeast-2.amazonaws.com/fontname.ttf'
+    maker = FontMaker(data.fontName)
+    savedURL = 'https://naratmalssafy.s3.ap-northeast-2.amazonaws.com/' + maker.fontname + '.ttf'
     try:
-        s3.upload_file(os.path.join("fontmaker", "FONT", data.fontName, "ttf_fonts", data.fontName + ".ttf"),"naratmalssafy", data.fontName + ".ttf")
-        savedURL = 'https://naratmalssafy.s3.ap-northeast-2.amazonaws.com/' + data.fontName + ".ttf"
+        s3.upload_file(os.path.join("fontmaker", "FONT", maker.fontname, "ttf_fonts", maker.fontname + ".ttf"),"naratmalssafy", maker.fontname + ".ttf")
+        savedURL = 'https://naratmalssafy.s3.ap-northeast-2.amazonaws.com/' + maker.fontname + ".ttf"
     except Exception as e:
         print(e)
 
     session = database.Session(database.engine)
     
-    db_file = models_.TFile(file_original_name=data.fontName + '.ttf', file_saved_name=data.fontName + '.ttf', file_saved_path=savedURL)
+    db_file = models_.TFile(file_original_name=maker.fontname + '.ttf', file_saved_name=maker.fontname + '.ttf', file_saved_path=savedURL)
     
     session.add(db_file)
     db_font = session.query(models_.TFont).filter(models_.TFont.font_seq == data.fontSeq).first()
