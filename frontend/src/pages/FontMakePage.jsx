@@ -22,6 +22,8 @@ const FontMakePage = () => {
   const [introduction, setIntroduction] = useState("");
   const [fontName, setFontName] = useState("");
 
+  const [fontNameCheck, setFontNameCheck] = useState(false);
+
   const [cropStep, setCropStep] = useState(0);
 
   const [crop, setCrop] = useState({
@@ -149,6 +151,11 @@ const FontMakePage = () => {
         setCurrentStep(currentStep);
         return;
       }
+
+      if (!fontNameCheck) {
+        alert("폰트 이름이 중복됩니다.");
+        return;
+      }
       const formData = new FormData();
 
       for (let index = 0; index < croppedImageUrl.length; index++) {
@@ -185,6 +192,27 @@ const FontMakePage = () => {
           console.log(err);
         });
     }
+  }
+
+  function checkFontName(e) {
+    const checkFontNameDiv = document.getElementById(
+      "check_font_name_duplicate"
+    );
+    if (e.target.value.length > 10) {
+      return;
+    }
+
+    setFontNameCheck(false);
+    checkFontNameDiv.style.color = "red";
+    setFontName(e.target.value);
+    if (e.target.value.length < 2) {
+      return;
+    }
+
+    // 폰트 중복체크 axios
+
+    checkFontNameDiv.style.color = "green";
+    setFontNameCheck(true);
   }
 
   function UploadImageClick() {
@@ -336,7 +364,7 @@ const FontMakePage = () => {
                   src={uploadImage}
                   alt="이미지를 업로드 해주세요"
                   width={"100%"}
-                  height={"100%"}
+                  height={"200px"}
                   style={{ borderRadius: "10px" }}
                 />
               ) : (
@@ -480,18 +508,25 @@ const FontMakePage = () => {
               </div>
             </div>
             <div className="font_name_input_box">
-              <input
-                type="text"
-                value={fontName}
-                placeholder="원하는 폰트 이름을 입력하세요(2~10자)"
-                onChange={(e) => {
-                  if (e.target.value.length > 10) {
-                    return;
-                  }
-                  setFontName(e.target.value);
-                }}
-              />
-              <div style={{ fontSize: "25px", marginLeft: "10px" }}>"체"</div>
+              <div className="font_name_input">
+                <input
+                  type="text"
+                  value={fontName}
+                  placeholder="원하는 폰트 이름을 입력하세요(2~10자)"
+                  onChange={checkFontName}
+                />
+                <div style={{ fontSize: "25px", marginLeft: "10px" }}>"체"</div>
+              </div>
+              <div
+                className="check_font_name_duplicate"
+                id="check_font_name_duplicate"
+              >
+                {fontName.length < 2
+                  ? "2글자 이상 입력해주세요!"
+                  : fontNameCheck
+                  ? "사용할 수 있습니다!"
+                  : "이미 존재하는 이름입니다!"}
+              </div>
             </div>
             <div className="font_introduce_textarea_box">
               <textarea

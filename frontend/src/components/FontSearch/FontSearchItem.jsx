@@ -18,7 +18,26 @@ const FontSearchItem = ({ idx, fontData, fontEditorText }) => {
     const fontDataTextArea = document.getElementById(
       `fontData_textarea_${idx}`
     );
+
+    // 서버에서 웹폰트 넘겨줄 경우 폰트 다운로드 후 적용
+
+    let font = new FontFace(
+      "지홍체",
+      `url(https://naratmalssafy.s3.ap-northeast-2.amazonaws.com/fo222.woff) format("woff")`
+    );
+    font
+      .load()
+      .then(function (loadedFont) {
+        document.fonts.add(loadedFont);
+        //do something after the font is loaded
+        // console.log(loadedFont);
+      })
+      .catch(function (error) {
+        // error occurred
+      });
+
     fontDataDiv.style.fontFamily = fontData.fontFamilyName;
+    // fontDataDiv.style.fontFamily = "지홍체";
     fontDataTextArea.style.fontFamily = fontData.fontFamilyName;
   }, []);
 

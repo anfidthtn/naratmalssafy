@@ -251,12 +251,14 @@ const handleNicknameCheck=()=>{
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFont
                                 fontData={data}
+                                idx={idx}
                             />
                             </Grid>
                         ) : (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFont
                                 fontData={data}
+                                idx={idx}
                             />
                             </Grid>
                         )
@@ -277,12 +279,14 @@ const handleNicknameCheck=()=>{
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFavoritesFont
                                 fontData={data}
+                                idx={idx}
                             />
                             </Grid>
                         ) : (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyFavoritesFont
                                 fontData={data}
+                                idx={idx}
                             />
                             </Grid>
                         )
@@ -303,12 +307,14 @@ const handleNicknameCheck=()=>{
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyDownloadFont
                                 fontData={data}
+                                idx={idx}
                             />
                             </Grid>
                         ) : (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
                             <MyDownloadFont
                                 fontData={data}
+                                idx={idx}
                             />
                             </Grid>
                         )
