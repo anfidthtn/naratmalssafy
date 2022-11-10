@@ -48,7 +48,7 @@ public class PadletServiceImpl implements PadletService{
                     .color(p.getColor())
                     .content(p.getContent())
                     .fontName(p.getFont().getFontName())
-                    .fontPath(p.getFont().getFontPath())
+                    .fontPath(p.getFont().getFontDownloadFile().getWoffSavedPath())
                     .fontSeq(p.getFont().getFontSeq())
                     .userEmail(p.getUser().getUserEmail())
                     .userName(p.getUser().getUserName())

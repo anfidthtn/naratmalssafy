@@ -33,8 +33,6 @@ font_download_file bigint
     Long fontSeq;
     @Column(name = "font_name")
     String fontName;
-    @Column(name= "font_path")
-    String fontPath;
     @Column(name = "font_description")
     String fontDescription;
     @Column(name = "font_fav_count")
