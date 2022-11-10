@@ -5,7 +5,7 @@ const genFont = require('../generateTTF');
 router.post('/nodeexpress/makefont', (req, res) => {
     console.log(req.body)
     genFont(req.body.fontName);
-    let seq = req.body.fontseq;
+    res.end()
 });
 
 module.exports = router;
