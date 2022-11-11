@@ -37,7 +37,7 @@ const PostGumiItem = ({ idx, postData }) => {
           // 서버에서 웹폰트 넘겨줄 경우 폰트 다운로드 후 적용
 
           let font = new FontFace(
-            `${postData.fontFamilyName}`,
+            `${postData.fontName}`,
             `url(${postData.fontPath}) format("woff2")`
           );
           font
@@ -49,8 +49,8 @@ const PostGumiItem = ({ idx, postData }) => {
             });
       
       
-          fontDataDiv.style.fontFamily = postData.fontFamilyName;
-          fontDataTextArea.style.fontFamily = postData.fontFamilyName;
+          fontDataDiv.style.fontFamily = postData.fontName
+          fontDataTextArea.style.fontFamily = postData.fontName;
           postColor.style.backgroundColor = postData.color
     }, []);
     
