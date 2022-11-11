@@ -58,8 +58,8 @@ var genFont = function generate(fontNameHash, fontName, res)
     var option = {
         // Tracing
         corsenabled : false,
-        ltres : 1,
-        qtres : 2,
+        ltres : 0,
+        qtres : 0,
         pathomit : 8,
         rightangleenhance : true,
         
@@ -74,17 +74,19 @@ var genFont = function generate(fontNameHash, fontName, res)
         
         // SVG rendering
         strokewidth : 1,
-        linefilter : true,
+        linefilter : false,
         scale : 1,
-        roundcoords : 2,
+        roundcoords : 1,
         viewbox : false,
         desc : false,
         lcpr : 0,
         qcpr : 0,
         
         // Blur
-        blurradius : 5,
-        blurdelta : 64
+        blurradius : 100,
+        blurdelta : 200,
+
+        pal : [{r:0,g:0,b:0,a:255},{r:255,g:255,b:255,a:255}]
     }
 
     option.pal = [{r:0,g:0,b:0,a:255},{r:255,g:255,b:255,a:255}];
@@ -152,5 +154,5 @@ var genFont = function generate(fontNameHash, fontName, res)
     fontStream.end();
 }
 
-// genFont('fontname');
+// genFont('29e673c549e444e1c8b695ceda6b9cab2c2bb758', '에라토스테네스의', null);
 module.exports = genFont;
