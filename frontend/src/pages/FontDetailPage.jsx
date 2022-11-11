@@ -412,7 +412,7 @@ const FontDetailPage = () => {
       <div className="second_row_box">
         <div className="font_oneline_header">
           <span>폰트 한줄 설명</span>
-          {currentUserEmail === fontData.Creator?.email &&
+          {currentUserEmail === fontData.creator?.email &&
             (modifyText ? (
               <div>
                 <span
