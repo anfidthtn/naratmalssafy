@@ -9,6 +9,7 @@ const MyFont = ({ idx, fontData }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log(fontData)
     const fontDataDiv = document.getElementById(`my_${idx}`);
     const fontDataTextArea = document.getElementById(
       `my_textarea_${idx}`
@@ -23,24 +24,21 @@ const MyFont = ({ idx, fontData }) => {
             .load()
             .then(function (loadedFont) {
               document.fonts.add(loadedFont);
-              //do something after the font is loaded
-              console.log(loadedFont);
             })
             .catch(function (error) {
-              // error occurred
+
             });
       
-      
-          // fontDataDiv.style.fontFamily = "Gamja Flower";
+
           fontDataDiv.style.fontFamily = fontData.fontFamilyName;
           fontDataTextArea.style.fontFamily = fontData.fontFamilyName;
   }, []);
- 
+
     return(
-        <div className="fontData" id={`my__${idx}`}>
+        <div className="fontData" id={`my_${idx}`}>
           <link rel="stylesheet" type="text/css" href={fontData.webFontPath}/>
         <div className="textarea_box">
-          <textarea className="textarea" id={`my_textarea_${idx}`}>{fontData.description}</textarea>
+          <textarea className="textarea" id={`my_textarea_${idx}`} defaultValue={fontData.description} readOnly></textarea>
         </div>
         <div className="info_box"         onClick={() => {
               navigate(`/detail/${fontData.fontSeq}`);

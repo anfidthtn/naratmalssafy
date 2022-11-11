@@ -20,9 +20,9 @@ import swal from "sweetalert";
 const MyPage = () => {
     const navigate = useNavigate()
     const [userinfo, setUserinfo] = useState('')
-    const [ismyfontsempty, setIsmyfontsempty] = useState(false)
-    const [isdownloadfontsempty, setIsdownloadfontsempty] = useState(false)
-    const [islikefontsempty, setIslikefontsempty] = useState(false)
+    const [ismyfontsempty, setIsmyfontsempty] = useState(true)
+    const [isdownloadfontsempty, setIsdownloadfontsempty] = useState(true)
+    const [islikefontsempty, setIslikefontsempty] = useState(true)
     
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -50,14 +50,14 @@ const MyPage = () => {
         })
         .then(res=> {
             setUserinfo(res.data)
-            if (res.data.downloadFonts.length === 0) {
-                setIsdownloadfontsempty(true)
+            if (res.data.downloadFonts.length !== 0) {
+                setIsdownloadfontsempty(false)
             }
-            if (res.data.likeFonts.length === 0){
-                setIslikefontsempty(true)
+            if (res.data.likeFonts.length !== 0){
+                setIslikefontsempty(false)
             }
-            if (res.data.myFonts.length === 0){
-                setIsmyfontsempty(true)
+            if (res.data.myFonts.length !== 0){
+                setIsmyfontsempty(false)
             }
             console.log(res.data)
         })
@@ -69,10 +69,10 @@ const MyPage = () => {
 
 // 내폰트, 다운로드, 즐겨찾기중 어떤걸로 볼지 #################################################################
 
-    const [ismyfontshow, setIsmyfontshow] = useState(false)
+    const [ismyfontshow, setIsmyfontshow] = useState(true)
     const [isdownloadshow, setIsdownloadshow] = useState(false)
     const [isfavoriteshow, setIsfavoriteshow] = useState(false)
-    const [iseditshow, setIseditshow] = useState(true)
+    const [iseditshow, setIseditshow] = useState(false)
 
     function showedit() {
         setIsmyfontshow(false)
@@ -195,10 +195,10 @@ const handleNicknameCheck=()=>{
                 <div className='Mypage__Profile__Content'>이메일 : {userinfo.userEmail}</div>
             </div>
             <div className='Mypage__Fontselect'>
-                <div className='Mypage__Fontselect__Edit' onClick={showedit}>회원정보수정</div>
                 <div className='Mypage__Fontselect__My' onClick={showmyfont}>내폰트</div>
                 <div className='Mypage__Fontselect__Favorite' onClick={showfavoritefont}>즐겨찾기폰트</div>
                 <div className='Mypage__Fontselect__Download' onClick={showdownloadfont}>다운로드폰트</div>
+                <div className='Mypage__Fontselect__Edit' onClick={showedit}>회원정보수정</div>
             </div>
             <div className="custom_m_y_10">
                     <Divider />
@@ -330,7 +330,7 @@ const handleNicknameCheck=()=>{
                 ismyfontshow && 
                 <div className='Mypage__Alert'>
                     <div className='Mypage__Alert__Myfont__Title'>안녕하세요, {userinfo.userLocation}_{userinfo.userName}_{userinfo.userNickname}님 ^◡^</div>
-                    <div className='Mypage__Alert__Myfont__Content'>현재 제작한 폰트가 없어요.</div>
+                    <div className='Mypage__Alert__Myfont__Content'>현재 제작한 폰트가 없거나, 현재 제작 중 입니다!</div>
                     <div className='Mypage__Alert__Myfont__Content'>나랏말싸피와 함께 폰트를 제작해 보아요!!</div>
                     <div className='Mypage__Alert__Myfont__Button' onClick={()=> navigate('/make-font')}>폰트제작하기</div>
                 </div>
