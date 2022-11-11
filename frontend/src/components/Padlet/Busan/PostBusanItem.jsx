@@ -37,7 +37,7 @@ const PostBusanItem = ({ idx, postData }) => {
           // 서버에서 웹폰트 넘겨줄 경우 폰트 다운로드 후 적용
 
           let font = new FontFace(
-            `${postData.fontFamilyName}`,
+            `${postData.fontName}`,
             `url(${postData.fontPath}) format("woff2")`
           );
           font
