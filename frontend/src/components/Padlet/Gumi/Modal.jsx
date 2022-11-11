@@ -44,7 +44,9 @@ const Modal = ({setModalOpen, userinfo}) => {
                 text: "패들릿이 성공적으로 생성되었습니다.",
                 icon: "success",
                 button: "확인",
-              })
+              }).then(() => {
+                window.location.href='/post/gumi'
+              });
         })
         .catch(err => {
             console.log(err)
@@ -52,7 +54,9 @@ const Modal = ({setModalOpen, userinfo}) => {
                 text: "패들릿 정보를 확인하세요!",
                 icon: "error",
                 button: "확인",
-              })
+              }).then(() => {
+                window.location.href='/post/gumi'
+              });
         })
         setModalOpen(false)
     }
