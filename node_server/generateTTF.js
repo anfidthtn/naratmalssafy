@@ -58,9 +58,9 @@ var genFont = function generate(fontNameHash, fontName, res)
     var option = {
         // Tracing
         corsenabled : false,
-        ltres : 0,
-        qtres : 0,
-        pathomit : 8,
+        pathomit:0,
+        ltres:0.5,
+        qtres:0.5,
         rightangleenhance : true,
         
         // Color quantization
@@ -76,7 +76,7 @@ var genFont = function generate(fontNameHash, fontName, res)
         strokewidth : 1,
         linefilter : false,
         scale : 1,
-        roundcoords : 1,
+        roundcoords:2,
         viewbox : false,
         desc : false,
         lcpr : 0,
