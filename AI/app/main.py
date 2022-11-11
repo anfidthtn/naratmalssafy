@@ -48,11 +48,14 @@ def read_root(data : Item):
     except Exception as e:
         return {"msg" : "s3 저장 중 에러발생"}
 
-    session = database.Session(database.engine)
+    engine = database.create_engine(database.MYSQL_URL)
+
+    session = database.Session(engine, autoflush=False)
     
     db_file = models_.TFile(file_original_name=data.fontName + '.ttf', file_saved_name=nameHash, file_saved_path=ttfURL, woff_saved_path=woffURL)
     
     session.add(db_file)
+    session.flush()
     db_font = session.query(models_.TFont).filter(models_.TFont.font_seq == data.fontSeq).first()
     db_font.t_file = db_file
     
