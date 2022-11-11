@@ -58,9 +58,10 @@ public class FontController {
         if(auth!=null){
             UserDetail userDetail = (UserDetail) auth.getDetails();
             user =  userDetail.getUser();
+            logger.info("getFontDetail requestUser: ["+user.getUserEmail()+"] "+" fontSeq: ["+fontSeq+"]");
         }
 
-        logger.info("getFontDetail requestUser: ["+user.getUserEmail()+"] "+" fontSeq: ["+fontSeq+"]");
+        logger.info("getFontDetail requestUser: [Not Login User] "+" fontSeq: ["+fontSeq+"]");
         GetFontDetailRes res = fontService.getFont(user,fontSeq);
         return ResponseEntity.status(200).body(res);
     }
