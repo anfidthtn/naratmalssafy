@@ -298,6 +298,10 @@
     box-sizing: border-box;
   }
 
+  & .font_introduce_textarea_box textarea::placeholder {
+    font-size: 25px;
+  }
+
   & .check_font_name_duplicate {
     padding: 2px 0px 5px 20px;
     flex-grow: 1;
