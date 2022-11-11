@@ -1,5 +1,6 @@
 package com.ssafy.be.api.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ssafy.be.api.dto.Creator;
 import lombok.Builder;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class GetFontDetailRes {
     String description;
     Long downloadCount;
     String regDate;
+    @JsonProperty(value="isLike")
     boolean isLike;
     boolean isDownload;
 }
