@@ -15,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
@@ -53,8 +54,12 @@ public class FontController {
     }
     @GetMapping("/detail/{fontSeq}")
     public ResponseEntity<GetFontDetailRes> getFont(@ApiIgnore Authentication auth, @PathVariable long fontSeq){
-        UserDetail userDetail = (UserDetail) auth.getDetails();
-        User user =  userDetail.getUser();
+        User user = null;
+        if(auth!=null){
+            UserDetail userDetail = (UserDetail) auth.getDetails();
+            user =  userDetail.getUser();
+        }
+
         logger.info("getFontDetail requestUser: ["+user.getUserEmail()+"] "+" fontSeq: ["+fontSeq+"]");
         GetFontDetailRes res = fontService.getFont(user,fontSeq);
         return ResponseEntity.status(200).body(res);
@@ -131,6 +136,6 @@ public class FontController {
     @PostMapping("/test")
     public ResponseEntity<IsSuccessRes> test(@RequestBody RegistDownloadHistoryReq req){
         logger.info("registFont requestUser: ["+req.getFontName()+"] "+" fontName: ["+req.getFontSeq()+"]");
-        return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(true).msg(req.toString()).build());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(IsSuccessRes.builder().isSuccess(true).msg(req.toString()).build());
     }
 }
