@@ -49,8 +49,8 @@ const PostBusanItem = ({ idx, postData }) => {
             });
       
       
-          fontDataDiv.style.fontFamily = postData.fontFamilyName;
-          fontDataTextArea.style.fontFamily = postData.fontFamilyName;
+          fontDataDiv.style.fontFamily = postData.fontName;
+          fontDataTextArea.style.fontFamily = postData.fontName;
           postColor.style.backgroundColor = postData.color
     }, []);
     const handleDelete = () =>{
