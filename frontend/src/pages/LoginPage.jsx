@@ -38,6 +38,9 @@ const LoginPage = () => {
             있어요!
           </div>
         </div>
+        <div className='Login__Bottom'>
+          카카오 로그인시 이메일정보 수집관련 동의는 선택이 아닌 <div className="Login__Bottom__Emphasis">필수!!!!!!</div> 입니다.  
+        </div>
         <div className="Login__Button" onClick={Kakaologin}>
           <img className="Login__Button__Kakao" src={kakao} alt="카카오"></img>
           카카오 계정으로 계속하기

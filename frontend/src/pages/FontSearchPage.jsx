@@ -46,7 +46,6 @@ const FontSearchPage = () => {
   // 서버에서 아이템을 가지고 오는 함수
   const getItems = useCallback(() => {
     setLoading(true);
-    console.log(page);
     axios({
       method: "GET",
       url: `/api/font`,
@@ -59,7 +58,6 @@ const FontSearchPage = () => {
       },
     })
       .then((res) => {
-        console.log(res);
         setFontData((prevState) => {
           if (prevState.toString() !== res.data.fonts.toString()) {
             return [...prevState, ...res.data.fonts];
@@ -92,7 +90,7 @@ const FontSearchPage = () => {
 
   const enterClick = (e) => {
     //검색 조건 받아오는 aixos 서버 통신
-    if (e.key === "Enter") {
+    if (e.key === "Enter" || e.type === "click") {
       setPage(0);
       axios({
         method: "GET",
