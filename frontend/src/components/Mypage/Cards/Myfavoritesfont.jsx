@@ -23,15 +23,11 @@ const MyFavoritesFont = ({ idx, fontData }) => {
             .load()
             .then(function (loadedFont) {
               document.fonts.add(loadedFont);
-              //do something after the font is loaded
-              console.log(loadedFont);
             })
             .catch(function (error) {
-              // error occurred
             });
       
       
-          // fontDataDiv.style.fontFamily = "Gamja Flower";
           fontDataDiv.style.fontFamily = fontData.fontFamilyName;
           fontDataTextArea.style.fontFamily = fontData.fontFamilyName;
   }, []);
@@ -39,7 +35,7 @@ const MyFavoritesFont = ({ idx, fontData }) => {
       <div className="fontData" id={`myfavorite_${idx}`}>
         <link rel="stylesheet" type="text/css" href={fontData.webFontPath}/>
       <div className="textarea_box">
-        <textarea className="textarea" id={`myfavorite_textarea_${idx}`}>{fontData.description}</textarea>
+        <textarea className="textarea" id={`myfavorite_textarea_${idx}`} defaultValue={fontData.description} readOnly></textarea>
       </div>
       <div className="info_box"         onClick={() => {
               navigate(`/detail/${fontData.fontSeq}`);

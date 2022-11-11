@@ -1,6 +1,9 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
+import loading from "../../assets/loading.gif";
+import '../../styles/Sign/Loading.scss'
+
 
 const KakaoRedirectHandler = () => {
   const location = useLocation();
@@ -41,6 +44,17 @@ const KakaoRedirectHandler = () => {
     getKakaoToken();
   }, []);
 
-  return <div>KakaoLogin</div>;
+  return(
+    <div className="Loading">
+      <img
+        className="Loading__Main"
+        src={loading}
+        alt="mainlogo"
+      />
+      <div className="Loading__Content">
+        로그인중 입니다.......
+      </div>
+    </div>
+  ) 
 };
 export default KakaoRedirectHandler;
