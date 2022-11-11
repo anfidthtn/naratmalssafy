@@ -21,7 +21,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionManager;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionSynchronizationManager;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -191,7 +193,6 @@ public class FontServiceImpl implements FontService {
     }
 
     @Override
-    @Transactional(rollbackFor = CreateFailException.class)
     public Long createFont(List<MultipartFile> uploadImg, String fontDescription, String fontName,User user) {
         //사진 저장하기
         String path;
@@ -199,10 +200,6 @@ public class FontServiceImpl implements FontService {
         String contentType;
         String [] fileNames = {"다","람","쥐","헌","쳇","바","퀴","에","타","고","파"};
         int idx = 0;
-        Long fontSeq = registFontInfo(fontName,fontDescription,user);
-        if(fontSeq==-1L){
-            return -1L;
-        }
         //String absolutePath = new File("").getAbsolutePath() + "\\";
         String absolutePath = System.getProperty("user.dir");;
         String dirName = "";
@@ -243,7 +240,7 @@ public class FontServiceImpl implements FontService {
             }
         }
         //fast API fontSeq 전달하기
-        requestCreateFont.requestToFastAPI(fontSeq,fontName);
+        requestCreateFont.requestToFastAPI(fontDescription,fontName,user);
         return 0L;
     }
 
