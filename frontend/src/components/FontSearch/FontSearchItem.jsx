@@ -20,7 +20,6 @@ const FontSearchItem = ({ idx, fontData, fontEditorText }) => {
     );
 
     // 서버에서 웹폰트 넘겨줄 경우 폰트 다운로드 후 적용
-
     let font = new FontFace(
       `${fontData.fontFamilyName}`,
       `url(${fontData.webFontPath}) format("woff")`
