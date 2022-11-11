@@ -32,12 +32,13 @@ export default function TopNav() {
     setIstoken(token);
     setIsloginshow(true);
     localStorage.removeItem("token");
+    localStorage.removeItem("email");
     swal({
       text: "성공적으로 로그아웃되었습니다.",
       icon: "success",
       button: "확인",
     }).then(() => {
-      navigate('/')
+      navigate("/");
     });
   };
 
