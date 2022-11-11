@@ -16,6 +16,7 @@ from models.GAN import GeneativeModel
 import cv2
 import os
 import requests
+from img2png import img2png
 
 class FontMaker():
     
@@ -26,29 +27,31 @@ class FontMaker():
         print(fontname + "훈련 완료")
         print(fontname + "png 제작 시작")
         self.font_gen = self.generate(self.model, self.dataloader)
-
-        imgs = []
-        maxH = 1
-        for i in range(len(common_han)):
-            img = np.abs(self.font_gen[i]).astype(np.uint8)
-            tmp = np.where(img!=255)
-            sizeh = img.shape[0]
-            sizew = img.shape[1]
-            hs,he,ws,we = max(min(tmp[0]),0), min(max(tmp[0]),sizeh), max(min(tmp[1]),0), min(max(tmp[1]),sizew)
-            img = np.pad(img[hs:he + 1,ws:we + 1], pad_width=2, mode='constant', constant_values=255)
-            imgs.append(img)
-            maxH = max(maxH, img.shape[0])
-        ratio = 128 / maxH
         
-        if not os.path.isdir(os.path.join(self.nowDir, 'FONT', self.fontname, 'img')):
-            os.mkdir(os.path.join(self.nowDir, 'FONT', self.fontname, 'img'))
+        img2png(self.font_gen, self.nowDir, self.fontname, common_han)
         
-        for i in range(len(imgs)):
-            img = imgs[i]
-            newH = max(int(img.shape[0] * ratio), 1)
-            newW = int(newH * img.shape[1] / max(1, img.shape[0])) + 1
-            img = Image.fromarray(cv2.resize(img.astype(np.uint8), (newW, newH), interpolation=cv2.INTER_CUBIC))
-            img.save(os.path.join(self.nowDir, 'FONT', self.fontname, 'img', f'{hex(ord(common_han[i]))[2:].upper()}.png'), 'PNG')
+        # imgs = []
+        # maxH = 1
+        # for i in range(len(common_han)):
+        #     img = np.abs(self.font_gen[i]).astype(np.uint8)
+        #     tmp = np.where(img!=255)
+        #     sizeh = img.shape[0]
+        #     sizew = img.shape[1]
+        #     hs,he,ws,we = max(min(tmp[0]),0), min(max(tmp[0]),sizeh), max(min(tmp[1]),0), min(max(tmp[1]),sizew)
+        #     img = np.pad(img[hs:he + 1,ws:we + 1], pad_width=2, mode='constant', constant_values=255)
+        #     imgs.append(img)
+        #     maxH = max(maxH, img.shape[0])
+        # ratio = 128 / maxH
+        
+        # if not os.path.isdir(os.path.join(self.nowDir, 'FONT', self.fontname, 'img')):
+        #     os.mkdir(os.path.join(self.nowDir, 'FONT', self.fontname, 'img'))
+        
+        # for i in range(len(imgs)):
+        #     img = imgs[i]
+        #     newH = max(int(img.shape[0] * ratio), 1)
+        #     newW = int(newH * img.shape[1] / max(1, img.shape[0])) + 1
+        #     img = Image.fromarray(cv2.resize(img.astype(np.uint8), (newW, newH), interpolation=cv2.INTER_CUBIC))
+        #     img.save(os.path.join(self.nowDir, 'FONT', self.fontname, 'img', f'{hex(ord(common_han[i]))[2:].upper()}.png'), 'PNG')
         print(fontname + "png 제작 완료")
         
 
@@ -117,6 +120,8 @@ class FontMaker():
         # Trainstep
         self.progress_bar = tqdm(range(self.train_dataloader.__len__()*epochs))
         for epoch in range(epochs):
+            if epoch % 10 == 9:
+                print(str(epoch) + '/' + str(epochs))
             self.model.train()
             total_loss = 0
             
@@ -171,24 +176,6 @@ class FontMaker():
                     plt.show()
 
         return generated_font
-
-    def write(to_gen, font_gen):
-        gen = to_gen.split('\n')
-        len_max = max(list(map(len,to_gen.split('\n'))))
-        row_num = len(to_gen.split('\n'))
-        w,h = len_max,len(to_gen.split('\n'))
-
-        plt.figure(figsize=(w,h))
-        for row in range(row_num):
-            for c in range(len(to_gen.split('\n')[row])):
-                plt.subplot(row_num,len_max,(row*len_max)+c+1)
-                # plt.title(f"{gen[row][c]}")
-                if gen[row][c] not in common_han:
-                    plt.imshow(np.full((32,32,3),1,dtype=float),cmap='gray')
-                else:
-                    plt.imshow(font_gen[common_han.index(gen[row][c])], cmap='gray')
-                plt.axis('off')
-        plt.show()
         
     def makeTTF(self, fontSeq, fontNameHash, fontName):
         print(self.fontname + "ttf 제작 시작")
