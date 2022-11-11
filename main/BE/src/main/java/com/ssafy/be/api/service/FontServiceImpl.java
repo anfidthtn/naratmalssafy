@@ -5,6 +5,7 @@ import com.ssafy.be.api.dto.TotalResFont;
 import com.ssafy.be.api.response.CheckFontNameRes;
 import com.ssafy.be.api.response.GetFontDetailRes;
 import com.ssafy.be.api.response.GetFontsRes;
+import com.ssafy.be.common.exception.CreateFailException;
 import com.ssafy.be.common.util.EncodeFontName;
 import com.ssafy.be.common.util.RequestCreateFont;
 import com.ssafy.be.db.entity.Font;
@@ -19,6 +20,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,7 +55,7 @@ public class FontServiceImpl implements FontService {
         if("fontName".equals(flag)){
             fontAll = fontRepository.findByFontNameContains(pageable,keyword);
         }
-        else if("creator".equals(flag)){
+        else if("nickName".equals(flag)){
             List<User> creators = userRepository.findByUserNameContainsOrUserNicknameContainsIgnoreCaseOrUserLocationContains(keyword,keyword,keyword);
             fontAll = fontRepository.findByFontCreatorIn(pageable,creators);
         }
@@ -122,12 +124,15 @@ public class FontServiceImpl implements FontService {
 
     @Override
     public GetFontDetailRes getFont(User user, Long fontSeq) {
-        //폰트 가져와
         Font target = fontRepository.findById(fontSeq).get();
-        //다운로드 했는지 확인해
-        boolean isDownload = fontDownloadHistoryRepository.findByUserAndDownloadFont(user, target) != null;
-        //즐겨찾기 했는지 확인해
-        boolean isLike = userFontRepository.findByUserAndFont(user, target) != null;
+        boolean isDownload =false;
+        boolean isLike = false;
+        if(user!=null){
+            //다운로드 했는지 확인해
+            isDownload = fontDownloadHistoryRepository.findByUserAndDownloadFont(user, target) != null;
+            //즐겨찾기 했는지 확인해
+            isLike = userFontRepository.findByUserAndFont(user, target) != null;
+        }
         GetFontDetailRes res = GetFontDetailRes.builder()
                 .creator(Creator.builder()
                         .email(target.getFontCreator().getUserEmail())
@@ -148,7 +153,6 @@ public class FontServiceImpl implements FontService {
                 .isLike(isLike)
                 .regDate(target.getFontRegDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")))
                 .build();
-
         //폰트 반환해
         return res;
     }
@@ -187,7 +191,7 @@ public class FontServiceImpl implements FontService {
     }
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = CreateFailException.class)
     public Long createFont(List<MultipartFile> uploadImg, String fontDescription, String fontName,User user) {
         //사진 저장하기
         String path;
@@ -215,7 +219,7 @@ public class FontServiceImpl implements FontService {
             file.mkdirs();
         }
         for(MultipartFile img : uploadImg){
-            if(idx==7) {
+            if(idx==0) { // "다" 제외
                 idx++;
                 continue;
             }
