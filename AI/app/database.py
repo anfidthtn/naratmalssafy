@@ -14,6 +14,4 @@ PASSWORD = mysql_conf['PASSWORD']
 DBNAME = mysql_conf['DBNAME']
 MYSQL_URL = f'mysql+pymysql://{USERNAME}:{PASSWORD}@{HOSTNAME}:{PORT}/{DBNAME}'
 
-engine = create_engine(MYSQL_URL)
-
 Base = declarative_base()

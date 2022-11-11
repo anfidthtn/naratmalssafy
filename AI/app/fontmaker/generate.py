@@ -194,4 +194,4 @@ class FontMaker():
         print(self.fontname + "ttf 제작 시작")
         requests.post('https://xn--910b35kqzb51p93w.com/nodeexpress/makefont/', json={'fontSeq' : fontSeq, 'fontNameHash' : fontNameHash, 'fontName' : fontName})
         print(self.fontname + "ttf 제작 완료")
-        # requests.post('http://localhost:28080/nodeexpress/makefont/', json={'fontSeq' : fontSeq, 'fontName' : fontName})
+        # requests.post('http://localhost:28080/nodeexpress/makefont/', json={'fontSeq' : fontSeq, 'fontNameHash' : fontNameHash, 'fontName' : fontName})
