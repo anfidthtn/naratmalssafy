@@ -32,16 +32,20 @@ const LoginPage = () => {
             width={"80%"}
           />
         </div>
-        <div className='Login__Top'>
-          <div className='Login__Top__Title'>나랏말싸피 로그인</div>
-          <div className='Login__Top__Content'>로그인을 하세요! 로그인을 통해 더 많고 다양한 서비스를 경험할 수 있어요!</div>
+        <div className="Login__Top">
+          <div className="Login__Top__Title">나랏말싸피 로그인</div>
+          <div className="Login__Top__Content">
+            로그인을 하세요! 로그인을 통해 더 많고 다양한 서비스를 경험할 수
+            있어요!
+          </div>
         </div>
         <div className="Login__Button" onClick={Kakaologin}>
           <img className="Login__Button__Kakao" src={kakao} alt="카카오"></img>
           카카오 계정으로 계속하기
         </div>
-        <div className='Login__Bottom'>
-          카카오 로그인시 이메일정보 수집관련 동의는 선택이 아닌 <div className="Login__Bottom__Emphasis">필수!!!!!!</div> 입니다.  
+        <div className="Login__Bottom">
+          카카오 로그인시 이메일정보 수집관련 동의는 선택이 아닌{" "}
+          <div className="Login__Bottom__Emphasis">필수!!!!!!</div> 입니다.
         </div>
       </div>
     </div>

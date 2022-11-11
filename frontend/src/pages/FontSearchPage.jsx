@@ -9,18 +9,18 @@ import { FcSearch } from "react-icons/fc";
 import { BsFonts } from "react-icons/bs";
 import FontSearchItem from "../components/FontSearch/FontSearchItem";
 import { useInView } from "react-intersection-observer";
-import { dummyDataSet } from "../store/dummy";
+import axios from "axios";
 
 const FontSearchPage = () => {
   const [searchCondition, setSearchCondition] = useState("nickName");
   const [searchText, setSearchText] = useState("");
-  const [searchOption, setSearchOption] = useState("latest");
-  const [fontData, setFontData] = useState(dummyDataSet);
+  const [searchOption, setSearchOption] = useState("fontRegDate,desc");
+  const [fontData, setFontData] = useState([]);
 
   const [fontEditorText, setFontEditorText] = useState("만나서 반갑습니다.");
 
   // 무한 스크롤
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
   const [ref, inView] = useInView();
 
@@ -44,8 +44,34 @@ const FontSearchPage = () => {
   }, []);
 
   // 서버에서 아이템을 가지고 오는 함수
-  const getItems = useCallback(async () => {
+  const getItems = useCallback(() => {
     setLoading(true);
+    console.log(page);
+    axios({
+      method: "GET",
+      url: `/api/font`,
+      params: {
+        page: page,
+        size: 20,
+        flag: searchCondition,
+        keyword: searchText,
+        sort: searchOption,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        setFontData((prevState) => {
+          if (prevState.toString() !== res.data.fonts.toString()) {
+            return [...prevState, ...res.data.fonts];
+          } else {
+            return prevState;
+          }
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
     // await axios.get(`${Your Server Url}/page=${page}`).then((res) => {
     //   setItems(prevState => [...prevState, res])
     // })
@@ -67,16 +93,35 @@ const FontSearchPage = () => {
   const enterClick = (e) => {
     //검색 조건 받아오는 aixos 서버 통신
     if (e.key === "Enter") {
-      //검색 처리
-    } else {
+      setPage(0);
+      axios({
+        method: "GET",
+        url: `/api/font`,
+        params: {
+          page: 0,
+          size: 20,
+          flag: searchCondition,
+          keyword: searchText,
+          sort: searchOption,
+        },
+      })
+        .then((res) => {
+          setFontData(res.data.fonts);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   };
 
   const clickSearchOption = (e) => {
+    let searchOpt = "";
+
     if (isMobile600) {
       setSearchOption(e.target.value);
+      searchOpt = e.target.value;
     } else {
-      setSearchOption(e.target.id);
+      searchOpt = e.target.id;
       const fontSearchOptName = document.getElementsByClassName(
         "font_search_opt_name"
       );
@@ -90,6 +135,25 @@ const FontSearchPage = () => {
         }
       }
     }
+
+    setPage(0);
+    axios({
+      method: "GET",
+      url: `/api/font`,
+      params: {
+        page: 0,
+        size: 20,
+        flag: searchCondition,
+        keyword: searchText,
+        sort: searchOpt,
+      },
+    })
+      .then((res) => {
+        setFontData(res.data.fonts);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -161,10 +225,12 @@ const FontSearchPage = () => {
                 label="정렬"
                 onChange={clickSearchOption}
               >
-                <MenuItem value={"latest"}>최신순</MenuItem>
-                <MenuItem value={"oldest"}>오래된 순</MenuItem>
-                <MenuItem value={"favorite"}>즐겨찾기 순</MenuItem>
-                <MenuItem value={"download"}>다운로드 순</MenuItem>
+                <MenuItem value={"fontRegDate,desc"}>최신순</MenuItem>
+                <MenuItem value={"fontRegDate,asc"}>오래된 순</MenuItem>
+                <MenuItem value={"fontFavCount,desc"}>즐겨찾기 순</MenuItem>
+                <MenuItem value={"fontDownloadCount,desc"}>
+                  다운로드 순
+                </MenuItem>
               </Select>
             </FormControl>
           </>
@@ -172,28 +238,28 @@ const FontSearchPage = () => {
           <ul style={{ marginRight: "20px" }}>
             <li
               className="font_search_opt_name"
-              id="latest"
+              id="fontRegDate,desc"
               onClick={clickSearchOption}
             >
               최신순
             </li>
             <li
               className="font_search_opt_name"
-              id="oldest"
+              id="fontRegDate,asc"
               onClick={clickSearchOption}
             >
               오래된 순
             </li>
             <li
               className="font_search_opt_name"
-              id="favorite"
+              id="fontFavCount,desc"
               onClick={clickSearchOption}
             >
               즐겨찾기 순
             </li>
             <li
               className="font_search_opt_name"
-              id="download"
+              id="fontDownloadCount,desc"
               onClick={clickSearchOption}
             >
               다운로드 순

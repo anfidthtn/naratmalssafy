@@ -32,7 +32,7 @@ function App() {
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/" element={<MainPage />} />
           <Route path="/make-font" element={<FontMakePage />} />
-          <Route path="/detail/:id" element={<FontDetailPage />} />
+          <Route path="/detail/:fontSeq" element={<FontDetailPage />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/padlet" element={<PadletPage />} />
           <Route path="/post/seoul" element={<Postseoul />} />

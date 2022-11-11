@@ -22,8 +22,8 @@ const FontSearchItem = ({ idx, fontData, fontEditorText }) => {
     // 서버에서 웹폰트 넘겨줄 경우 폰트 다운로드 후 적용
 
     let font = new FontFace(
-      "지홍체",
-      `url(https://naratmalssafy.s3.ap-northeast-2.amazonaws.com/fo222.woff) format("woff")`
+      `${fontData.fontFamilyName}`,
+      `url(${fontData.webFontPath}) format("woff")`
     );
     font
       .load()
@@ -39,7 +39,7 @@ const FontSearchItem = ({ idx, fontData, fontEditorText }) => {
     fontDataDiv.style.fontFamily = fontData.fontFamilyName;
     // fontDataDiv.style.fontFamily = "지홍체";
     fontDataTextArea.style.fontFamily = fontData.fontFamilyName;
-  }, []);
+  }, [fontData]);
 
   return (
     <div className="fontData" id={`fontData_${idx}`}>
@@ -77,11 +77,11 @@ const FontSearchItem = ({ idx, fontData, fontEditorText }) => {
           <div className="font_user_info">
             <span style={{ fontSize: "10px" }}>Designed By.</span>
             <span style={{ fontWeight: "bold", fontSize: "16px" }}>
-              {fontData.Creator.location +
+              {fontData.creator?.location +
                 "_" +
-                fontData.Creator.name +
+                fontData.creator?.name +
                 "_" +
-                fontData.Creator.nickname}
+                fontData.creator?.nickname}
             </span>
           </div>
         </div>

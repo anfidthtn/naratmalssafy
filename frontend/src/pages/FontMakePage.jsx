@@ -105,13 +105,13 @@ const FontMakePage = () => {
 
   useEffect(() => {
     const nextButton = document.getElementById("fontMakePage_next_button");
-    nextButton.classList.remove("noHover");
+    nextButton?.classList.remove("noHover");
     if (currentStep === 5 && !uploadImage) {
-      nextButton.classList.add("noHover");
+      nextButton?.classList.add("noHover");
     } else if (currentStep === 6 && croppedImageUrl.length !== 11) {
-      nextButton.classList.add("noHover");
+      nextButton?.classList.add("noHover");
     } else if (currentStep === 9) {
-      nextButton.classList.add("noHover");
+      nextButton?.classList.add("noHover");
     }
   }, [currentStep, cropStep, uploadImage, croppedImageUrl]);
 
@@ -154,6 +154,7 @@ const FontMakePage = () => {
 
       if (!fontNameCheck) {
         alert("폰트 이름이 중복됩니다.");
+        setCurrentStep(currentStep);
         return;
       }
       const formData = new FormData();
@@ -194,6 +195,16 @@ const FontMakePage = () => {
     }
   }
 
+  useEffect(() => {
+    const checkFontNameDiv = document.getElementById(
+      "check_font_name_duplicate"
+    );
+
+    if (fontName.length < 2) {
+      checkFontNameDiv && (checkFontNameDiv.style.color = "red");
+    }
+  }, [fontName]);
+
   function checkFontName(e) {
     const checkFontNameDiv = document.getElementById(
       "check_font_name_duplicate"
@@ -202,17 +213,34 @@ const FontMakePage = () => {
       return;
     }
 
-    setFontNameCheck(false);
-    checkFontNameDiv.style.color = "red";
+    // setFontNameCheck(false);
+    // checkFontNameDiv.style.color = "red";
     setFontName(e.target.value);
+
     if (e.target.value.length < 2) {
       return;
     }
 
     // 폰트 중복체크 axios
-
-    checkFontNameDiv.style.color = "green";
-    setFontNameCheck(true);
+    axios({
+      method: "GET",
+      url: `/api/font/checkname/${e.target.value}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      },
+    })
+      .then((res) => {
+        if (res.data.usable && e.target.value.length >= 2) {
+          checkFontNameDiv.style.color = "green";
+          setFontNameCheck(true);
+        } else {
+          setFontNameCheck(false);
+          checkFontNameDiv.style.color = "red";
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function UploadImageClick() {
@@ -581,13 +609,15 @@ const FontMakePage = () => {
           >
             {currentStep === 9 ? "처음으로" : "이전"}
           </button>
-          <button
-            className="next_button"
-            id="fontMakePage_next_button"
-            onClick={() => clickStepButton("next")}
-          >
-            {currentStep === 8 ? "완료" : "다음"}
-          </button>
+          {currentStep !== 9 && (
+            <button
+              className="next_button"
+              id="fontMakePage_next_button"
+              onClick={() => clickStepButton("next")}
+            >
+              {currentStep === 8 ? "완료" : "다음"}
+            </button>
+          )}
         </div>
       </div>
     </div>

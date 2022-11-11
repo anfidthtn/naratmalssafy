@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { dummyDataSet } from "../store/dummy";
 import "../styles/FontDetailPage/FontDetailPage.scss";
 import { BiStar } from "react-icons/bi";
 import { BsStarFill } from "react-icons/bs";
@@ -25,6 +24,7 @@ import kakaoImg from "../assets/sns_icon/kakao_img.png";
 import linkImg from "../assets/sns_icon/link.png";
 
 import { useScript } from "../hooks";
+import axios from "axios";
 
 const FontDetailPage = () => {
   const navigate = useNavigate();
@@ -50,27 +50,55 @@ const FontDetailPage = () => {
   let clipboardModal = null;
 
   // 파라미터로 넘어오는 id 값 받기
-  const { id } = useParams();
+  const { fontSeq } = useParams();
   useEffect(() => {
     // axios로 폰트 데이터 요청
+    axios({
+      method: "GET",
+      url: `/api/font/detail/${fontSeq}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      },
+    })
+      .then((res) => {
+        console.log(res);
+        setfontData(res.data);
+        setOneLineText(res.data.description);
+        setIsFavorite(res.data.isLike);
+        const fontDetailPage = document.getElementById("FontDetailPage");
 
-    setfontData(dummyDataSet[id - 1]);
-    setOneLineText(dummyDataSet[id - 1].description);
-    setIsFavorite(dummyDataSet[id - 1].isLike);
+        const textarea = document.getElementById(
+          `FontDetailPage_textarea_${res.data.fontSeq}`
+        );
 
-    const fontDetailPage = document.getElementById("FontDetailPage");
-    const textarea = document.getElementById(
-      `FontDetailPage_textarea_${fontData.fontSeq}`
-    );
-    const dummyData = dummyDataSet[id - 1];
+        let font = new FontFace(
+          `${res.data.fontFamilyName}`,
+          `url(${res.data.webFontPath}) format("woff")`
+        );
+        font
+          .load()
+          .then(function (loadedFont) {
+            document.fonts.add(loadedFont);
+            //do something after the font is loaded
+            // console.log(loadedFont);
+          })
+          .catch(function (error) {
+            // error occurred
+          });
 
-    fontDetailPage.style.fontFamily = dummyData.fontFamilyName;
-    textarea.style.fontFamily = dummyData.fontFamilyName;
+        fontDetailPage &&
+          (fontDetailPage.style.fontFamily = res.data.fontFamilyName);
+
+        textarea && (textarea.style.fontFamily = res.data.fontFamilyName);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, []);
 
   useEffect(() => {
     const textarea = document.getElementById(
-      `FontDetailPage_textarea_${fontData.fontSeq}`
+      `FontDetailPage_textarea_${fontSeq}`
     );
 
     textarea.style.fontSize = fontTrialConfig.size + "px";
@@ -157,7 +185,7 @@ const FontDetailPage = () => {
 
   function imageClick(e) {
     const textarea = document.getElementById(
-      `FontDetailPage_textarea_${fontData.fontSeq}`
+      `FontDetailPage_textarea_${fontSeq}`
     );
 
     let bgImage = null;
@@ -194,20 +222,54 @@ const FontDetailPage = () => {
     }
 
     // axios로 다운로드 받은 폰트번호 서버로 보내기
+    axios({
+      method: "POST",
+      url: `/api/user/download`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      },
+      data: {
+        fontName: fontData.fontName,
+        fontSeq: fontSeq,
+      },
+    })
+      .then((_res) => {
+        // 만약 다운로드가 성공한다면
+        setfontData({ ...fontData, downloadCount: ++fontData.downloadCount });
 
-    // 만약 다운로드가 성공한다면
-    setfontData({ ...fontData, downloadCount: ++fontData.downloadCount });
-
-    //다운로드 페이지 이동
-    window.location.href = fontData.fontDownloadPath;
+        //다운로드 페이지 이동
+        window.location.href = fontData.fontDownloadPath;
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function clickModifyTextButton() {
+    if (oneLineText.length < 5) {
+      alert("최소 5자 이상 입력해주세요!");
+      return;
+    }
     // 변경사항 서버로 axios 보내기
-
-    // 정상적인 응답이 오면
-    fontData.description = oneLineText;
-    setModifyText(false);
+    axios({
+      method: "PUT",
+      url: `/api/font`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      },
+      data: {
+        fontDescription: oneLineText,
+        fontName: fontData.fontFamily,
+      },
+    })
+      .then(() => {
+        // 정상적인 응답이 오면
+        fontData.description = oneLineText;
+        setModifyText(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
 
   function clickFavoriteButton() {
@@ -224,15 +286,28 @@ const FontDetailPage = () => {
     }
 
     // Favorite 버튼 클릭 API 요청
-
-    // 만약 성공했다면
-    setIsFavorite(!isFavorite);
-
-    if (isFavorite) {
-      fontData.favCount -= 1;
-    } else {
-      fontData.favCount += 1;
-    }
+    axios({
+      method: "POST",
+      url: `/api/user/toggleLike`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+      },
+      data: {
+        id: fontSeq,
+      },
+    })
+      .then((_res) => {
+        // 만약 성공했다면
+        if (isFavorite) {
+          fontData.favCount -= 1;
+        } else {
+          fontData.favCount += 1;
+        }
+        setIsFavorite(!isFavorite);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }
   // 카카오 공유 버튼######################################################################################################
   const status = useScript("https://developers.kakao.com/sdk/js/kakao.js");
@@ -251,11 +326,11 @@ const FontDetailPage = () => {
       objectType: "feed",
       content: {
         title: `${
-          fontData.Creator.location +
+          fontData.creator.location +
           "_" +
-          fontData.Creator.name +
+          fontData.creator.name +
           "_" +
-          fontData.Creator.nickname
+          fontData.creator.nickname
         }님의 폰트를 구경해보세요!`,
         // 폰트 만든사람 이름 넣어서 보내면 됨.
         description: "#폰트 #나만의 #싸피 #SSAFY #추억 #선물",
@@ -288,11 +363,11 @@ const FontDetailPage = () => {
           <div className="font_user">
             Designed By.{" "}
             <span style={{ fontSize: "1.5rem" }}>
-              {fontData.Creator?.location +
+              {fontData.creator?.location +
                 "_" +
-                fontData.Creator?.name +
+                fontData.creator?.name +
                 "_" +
-                fontData.Creator?.nickname}
+                fontData.creator?.nickname}
             </span>{" "}
           </div>
           <div className="font_make_time">
@@ -385,7 +460,7 @@ const FontDetailPage = () => {
       <div className="third_row_box">
         <div className="text_area_box">
           <textarea
-            id={`FontDetailPage_textarea_${fontData.fontSeq}`}
+            id={`FontDetailPage_textarea_${fontSeq}`}
             placeholder="원하는 글자를 작성해보세요"
           ></textarea>
         </div>
