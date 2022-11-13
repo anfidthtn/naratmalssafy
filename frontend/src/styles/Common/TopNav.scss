@@ -19,6 +19,14 @@
     justify-content: space-between;
   }
 
+  &__MainIconBox {
+    height: 100%;
+  }
+
+  &__LinkBox {
+    height: 100%;
+  }
+
   @media (max-width: 1024px) {
     &__container {
       max-width: 100%;
@@ -44,10 +52,14 @@
     display: flex;
     justify-content: space-between;
     list-style: none;
+    height: 100%;
+    margin: 0;
+    align-items: center;
   }
 
   & li {
     margin-right: 40px;
+    font-size: 1.2rem;
     cursor: pointer;
   }
 

@@ -1,7 +1,7 @@
 @font-face {
-  font-family: "OTWelcomeRA";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2110@1.0/OTWelcomeRA.woff2")
-    format("woff2");
+  font-family: "GongGothicMedium";
+  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-10@1.0/GongGothicMedium.woff")
+    format("woff");
   font-weight: normal;
   font-style: normal;
 }
@@ -10,7 +10,13 @@ body {
   background-image: url("../../assets/background.jpg");
   height: 100vh;
   margin: 0;
-  font-family: "OTWelcomeRA";
+  font-family: "GongGothicMedium";
+}
+
+button,
+textarea,
+input {
+  font-family: "GongGothicMedium";
 }
 
 .App {

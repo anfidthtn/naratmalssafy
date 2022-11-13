@@ -172,13 +172,19 @@ const FontSearchPage = () => {
       <div className="font_search_box">
         <div className="font_search_dropdown">
           <FormControl sx={{ width: 120 }}>
-            <InputLabel id="demo-simple-select-label">검색</InputLabel>
+            <InputLabel
+              id="demo-simple-select-label"
+              style={{ fontFamily: "GongGothicMedium" }}
+            >
+              검색
+            </InputLabel>
             <Select
               labelId="demo-simple-select-label"
               id="demo-simple-select"
               value={searchCondition}
               label="검색"
               onChange={handleChangeCondition}
+              style={{ fontFamily: "GongGothicMedium" }}
             >
               <MenuItem value={"nickName"}>닉네임</MenuItem>
               <MenuItem value={"fontName"}>폰트 이름</MenuItem>
@@ -196,8 +202,12 @@ const FontSearchPage = () => {
               }
               variant="standard"
               fullWidth
-              inputProps={{ style: { fontSize: 20, fontWeight: "bold" } }}
-              InputLabelProps={{ style: { fontSize: 20 } }} // font size of input label
+              inputProps={{
+                style: { fontSize: 20, fontFamily: "GongGothicMedium" },
+              }}
+              InputLabelProps={{
+                style: { fontSize: 20, fontFamily: "GongGothicMedium" },
+              }} // font size of input label
               onChange={handleChangeText}
               value={searchText}
               onKeyDown={enterClick}
