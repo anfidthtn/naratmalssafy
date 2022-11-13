@@ -43,8 +43,8 @@ def read_root(data : Item):
     nameHash = hashlib.sha1(data.fontName.encode('utf-8')).hexdigest()
     maker = FontMaker(nameHash)
     maker.makeTTF(nameHash, data.fontName)
-    ttfURL = 'https://naratmalssafy.s3.ap-northeast-2.amazonaws.com/' + nameHash + '.ttf'
-    woffURL = 'https://naratmalssafy.s3.ap-northeast-2.amazonaws.com/' + nameHash + '.woff'
+    ttfURL = 'https://d1mo4ucdb98b4w.cloudfront.net/' + nameHash + '.ttf'
+    woffURL = 'https://d1mo4ucdb98b4w.cloudfront.net/' + nameHash + '.woff'
     try:
         s3.upload_file(os.path.join("fontmaker", "FONT", nameHash, "ttf_fonts", nameHash + ".ttf"), "naratmalssafy", nameHash + ".ttf")
         s3.upload_file(os.path.join("fontmaker", "FONT", nameHash, "ttf_fonts", nameHash + ".woff"), "naratmalssafy", nameHash + ".woff")
