@@ -11,10 +11,8 @@ import com.ssafy.be.common.util.RequestCreateFont;
 import com.ssafy.be.db.entity.Font;
 import com.ssafy.be.db.entity.User;
 import com.ssafy.be.db.entity.UserFont;
-import com.ssafy.be.db.repository.FontDownloadHistoryRepository;
-import com.ssafy.be.db.repository.FontRepository;
-import com.ssafy.be.db.repository.UserFontRepository;
-import com.ssafy.be.db.repository.UserRepository;
+import com.ssafy.be.db.entity.WaitCreate;
+import com.ssafy.be.db.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -47,6 +45,8 @@ public class FontServiceImpl implements FontService {
     RequestCreateFont requestCreateFont;
     @Autowired
     EncodeFontName encodeFontName;
+    @Autowired
+    WaitCreateRepository waitCreateRepository;
 
     @Value("${users.handwriteImg.savePath}")
     private String saveFolderPath;
@@ -163,7 +163,8 @@ public class FontServiceImpl implements FontService {
     public CheckFontNameRes checkFontName(String fontName) {
         CheckFontNameRes res;
         Font findRes= fontRepository.findByFontName(fontName);
-        if(findRes ==null){
+        WaitCreate findRes2 = waitCreateRepository.findByWaitCreateName(fontName);
+        if(findRes ==null&&findRes2==null){
             res = CheckFontNameRes.builder()
                     .isUsable(true)
                     .msg("사용가능한 폰트 이름입니다.")
@@ -179,17 +180,17 @@ public class FontServiceImpl implements FontService {
     }
 
     @Override
-    public Long registFontInfo(String fontName, String fontDescription, User user) {
-        Font font = Font.builder()
-                .fontDescription(fontDescription)
-                .fontName(fontName)
-                .fontCreator(user)
+    public Long registWaitInfo(String fontName, User user) {
+        WaitCreate waitCreate = WaitCreate.builder()
+                .waitCreateName(fontName)
+                .waitCreateState(0)
+                .userSeq(user.getUserSeq())
                 .build();
         if(!checkFontName(fontName).isUsable()){
             return -1L;
         }
-        Font RegistedFont = fontRepository.save(font);
-        return RegistedFont.getFontSeq();
+        WaitCreate res = waitCreateRepository.save(waitCreate);
+        return res.getWaitCreateSeq();
     }
 
     @Override
@@ -239,6 +240,7 @@ public class FontServiceImpl implements FontService {
                 return -5L;
             }
         }
+        if(registWaitInfo(fontName,user)==-1) return -1L;
         //fast API fontSeq 전달하기
         requestCreateFont.requestToFastAPI(fontDescription,fontName,user);
         return 0L;
