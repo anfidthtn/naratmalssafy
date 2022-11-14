@@ -28,6 +28,9 @@ class FontMaker():
         print(fontname + "png 제작 시작")
         self.font_gen = self.generate(self.model, self.dataloader)
         
+        if not os.path.isdir(os.path.join(self.nowDir, 'FONT', self.fontname, 'img')):
+            os.mkdir(os.path.join(self.nowDir, 'FONT', self.fontname, 'img'))
+        
         img2png(self.font_gen, self.nowDir, self.fontname, common_han)
         
         # imgs = []
@@ -43,8 +46,6 @@ class FontMaker():
         #     maxH = max(maxH, img.shape[0])
         # ratio = 128 / maxH
         
-        # if not os.path.isdir(os.path.join(self.nowDir, 'FONT', self.fontname, 'img')):
-        #     os.mkdir(os.path.join(self.nowDir, 'FONT', self.fontname, 'img'))
         
         # for i in range(len(imgs)):
         #     img = imgs[i]
