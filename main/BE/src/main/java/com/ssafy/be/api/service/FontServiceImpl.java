@@ -251,6 +251,9 @@ public class FontServiceImpl implements FontService {
     @Override
     public Long updateFontInfo(String fontName, String fontDescription, User user) {
         Font font = fontRepository.findByFontName(fontName);
+        if(font == null){
+            return -3L;
+        }
         if(font.getFontDownloadFile()==null){
             return-2L;
         }
