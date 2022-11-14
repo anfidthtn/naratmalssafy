@@ -46,11 +46,8 @@ public class FontController {
         else{
             logger.info("getFonts requestUser: [Not Login] "+" page: ["+page+"]"+"flag: ["+flag+"] "+" keyword: ["+keyword+"]");
         }
-
         res = fontService.getFonts(user,page,flag,keyword);
         return ResponseEntity.status(200).body(res);
-
-
     }
     @GetMapping("/detail/{fontSeq}")
     public ResponseEntity<GetFontDetailRes> getFont(@ApiIgnore Authentication auth, @PathVariable long fontSeq){
@@ -60,7 +57,6 @@ public class FontController {
             user =  userDetail.getUser();
             logger.info("getFontDetail requestUser: ["+user.getUserEmail()+"] "+" fontSeq: ["+fontSeq+"]");
         }
-
         logger.info("getFontDetail requestUser: [Not Login User] "+" fontSeq: ["+fontSeq+"]");
         GetFontDetailRes res = fontService.getFont(user,fontSeq);
         return ResponseEntity.status(200).body(res);
@@ -137,6 +133,11 @@ public class FontController {
     @PostMapping("/test")
     public ResponseEntity<IsSuccessRes> test(@RequestBody RegistDownloadHistoryReq req){
         logger.info("registFont requestUser: ["+req.getFontName()+"] "+" fontName: ["+req.getFontSeq()+"]");
+        try{
+            Thread.sleep(10000);
+        }catch (Exception e){
+
+        }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(IsSuccessRes.builder().isSuccess(true).msg(req.toString()).build());
     }
 }

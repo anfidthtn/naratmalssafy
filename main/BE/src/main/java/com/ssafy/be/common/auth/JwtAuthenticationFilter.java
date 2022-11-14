@@ -2,6 +2,7 @@ package com.ssafy.be.common.auth;
 
 
 import com.auth0.jwt.JWTVerifier;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.ssafy.be.api.service.UserService;
 import com.ssafy.be.common.util.JwtTokenUtil;
@@ -60,9 +61,9 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
             // parse the token and validate it (decode)
             JWTVerifier verifier = (JWTVerifier) JwtTokenUtil.getVerifier();
             JwtTokenUtil.handleError(token);
+            String userEmail="";
             DecodedJWT decodedJWT = verifier.verify(token.replace(JwtTokenUtil.TOKEN_PREFIX, ""));
-            String userEmail = decodedJWT.getSubject();
-
+            userEmail = decodedJWT.getSubject();
             // Search in the DB if we find the user by token subject (username)
             // If so, then grab user details and create spring auth token using username, pass, authorities/roles
             if (userEmail != null) {

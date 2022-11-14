@@ -72,7 +72,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 //회원가입
 //                .antMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
-
                 .anyRequest().permitAll()
                 .and().cors();
 
