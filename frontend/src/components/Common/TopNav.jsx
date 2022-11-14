@@ -22,7 +22,7 @@ export default function TopNav() {
       setIsloginshow(false);
       axios({
         method: "GET",
-        url: "api/user/checkToken",
+        url: "/api/user/checkToken",
         headers: {
           Authorization: `Bearer ${token}`,
         },
