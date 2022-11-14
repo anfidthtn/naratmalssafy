@@ -61,7 +61,7 @@ const FontDetailPage = () => {
       },
     })
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         setfontData(res.data);
         setOneLineText(res.data.description);
         setIsFavorite(res.data.isLike);
