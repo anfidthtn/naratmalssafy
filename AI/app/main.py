@@ -22,6 +22,8 @@ import requests
 
 import datetime
 
+import send_finish_mail
+
 
 
 
@@ -41,6 +43,12 @@ s3 = s3_connection()
 @app.post("/fastapi/makefont")
 def read_root(data : Item):
     nameHash = hashlib.sha1(data.fontName.encode('utf-8')).hexdigest()
+    engine = database.create_engine(database.MYSQL_URL)
+    session = database.Session(engine, autoflush=False)
+    db_waitCreate = session.query(models_.TWaitCreate).filter(models_.TWaitCreate.wait_create_name == data.fontName).first()
+    db_waitCreate.wait_create_state = 1
+    session.commit()
+    
     maker = FontMaker(nameHash)
     maker.makeTTF(nameHash, data.fontName)
     ttfURL = 'https://d1mo4ucdb98b4w.cloudfront.net/' + nameHash + '.ttf'
@@ -60,6 +68,9 @@ def read_root(data : Item):
     session.flush()
     db_font = models_.TFont(font_name=data.fontName, font_description=data.fontDescription, font_fav_count=0, t_user=db_user, font_download_count=0, t_file=db_file, font_reg_date=datetime.datetime.now())
     session.add(db_font)
+    db_waitCreate = session.query(models_.TWaitCreate).filter(models_.TWaitCreate.wait_create_name == data.fontName).first()
+    session.delete(db_waitCreate)
     
     session.commit()
+    send_finish_mail.send_mail(db_user.user_email, data.fontName)
     return {"ttfURL" : ttfURL, 'woffURL' : woffURL}

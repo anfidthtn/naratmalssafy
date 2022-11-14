@@ -1,5 +1,5 @@
 # coding: utf-8
-from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, String, text
+from sqlalchemy import BigInteger, Column, DateTime, ForeignKey, Integer, String, text
 from sqlalchemy.orm import relationship
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -25,6 +25,15 @@ class TUser(Base):
     user_nickname = Column(String(15), nullable=False, unique=True)
     user_name = Column(String(15), nullable=False)
     user_location = Column(String(10), nullable=False)
+
+
+class TWaitCreate(Base):
+    __tablename__ = 't_wait_create'
+
+    wait_create_seq = Column(BigInteger, primary_key=True)
+    wait_create_name = Column(String(45), nullable=False)
+    wait_create_state = Column(Integer, nullable=False)
+    wait_create_user = Column(BigInteger, nullable=False)
 
 
 class TFont(Base):
