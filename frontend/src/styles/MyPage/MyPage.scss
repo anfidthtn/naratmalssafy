@@ -78,6 +78,9 @@
         height: 80%;
         overflow-y:scroll;
     }
+    &__Myfont::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera*/
+    }
     &__Myfavoritesfont{
         display: flex;
         flex-flow: row;
@@ -86,6 +89,9 @@
         height: 80%;
         overflow-y:scroll;
     }
+    &__Myfavoritesfont::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera*/
+    }
     &__Mydownloadfont{
         display: flex;
         flex-flow: row;
@@ -93,6 +99,9 @@
         margin: 0 auto;        
         height: 80%;
         overflow-y:scroll;
+    }
+    &__Mydownloadfont::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera*/
     }
     &__Alert{
         margin-top: 8%;
