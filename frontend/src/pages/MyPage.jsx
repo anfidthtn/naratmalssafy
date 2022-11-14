@@ -60,7 +60,9 @@ const MyPage = () => {
             if (res.data.myFonts.length !== 0){
                 setIsmyfontsempty(false)
             }
-            console.log(res.data)
+            if (res.data.waitingFonts.length !== 0) {
+                setIsmyfontsempty(false)
+            }
         })
         .catch(err => {
             console.log(err)
