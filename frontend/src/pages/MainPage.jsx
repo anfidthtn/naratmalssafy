@@ -263,7 +263,7 @@ const MainPage = () => {
           <div className="font_make_info_carousel" style={{ margin: "0 auto" }}>
             <Carousel2 height={"300px"} autoPlay interval={2000}>
               {[...new Array(5)].map((_, i) => (
-                <Card index={i + 1} />
+                <Card index={i + 1} key={i} />
               ))}
             </Carousel2>
           </div>
