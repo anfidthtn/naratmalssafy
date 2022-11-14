@@ -49,6 +49,10 @@
   }
 
   & ul {
+    list-style: none;
+  }
+
+  & .TopNav__LinkBox ul {
     display: flex;
     justify-content: space-between;
     list-style: none;
