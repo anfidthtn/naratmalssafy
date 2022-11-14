@@ -104,7 +104,7 @@ export default function TopNav() {
                     navigate("/padlet");
                   }}
                 >
-                  ForSSAFY
+                  패들릿
                 </li>
               )}
               {/* {!isloginshow && <li>서명만들기</li>} */}
@@ -159,7 +159,7 @@ export default function TopNav() {
                     }}
                     className="side_menu_item"
                   >
-                    ForSSAFY
+                    패들릿
                   </li>
                 )}
                 {/* <li className="side_menu_item">서명만들기</li> */}
