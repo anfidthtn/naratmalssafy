@@ -450,9 +450,8 @@ const FontMakePage = () => {
                   src={uploadImage}
                   onLoad={onLoad}
                   alt="이미지"
-                  width={"100%"}
                   height={"100%"}
-                  style={{ maxWidth: "1000px", maxHeight: "600px" }}
+                  style={{ width: "1000px", maxHeight: "600px" }}
                 />
               </ReactCrop>
             </div>
