@@ -119,9 +119,9 @@ class FontMaker():
         self.optimizer_G = torch.optim.AdamW(self.model.parameters(),lr=learning_rate) # You need to calibrate the learning rate (5e-4 ~ 4e-4 recomendded)
 
         # Trainstep
-        self.progress_bar = tqdm(range(self.train_dataloader.__len__()*epochs))
+        # self.progress_bar = tqdm(range(self.train_dataloader.__len__()*epochs))
         for epoch in range(epochs):
-            if epoch % 10 == 9:
+            if epoch % 3 == 2:
                 print(str(epoch) + '/' + str(epochs))
             self.model.train()
             total_loss = 0
@@ -142,7 +142,7 @@ class FontMaker():
                 self.optimizer_G.step()
 
                 with torch.no_grad():
-                    self.progress_bar.update(1)
+                    # self.progress_bar.update(1)
                     total_loss += loss.sum()
                 # print(epoch,total_loss.item())
         return self.model, self.dataloader
