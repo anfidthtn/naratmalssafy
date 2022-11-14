@@ -33,13 +33,6 @@ export default function TopNav() {
             localStorage.removeItem("email");
             setIsloginshow(true);
             setIstoken("");
-            swal({
-              text: "유효하지 않은 토큰입니다. 새로 로그인을 해주세요.",
-              icon: "error",
-              button: "확인",
-            }).then(() => {
-              navigate("/login");
-            });
           }
         })
         .catch((_err) => {
@@ -47,13 +40,6 @@ export default function TopNav() {
           localStorage.removeItem("email");
           setIsloginshow(true);
           setIstoken("");
-          swal({
-            text: "유효하지 않은 토큰입니다. 새로 로그인을 해주세요.",
-            icon: "error",
-            button: "확인",
-          }).then(() => {
-            navigate("/login");
-          });
         });
     }
   });
