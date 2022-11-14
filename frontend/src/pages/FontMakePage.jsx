@@ -297,7 +297,7 @@ const FontMakePage = () => {
 
   // 크롭 영역 canvas에 넣기
   const createCanvas = () => {
-    if (!completedCrop || !imgRef.current || cropStep === 11) {
+    if (!completedCrop || !imgRef.current || cropStep === 12) {
       return;
     }
 
@@ -460,7 +460,7 @@ const FontMakePage = () => {
                 {"〈"}
               </button>
               <div className="crop_step">
-                {cropStep >= 11 ? 11 : cropStep + 1} / 11
+                {cropStep >= 12 ? 12 : cropStep + 1} / 12
               </div>
               <button onClick={createCanvas} className="crop_click_button">
                 {"〉"}
