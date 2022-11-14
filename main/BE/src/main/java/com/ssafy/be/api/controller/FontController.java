@@ -134,7 +134,7 @@ public class FontController {
     public ResponseEntity<IsSuccessRes> test(@RequestBody RegistDownloadHistoryReq req){
         logger.info("registFont requestUser: ["+req.getFontName()+"] "+" fontName: ["+req.getFontSeq()+"]");
         try{
-            Thread.sleep(10000);
+            Thread.sleep(100000);
         }catch (Exception e){
 
         }

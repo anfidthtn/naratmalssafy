@@ -239,7 +239,9 @@ public class FontServiceImpl implements FontService {
                 e.printStackTrace();
                 return -5L;
             }
+
         }
+
         if(registWaitInfo(fontName,user)==-1) return -1L;
         //fast API fontSeq 전달하기
         requestCreateFont.requestToFastAPI(fontDescription,fontName,user);
