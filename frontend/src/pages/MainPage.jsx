@@ -93,14 +93,14 @@ const MainPage = () => {
   };
 
   const process = document.getElementsByClassName("font_make_info_process");
-
+  let addClass = null;
   setInterval(() => {
     for (let index = 0; index < process.length; index++) {
       const element = process[index];
       element.classList.remove(`appear${index + 1}`);
     }
 
-    const addClass = setTimeout(() => {
+    addClass = setTimeout(() => {
       clearTimeout(addClass);
       for (let index = 0; index < process.length; index++) {
         const element = process[index];
