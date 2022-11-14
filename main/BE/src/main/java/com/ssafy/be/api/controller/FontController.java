@@ -116,10 +116,10 @@ public class FontController {
             @ApiResponse(code = 903, message = "return null, DB에서 찾지 못했을 때")
 
     })
-    public ResponseEntity<GetFontDetailRes> updateFontInfo(@ApiIgnore Authentication authentication, UpdateFontInfoReq req){
+    public ResponseEntity<GetFontDetailRes> updateFontInfo(@ApiIgnore Authentication authentication, @RequestBody UpdateFontInfoReq req){
         UserDetail userDetail = (UserDetail) authentication.getDetails();
         User user= userDetail.getUser();
-        logger.info("registFont requestUser: ["+req.getFontDescription()+"] "+" fontName: ["+req.getFontName()+"]");
+        logger.info("updateFont user:["+user.getUserEmail()+"] fontDescription: ["+req.getFontDescription()+"] "+" fontName: ["+req.getFontName()+"]");
         Long resUpdate = fontService.updateFontInfo(req.getFontName(),req.getFontDescription(),user);
         if (resUpdate == -1L){
             return ResponseEntity.status(901).body(null);
