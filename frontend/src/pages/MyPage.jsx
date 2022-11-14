@@ -1,6 +1,7 @@
 import MyFont from '../components/Mypage/Cards/Myfont.jsx'
 import MyFavoritesFont from '../components/Mypage/Cards/Myfavoritesfont.jsx'
 import MyDownloadFont from '../components/Mypage/Cards/Mydownloadfont.jsx'
+import MyWaitingFont from '../components/Mypage/Cards/Mywaitingfont.jsx'
 import '../styles/MyPage/MyPage.scss'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -246,6 +247,23 @@ const handleNicknameCheck=()=>{
                     ismyfontshow &&
                     <div className='Mypage__Myfont'>
                     <Grid container spacing={3}>
+                    {userinfo.waitingFonts.map((data, idx) =>
+                        userinfo.waitingFonts.length - 1 === idx ? (
+                            <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
+                            <MyWaitingFont
+                                fontData={data}
+                                idx={idx}
+                            />
+                            </Grid>
+                        ) : (
+                            <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
+                            <MyWaitingFont
+                                fontData={data}
+                                idx={idx}
+                            />
+                            </Grid>
+                        )
+                        )}
                         {userinfo.myFonts.map((data, idx) =>
                         userinfo.myFonts.length - 1 === idx ? (
                             <Grid key={idx} xs={12} sm={6} md={4} lg={3} item>
