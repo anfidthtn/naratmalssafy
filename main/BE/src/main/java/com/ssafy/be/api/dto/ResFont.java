@@ -23,4 +23,5 @@ public class ResFont
     String description;
     Long downloadCount;
     String regDate;
+
 }

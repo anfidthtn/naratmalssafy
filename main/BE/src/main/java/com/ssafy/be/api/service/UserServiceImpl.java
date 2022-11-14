@@ -2,16 +2,15 @@ package com.ssafy.be.api.service;
 
 import com.ssafy.be.api.dto.Creator;
 import com.ssafy.be.api.dto.ResFont;
+import com.ssafy.be.api.dto.Waiting;
 import com.ssafy.be.api.response.*;
 import com.ssafy.be.common.util.JwtTokenUtil;
 import com.ssafy.be.common.util.KakaoLogin;
-import com.ssafy.be.db.entity.Font;
-import com.ssafy.be.db.entity.FontDownloadHistory;
-import com.ssafy.be.db.entity.User;
-import com.ssafy.be.db.entity.UserFont;
+import com.ssafy.be.db.entity.*;
 import com.ssafy.be.db.repository.FontRepository;
 import com.ssafy.be.db.repository.UserFontRepository;
 import com.ssafy.be.db.repository.UserRepository;
+import com.ssafy.be.db.repository.WaitCreateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +29,8 @@ public class UserServiceImpl implements UserService {
     FontRepository fontRepository;
     @Autowired
     UserFontRepository userFontRepository;
+    @Autowired
+    WaitCreateRepository waitCreateRepository;
 
 
     @Override
@@ -99,9 +100,12 @@ public class UserServiceImpl implements UserService {
     @Override
     public GetUserInfoRes getUserInfo(User inputUser) {
         User user = userRepository.findByUserEmail(inputUser.getUserEmail());
+        List<WaitCreate> waitCreates = waitCreateRepository.findByUserSeq(user.getUserSeq());
         List<ResFont> resLike = new ArrayList<>();
         List<ResFont> resDownload = new ArrayList<>();
         List<ResFont> resMyFont = new ArrayList<>();
+        List<Waiting> waitings = new ArrayList<>();
+
         //즐찾 폰트
         for(UserFont e : user.getLikeFonts()){
             Font temp = e.getFont();
@@ -127,7 +131,6 @@ public class UserServiceImpl implements UserService {
         //다운로드 폰트
         for(FontDownloadHistory e : user.getDownloadFonts()){
             Font temp = e.getDownloadFont();
-
             ResFont resFont = ResFont.builder()
                     .creator(Creator.builder()
                             .email(temp.getFontCreator().getUserEmail())
@@ -167,6 +170,19 @@ public class UserServiceImpl implements UserService {
                     .build();
             resMyFont.add(resFont);
         }
+        for(WaitCreate temp : waitCreates){
+            Waiting waiting = Waiting.builder()
+                    .isCreating(temp.getWaitCreateState()==0?false:true)
+                    .creator(Creator.builder()
+                            .email(user.getUserEmail())
+                            .location(user.getUserLocation())
+                            .name(user.getUserName())
+                            .nickname(user.getUserNickname())
+                            .build())
+                    .fontName(temp.getWaitCreateName())
+                    .build();
+            waitings.add(waiting);
+        }
 
         GetUserInfoRes res = GetUserInfoRes.builder()
                 .userEmail(user.getUserEmail())
@@ -176,6 +192,7 @@ public class UserServiceImpl implements UserService {
                 .downloadFonts(resDownload)
                 .likeFonts(resLike)
                 .myFonts(resMyFont)
+                .waitingFonts(waitings)
                 .build();
         return res;
     }
