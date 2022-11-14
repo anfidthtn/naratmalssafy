@@ -78,4 +78,22 @@
       align-items: center;
     }
   }
-  
+  .make{
+    color:red;
+  }
+  .hi{
+    display: flex;
+    flex-flow: row;
+    flex-wrap: wrap;
+    resize: none;
+    border: none;
+    height: 200px;
+    padding: 10px;
+    font-size: 1.05rem;
+    line-height: 30px;
+    background-color: transparent;
+    max-width: 100%;
+    width: 100%;
+    outline: none;
+    box-sizing: border-box;
+  }

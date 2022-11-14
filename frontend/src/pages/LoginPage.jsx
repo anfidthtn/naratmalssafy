@@ -43,7 +43,7 @@ const LoginPage = () => {
         </div>
         <div className="Login__Button" onClick={Kakaologin}>
           <img className="Login__Button__Kakao" src={kakao} alt="카카오"></img>
-          카카오 계정으로 계속하기
+          <div className="Login__Button__Ment">카카오 계정으로 계속하기</div>
         </div>
       </div>
     </div>
