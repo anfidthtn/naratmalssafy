@@ -8,7 +8,7 @@ import sys
 
 sys.path.append(os.path.join(os.path.dirname(__file__), "fontmaker"))
 
-from fontmaker.generate import FontMaker
+from fontmaker.generate import FontMaker, logger
 
 from pydantic import BaseModel
 
@@ -43,14 +43,17 @@ s3 = s3_connection()
 @app.post("/fastapi/makefont")
 def read_root(data : Item):
     nameHash = hashlib.sha1(data.fontName.encode('utf-8')).hexdigest()
+    logger.info(str(data.userSeq) + " " + data.fontName + " " + data.fontDescription + " " + nameHash + " 요청 확인")
     engine = database.create_engine(database.MYSQL_URL)
     session = database.Session(engine, autoflush=False)
     db_waitCreate = session.query(models_.TWaitCreate).filter(models_.TWaitCreate.wait_create_name == data.fontName).first()
     db_waitCreate.wait_create_state = 1
     session.commit()
     
+    logger.info(str(data.userSeq) + " " + data.fontName + " " + data.fontDescription + " " + nameHash + " DB 등록")
     maker = FontMaker(nameHash)
     maker.makeTTF(nameHash, data.fontName)
+    logger.info(str(data.userSeq) + " " + data.fontName + " " + data.fontDescription + " " + nameHash + " S3 저장 시작")
     ttfURL = 'https://d1mo4ucdb98b4w.cloudfront.net/' + nameHash + '.ttf'
     woffURL = 'https://d1mo4ucdb98b4w.cloudfront.net/' + nameHash + '.woff'
     try:
@@ -58,6 +61,8 @@ def read_root(data : Item):
         s3.upload_file(os.path.join("fontmaker", "FONT", nameHash, "ttf_fonts", nameHash + ".woff"), "naratmalssafy", nameHash + ".woff")
     except Exception as e:
         return {"msg" : "s3 저장 중 에러발생"}
+    logger.info(str(data.userSeq) + " " + data.fontName + " " + data.fontDescription + " " + nameHash + " S3 저장 완료")
+    logger.info(str(data.userSeq) + " " + data.fontName + " " + data.fontDescription + " " + nameHash + " 폰트, 파일정보 저장 시작")
 
     engine = database.create_engine(database.MYSQL_URL)
     session = database.Session(engine, autoflush=False)
@@ -72,5 +77,8 @@ def read_root(data : Item):
     session.delete(db_waitCreate)
     
     session.commit()
+    logger.info(str(data.userSeq) + " " + data.fontName + " " + data.fontDescription + " " + nameHash + " 폰트, 파일정보 저장 완료")
+    logger.info(str(data.userSeq) + " " + data.fontName + " " + data.fontDescription + " " + nameHash + " 메일발송 시작")
     send_finish_mail.send_mail(db_user.user_email, data.fontName)
+    logger.info(str(data.userSeq) + " " + data.fontName + " " + data.fontDescription + " " + nameHash + " 메일발송 완료")
     return {"ttfURL" : ttfURL, 'woffURL' : woffURL}
