@@ -22,10 +22,18 @@ export default function TopNav() {
     }
   });
 
+  const visibilityHidden = () => {
+    const sideMenu = document.getElementById("side_menu");
+    if (sideMenu) {
+      sideMenu.style.visibility = "hidden";
+    }
+  };
+
   const handlelogin = () => {
     const token = localStorage.getItem("token");
     setIstoken(token);
     navigate("/login");
+    document.getElementById("check_box").checked = false;
   };
   const handlelogout = () => {
     const token = localStorage.getItem("token");
@@ -39,6 +47,7 @@ export default function TopNav() {
       button: "확인",
     }).then(() => {
       navigate("/");
+      document.getElementById("check_box").checked = false;
     });
   };
 
@@ -105,12 +114,59 @@ export default function TopNav() {
             </label>
             <div id="side_menu">
               <ul>
-                <li className="side_menu_item">폰트제작</li>
-                <li className="side_menu_item">폰트검색</li>
-                <li className="side_menu_item">ForSSAFY</li>
-                <li className="side_menu_item">서명만들기</li>
-                <li className="side_menu_item">마이페이지</li>
-                <li className="side_menu_item">로그인</li>
+                {!isloginshow && (
+                  <li
+                    onClick={() => {
+                      navigate("/make-font");
+                      document.getElementById("check_box").checked = false;
+                    }}
+                    className="side_menu_item"
+                  >
+                    폰트제작
+                  </li>
+                )}
+                <li
+                  onClick={() => {
+                    navigate("/search");
+                    document.getElementById("check_box").checked = false;
+                  }}
+                  className="side_menu_item"
+                >
+                  폰트검색
+                </li>
+                {!isloginshow && (
+                  <li
+                    onClick={() => {
+                      navigate("/padlet");
+                      document.getElementById("check_box").checked = false;
+                    }}
+                    className="side_menu_item"
+                  >
+                    ForSSAFY
+                  </li>
+                )}
+                {/* <li className="side_menu_item">서명만들기</li> */}
+                {!isloginshow && (
+                  <li
+                    onClick={() => {
+                      navigate("/mypage");
+                      document.getElementById("check_box").checked = false;
+                    }}
+                    className="side_menu_item"
+                  >
+                    마이페이지
+                  </li>
+                )}
+                {isloginshow && (
+                  <li onClick={handlelogin} className="side_menu_item">
+                    로그인
+                  </li>
+                )}
+                {!isloginshow && (
+                  <li onClick={handlelogout} className="side_menu_item">
+                    로그아웃
+                  </li>
+                )}
               </ul>
             </div>
           </div>
