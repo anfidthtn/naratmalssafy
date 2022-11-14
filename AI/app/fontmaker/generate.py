@@ -31,16 +31,18 @@ class FontMaker():
     
     def __init__(self, fontname):
         self.fontname = fontname
-        logger.info(fontname + "훈련 시작")
+        logger.info(fontname + " 훈련 시작")
         self.model, self.dataloader = self.finetuning()
-        logger.info(fontname + "훈련 완료")
-        logger.info(fontname + "png 제작 시작")
+        logger.info(fontname + " 훈련 완료")
         self.font_gen = self.generate(self.model, self.dataloader)
+        logger.info(fontname + " 폴더 만들기")
         
         if not os.path.isdir(os.path.join(self.nowDir, 'FONT', self.fontname, 'img')):
             os.mkdir(os.path.join(self.nowDir, 'FONT', self.fontname, 'img'))
         
+        logger.info(fontname + " png 제작 시작")
         img2png(self.font_gen, self.nowDir, self.fontname, common_han)
+        logger.info(fontname + " png 제작 완료")
         
         # imgs = []
         # maxH = 1
@@ -62,7 +64,6 @@ class FontMaker():
         #     newW = int(newH * img.shape[1] / max(1, img.shape[0])) + 1
         #     img = Image.fromarray(cv2.resize(img.astype(np.uint8), (newW, newH), interpolation=cv2.INTER_CUBIC))
         #     img.save(os.path.join(self.nowDir, 'FONT', self.fontname, 'img', f'{hex(ord(common_han[i]))[2:].upper()}.png'), 'PNG')
-        logger.info(fontname + "png 제작 완료")
         
 
     def finetuning(self, img_dir="targetimg", 
@@ -71,7 +72,7 @@ class FontMaker():
                 category_layer="download/category_emb.npz",
                 gen_weight="download/gen_weight.pt",
                 source_font_npz="fonts/source_font.npz",
-                epochs=100,
+                epochs=200,
                 learning_rate=5e-4,
                 display_sample=False):
         self.nowDir = os.path.dirname(__file__)
@@ -130,7 +131,7 @@ class FontMaker():
         # Trainstep
         # self.progress_bar = tqdm(range(self.train_dataloader.__len__()*epochs))
         for epoch in range(epochs):
-            if epoch % 3 == 2:
+            if epoch % 5 == 0:
                 logger.info(str(epoch) + '/' + str(epochs) + " : " + self.fontname)
             self.model.train()
             total_loss = 0
