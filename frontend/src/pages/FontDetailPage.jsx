@@ -250,13 +250,12 @@ const FontDetailPage = () => {
       alert("최소 5자 이상 입력해주세요!");
       return;
     }
-    console.log(fontData.fontFamily);
     // 변경사항 서버로 axios 보내기
     axios({
       method: "PUT",
       url: `/api/font`,
       headers: {
-        Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
+        Authorization: `Bearer ${localStorage.getItem("token")}`,
       },
       data: {
         fontDescription: oneLineText,
