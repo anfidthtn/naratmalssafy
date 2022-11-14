@@ -23,8 +23,8 @@ const WaitingFont = ({ fontData }) => {
     return(
         <div className="fontData">
         <div className="textarea_box">
-            {fontData.isCreating && <textarea className="textarea" readOnly>제작중입니다...</textarea>}
-            {!fontData.isCreating && <textarea className="textarea" readOnly>제작 대기중입니다...</textarea>}
+            {fontData.isCreating && <textarea className="textarea" readOnly>제작 중 입니다.... {"("}최대 15분이 소요됩니다.{")"}</textarea>}
+            {!fontData.isCreating && <textarea className="textarea" readOnly>제작 전 입니다.... {"("}서버대기중{")"}</textarea>}
         </div>
         <div className="info_box">
           <div className="font_info">
