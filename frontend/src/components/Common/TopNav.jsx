@@ -5,6 +5,7 @@ import { useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import swal from "sweetalert";
+import axios from "axios";
 
 export default function TopNav() {
   const isMobile1024 = useMediaQuery("(max-width:1024px)");
@@ -19,21 +20,37 @@ export default function TopNav() {
       setIsloginshow(true);
     } else {
       setIsloginshow(false);
+      axios({
+        method: "GET",
+        url: "api/user/checkToken",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((res) => {
+          if (!res.data.success) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("email");
+            setIsloginshow(true);
+            setIstoken("");
+          }
+        })
+        .catch((_err) => {
+          localStorage.removeItem("token");
+          localStorage.removeItem("email");
+          setIsloginshow(true);
+          setIstoken("");
+        });
     }
   });
-
-  const visibilityHidden = () => {
-    const sideMenu = document.getElementById("side_menu");
-    if (sideMenu) {
-      sideMenu.style.visibility = "hidden";
-    }
-  };
 
   const handlelogin = () => {
     const token = localStorage.getItem("token");
     setIstoken(token);
     navigate("/login");
-    document.getElementById("check_box").checked = false;
+    if (document.getElementById("check_box")) {
+      document.getElementById("check_box").checked = false;
+    }
   };
   const handlelogout = () => {
     const token = localStorage.getItem("token");
