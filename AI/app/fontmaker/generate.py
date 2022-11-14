@@ -62,7 +62,7 @@ class FontMaker():
                 category_layer="download/category_emb.npz",
                 gen_weight="download/gen_weight.pt",
                 source_font_npz="fonts/source_font.npz",
-                epochs=20,
+                epochs=200,
                 learning_rate=5e-5,
                 display_sample=False):
         self.nowDir = os.path.dirname(__file__)
