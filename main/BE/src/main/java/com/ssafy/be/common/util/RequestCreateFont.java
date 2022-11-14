@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,6 +33,7 @@ public class RequestCreateFont {
         HttpEntity<?> requestMessage = new HttpEntity<>(body,httpHeaders);
         try{
             restTemplate.postForEntity(url,requestMessage,String.class);
+            System.out.println("Send Request To Fast-API: "+fontName);
         }
         catch (Exception e){
             throw new CreateFailException();
