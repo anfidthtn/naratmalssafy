@@ -166,6 +166,7 @@ public class UserServiceImpl implements UserService {
                     .fontFamilyName(temp.getFontName())
                     .webFontPath(temp.getFontDownloadFile().getWoffSavedPath())
                     .favCount(temp.getFontFavCount())
+                    .downloadCount(temp.getFontDownloadCount())
                     .fontSeq(temp.getFontSeq())
                     .build();
             resMyFont.add(resFont);
