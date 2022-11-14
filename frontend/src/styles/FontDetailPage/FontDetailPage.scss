@@ -385,6 +385,7 @@
     cursor: pointer;
     box-sizing: border-box;
     transition: box-shadow 0.2s linear;
+    align-items: center;
   }
 
   & .font_download_box:hover {
@@ -485,6 +486,7 @@
     border-radius: 15px;
     visibility: hidden;
     color: white;
-    width: 175px;
+    width: 190px;
+    font-family: "GongGothicMedium";
   }
 }
