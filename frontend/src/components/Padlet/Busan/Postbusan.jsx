@@ -39,7 +39,7 @@ const PostBusan = () => {
         })
         .then(res => {
             setUserinfo(res.data)
-            if (res.data.downloadFonts.length === 0 && res.data.myFonts.length === 0) {
+            if (res.data.myFonts.length === 0) {
                 setIsfontinfoempty(true)
             }
             else{
@@ -103,8 +103,8 @@ const PostBusan = () => {
             { isfontinfoempty &&
                 <div className="Post__FontEmpty">
                     <div className="Post__FontEmpty__Title">안녕하세요, {userinfo.userLocation}_{userinfo.userName}_{userinfo.userNickname}님!!!</div>
-                    <div className="Post__FontEmpty__Content">아직 회원님만의 폰트나 다운로드한 폰트가 없어요  ˃̣̣̥᷄⌓˂̣̣̥᷅ </div>
-                    <div className="Post__FontEmpty__Content">패들릿 작성전 폰트제작이나 다운로드를 해보아요 !!!</div>
+                    <div className="Post__FontEmpty__Content">아직 회원님만의 폰트가 없어요  ˃̣̣̥᷄⌓˂̣̣̥᷅ </div>
+                    <div className="Post__FontEmpty__Content">패들릿 작성전 폰트제작을 해보아요 !!!</div>
                     <div className="Post__FontEmpty__Button"onClick={()=> navigate('/make-font')}>폰트제작하기</div>
                     <div className="Post__FontEmpty__Button"onClick={()=> navigate('/search')}>폰트보러가기</div>
                 </div>
@@ -147,7 +147,6 @@ const PostBusan = () => {
                 }
             </div>
             }         
-            {/* <div className="Post__Create" onClick={showModal}>생성</div> */}
             {modalOpen && <Modal setModalOpen={setModalOpen} userinfo={userinfo}/>}
         </div>
     );

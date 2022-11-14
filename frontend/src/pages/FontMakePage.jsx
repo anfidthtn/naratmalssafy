@@ -13,9 +13,12 @@ import "react-image-crop/dist/ReactCrop.css";
 import { useNavigate } from "react-router-dom";
 import swal from "sweetalert";
 import axios from "axios";
+import { useMediaQuery } from "@mui/material";
 
 const FontMakePage = () => {
   const navigate = useNavigate();
+
+  const isMobile760 = useMediaQuery("(max-width:760px)");
 
   const [currentStep, setCurrentStep] = useState(1);
   const [uploadImage, setUploadImage] = useState(null);
@@ -53,6 +56,17 @@ const FontMakePage = () => {
         button: "확인",
       }).then(() => {
         navigate("/login");
+      });
+    }
+
+    if (isMobile760) {
+      swal({
+        title: "에러",
+        text: "760px 이하의 모바일 환경에서는 제작이 불가능합니다!",
+        icon: "warning",
+        button: "확인",
+      }).then(() => {
+        navigate(-1);
       });
     }
   }, []);
@@ -123,6 +137,19 @@ const FontMakePage = () => {
           : currentStep - 1
         : currentStep + 1
     );
+
+    if (type === "next" && currentStep === 4) {
+      if (isMobile760) {
+        swal({
+          title: "에러",
+          text: "760px 이하의 모바일 환경에서는 제작이 불가능합니다!",
+          icon: "warning",
+          button: "확인",
+        });
+        setCurrentStep(currentStep);
+        return;
+      }
+    }
 
     if (type === "prev" && currentStep === 9) {
       setCurrentStep(1);
@@ -297,7 +324,7 @@ const FontMakePage = () => {
 
   // 크롭 영역 canvas에 넣기
   const createCanvas = () => {
-    if (!completedCrop || !imgRef.current || cropStep === 12) {
+    if (!completedCrop || !imgRef.current || cropStep === 11) {
       return;
     }
 
@@ -425,7 +452,7 @@ const FontMakePage = () => {
           <>
             <div className="selected_image_preview_box">
               <div className="selected_info_text">
-                {cropStep !== 11 ? (
+                {cropStep < 11 ? (
                   <>
                     <span className="selected_word">
                       "{selectedWords[cropStep]}"
