@@ -61,7 +61,7 @@ class FontMaker():
                 category_layer="download/category_emb.npz",
                 gen_weight="download/gen_weight.pt",
                 source_font_npz="fonts/source_font.npz",
-                epochs=30,
+                epochs=20,
                 learning_rate=5e-5,
                 display_sample=False):
         self.nowDir = os.path.dirname(__file__)
@@ -177,7 +177,7 @@ class FontMaker():
 
         return generated_font
         
-    def makeTTF(self, fontSeq, fontNameHash, fontName):
+    def makeTTF(self, fontNameHash, fontName):
         print(self.fontname + "ttf 제작 시작")
         requests.post('https://xn--910b35kqzb51p93w.com/nodeexpress/makefont/', json={'fontNameHash' : fontNameHash, 'fontName' : fontName})
         print(self.fontname + "ttf 제작 완료")
