@@ -17,15 +17,24 @@ import cv2
 import os
 import requests
 from img2png import img2png
+import logging
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+
+stream_handler = logging.StreamHandler()
+stream_handler.setFormatter(formatter)
+logger.addHandler(stream_handler)
 
 class FontMaker():
     
     def __init__(self, fontname):
         self.fontname = fontname
-        print(fontname + "훈련 시작")
+        logger.info(fontname + "훈련 시작")
         self.model, self.dataloader = self.finetuning()
-        print(fontname + "훈련 완료")
-        print(fontname + "png 제작 시작")
+        logger.info(fontname + "훈련 완료")
+        logger.info(fontname + "png 제작 시작")
         self.font_gen = self.generate(self.model, self.dataloader)
         
         if not os.path.isdir(os.path.join(self.nowDir, 'FONT', self.fontname, 'img')):
@@ -53,7 +62,7 @@ class FontMaker():
         #     newW = int(newH * img.shape[1] / max(1, img.shape[0])) + 1
         #     img = Image.fromarray(cv2.resize(img.astype(np.uint8), (newW, newH), interpolation=cv2.INTER_CUBIC))
         #     img.save(os.path.join(self.nowDir, 'FONT', self.fontname, 'img', f'{hex(ord(common_han[i]))[2:].upper()}.png'), 'PNG')
-        print(fontname + "png 제작 완료")
+        logger.info(fontname + "png 제작 완료")
         
 
     def finetuning(self, img_dir="targetimg", 
@@ -62,8 +71,8 @@ class FontMaker():
                 category_layer="download/category_emb.npz",
                 gen_weight="download/gen_weight.pt",
                 source_font_npz="fonts/source_font.npz",
-                epochs=200,
-                learning_rate=5e-5,
+                epochs=100,
+                learning_rate=5e-4,
                 display_sample=False):
         self.nowDir = os.path.dirname(__file__)
         img_dir=os.path.join(self.nowDir, 'FONT', self.fontname, img_dir)
@@ -122,7 +131,7 @@ class FontMaker():
         # self.progress_bar = tqdm(range(self.train_dataloader.__len__()*epochs))
         for epoch in range(epochs):
             if epoch % 3 == 2:
-                print(str(epoch) + '/' + str(epochs))
+                logger.info(str(epoch) + '/' + str(epochs) + " : " + self.fontname)
             self.model.train()
             total_loss = 0
             
@@ -142,7 +151,7 @@ class FontMaker():
                 self.optimizer_G.step()
 
                 with torch.no_grad():
-                    # self.progress_bar.update(1)
+                #     self.progress_bar.update(1)
                     total_loss += loss.sum()
                 # print(epoch,total_loss.item())
         return self.model, self.dataloader
@@ -152,7 +161,9 @@ class FontMaker():
                 display_sample=False,
                 device=torch.device("cpu") if torch.cuda.is_available() else torch.device("cpu"),):
         generated_font = []
-        progress_bar = tqdm(range(dataloader.__len__()))
+        # progress_bar = tqdm(range(dataloader.__len__()))
+        
+        logger.info("generate 시작 : " + self.fontname)
         with torch.no_grad():
             for batch in dataloader:
                 inputs = batch['source'].reshape(-1,1,32,32)/255
@@ -162,7 +173,7 @@ class FontMaker():
                 catemb = [emb.to(device) for emb in batch['emb']]
                 
                 output = model(target,*catemb)
-                progress_bar.update(1)
+                # progress_bar.update(1)
                 for gf in output.reshape(-1,32,32).to('cpu').detach().numpy():
                     generated_font.append(np.vectorize(lambda x : x if x<=250 else 255)(gf*255))
                 if display_sample:
@@ -175,11 +186,12 @@ class FontMaker():
                     plt.imshow(x,cmap='gray')
                     plt.axis('off')
                     plt.show()
+        logger.info("generate 완료 : " + self.fontname)
 
         return generated_font
         
     def makeTTF(self, fontNameHash, fontName):
-        print(self.fontname + "ttf 제작 시작")
+        logger.info("ttf, woff 제작 시작 : " + self.fontname)
         requests.post('https://xn--910b35kqzb51p93w.com/nodeexpress/makefont/', json={'fontNameHash' : fontNameHash, 'fontName' : fontName})
-        print(self.fontname + "ttf 제작 완료")
+        logger.info("ttf, woff 제작 완료 : " + self.fontname)
         # requests.post('http://localhost:28080/nodeexpress/makefont/', json={'fontNameHash' : fontNameHash, 'fontName' : fontName})
