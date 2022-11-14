@@ -8,7 +8,6 @@ import axios from 'axios'
 import swal from "sweetalert";
 
 const Modal = ({setModalOpen, userinfo}) => {
-    const downloadFonts = userinfo.downloadFonts
     const myFonts= userinfo.myFonts
     const token = localStorage.getItem('token')
     const [color, setColor] = useState('')
@@ -102,9 +101,6 @@ const Modal = ({setModalOpen, userinfo}) => {
                 label="Font"
                 onChange={handlefont}
                 >
-                    {downloadFonts.map((data) =>
-                        <MenuItem value={data.fontSeq}>{data.fontName}</MenuItem>    
-                    )}
                     {myFonts.map((data) =>
                         <MenuItem value={data.fontSeq}>{data.fontName}</MenuItem>    
                     )}
