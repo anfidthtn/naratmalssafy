@@ -297,7 +297,7 @@ const FontMakePage = () => {
 
   // 크롭 영역 canvas에 넣기
   const createCanvas = () => {
-    if (!completedCrop || !imgRef.current || cropStep === 11) {
+    if (!completedCrop || !imgRef.current || cropStep === 12) {
       return;
     }
 
@@ -450,9 +450,8 @@ const FontMakePage = () => {
                   src={uploadImage}
                   onLoad={onLoad}
                   alt="이미지"
-                  width={"100%"}
                   height={"100%"}
-                  style={{ maxWidth: "1000px", maxHeight: "600px" }}
+                  style={{ width: "1000px", maxHeight: "600px" }}
                 />
               </ReactCrop>
             </div>
@@ -461,7 +460,7 @@ const FontMakePage = () => {
                 {"〈"}
               </button>
               <div className="crop_step">
-                {cropStep >= 11 ? 11 : cropStep + 1} / 11
+                {cropStep >= 12 ? 12 : cropStep + 1} / 12
               </div>
               <button onClick={createCanvas} className="crop_click_button">
                 {"〉"}
@@ -574,13 +573,14 @@ const FontMakePage = () => {
               </div>
               <div className="complted_info_text_box">
                 <div className="completed_info_text">
-                  *제작 완료까지 <span style={{ color: "red" }}>20분</span>정도
-                  소요 될 수 있습니다.
+                  *제작 완료까지 최소<span style={{ color: "red" }}>20분</span>
+                  소요 됩니다 단, 제작 요청이 많을 경우 추가적인 시간이 더 소요
+                  됩니다.
                 </div>
                 <div className="completed_info_text">
-                  *제작이 완료된 후에{" "}
-                  <span style={{ color: "red" }}>카카오톡 </span>알림으로 안내해
-                  드립니다.
+                  *제작이 완료된 후에 카카오톡에 등록된{" "}
+                  <span style={{ color: "red" }}>이메일로 </span>
+                  안내해 드립니다.
                 </div>
                 <div className="completed_info_text">
                   *제작이 완료된 후에{" "}
