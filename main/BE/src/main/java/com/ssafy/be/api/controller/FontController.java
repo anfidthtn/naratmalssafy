@@ -137,6 +137,11 @@ public class FontController {
     @PostMapping("/test")
     public ResponseEntity<IsSuccessRes> test(@RequestBody RegistDownloadHistoryReq req){
         logger.info("registFont requestUser: ["+req.getFontName()+"] "+" fontName: ["+req.getFontSeq()+"]");
+        try{
+            Thread.sleep(10000);
+        }catch (Exception e){
+
+        }
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(IsSuccessRes.builder().isSuccess(true).msg(req.toString()).build());
     }
 }

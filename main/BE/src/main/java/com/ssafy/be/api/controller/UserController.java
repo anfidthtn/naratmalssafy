@@ -115,4 +115,9 @@ public class UserController {
         List<GetDownloadFontsRes> res = userService.getDownloadFonts(user);
         return ResponseEntity.status(200).body(res);
     }
+
+    @GetMapping("/checkToken")
+    public ResponseEntity<IsSuccessRes> getCheckToken(@ApiIgnore Authentication authentication){
+        return ResponseEntity.status(200).body(IsSuccessRes.builder().isSuccess(true).msg("Valid Token").build());
+    }
 }
