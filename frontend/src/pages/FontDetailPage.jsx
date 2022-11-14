@@ -361,7 +361,7 @@ const FontDetailPage = () => {
         <div className="font_info_box">
           <div className="font_name">{fontData.fontName}</div>
           <div className="font_user">
-            Designed By.{" "}
+            <span style={{ fontFamily: "GongGothicMedium" }}>Designed By</span>{" "}
             <span style={{ fontSize: "1.5rem" }}>
               {fontData.creator?.location +
                 "_" +
@@ -371,7 +371,7 @@ const FontDetailPage = () => {
             </span>{" "}
           </div>
           <div className="font_make_time">
-            제작일시:{" "}
+            <span style={{ fontFamily: "GongGothicMedium" }}>제작일시:</span>{" "}
             <span style={{ fontSize: "1.4rem" }}>
               {fontData.regDate?.split("T")[0]}
             </span>

@@ -17,7 +17,8 @@ const FontSearchPage = () => {
   const [searchOption, setSearchOption] = useState("fontRegDate,desc");
   const [fontData, setFontData] = useState([]);
 
-  const [fontEditorText, setFontEditorText] = useState("만나서 반갑습니다.");
+  const [fontEditorText, setFontEditorText] =
+    useState("다람쥐 헌 쳇바퀴에 타고파");
 
   // 무한 스크롤
   const [page, setPage] = useState(0);
