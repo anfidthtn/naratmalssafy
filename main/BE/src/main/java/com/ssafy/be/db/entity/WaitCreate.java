@@ -25,4 +25,6 @@ public class WaitCreate {
     Integer waitCreateState;
     @Column(name = "wait_create_user")
     Long userSeq;
+    @Column(name = "wait_create_description")
+    String waitDescription;
 }

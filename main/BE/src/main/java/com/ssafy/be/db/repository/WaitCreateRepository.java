@@ -10,4 +10,5 @@ import java.util.List;
 public interface WaitCreateRepository extends JpaRepository<WaitCreate,Long> {
     public WaitCreate findByWaitCreateName(String WaitCreateName);
     public List<WaitCreate> findByUserSeq(Long userSeq);
+    public List<WaitCreate> findByWaitCreateState(Integer state);
 }
