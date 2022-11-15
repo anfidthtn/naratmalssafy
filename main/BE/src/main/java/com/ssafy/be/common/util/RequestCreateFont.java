@@ -51,7 +51,7 @@ public class RequestCreateFont {
             logger.info("Request Fast-API: ["+ fontName+"]");
         }
         catch (Exception e){
-            throw new CreateFailException();
+            e.printStackTrace();
         }
         return 0;
     }
