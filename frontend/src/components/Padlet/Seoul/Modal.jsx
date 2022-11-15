@@ -14,7 +14,7 @@ const Modal = ({setModalOpen, userinfo }) => {
     const [color, setColor] = useState('')
     const [font, setFont] = useState('')
     const [content, setContent] = useState('')
-    const [title, setTitle] = useState('')
+    const [title, setTitle] = useState('안녕하세요')
 
     const colorlist = [
         'red', 'blue', 'green', 'skyblue', 'gray', 'pink', 'brown', 'orange', 'yellow', 'purple'
