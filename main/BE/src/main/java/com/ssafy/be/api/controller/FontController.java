@@ -135,14 +135,14 @@ public class FontController {
         return ResponseEntity.status(200).body(res);
     }
 
-    @PostMapping("/test")
-    public ResponseEntity<IsSuccessRes> test(@RequestBody RegistDownloadHistoryReq req){
-        logger.info("registFont requestUser: ["+req.getFontName()+"] "+" fontName: ["+req.getFontSeq()+"]");
-        try{
-            Thread.sleep(100000);
-        }catch (Exception e){
-
-        }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(IsSuccessRes.builder().isSuccess(true).msg(req.toString()).build());
-    }
+//    @PostMapping("/test")
+//    public ResponseEntity<IsSuccessRes> test(@RequestBody RegistDownloadHistoryReq req){
+//        logger.info("registFont requestUser: ["+req.getFontName()+"] "+" fontName: ["+req.getFontSeq()+"]");
+//        try{
+//            Thread.sleep(1000);
+//        }catch (Exception e){
+//
+//        }
+//        return ResponseEntity.status(HttpStatus.OK).body(IsSuccessRes.builder().isSuccess(true).msg(req.toString()).build());
+//    }
 }

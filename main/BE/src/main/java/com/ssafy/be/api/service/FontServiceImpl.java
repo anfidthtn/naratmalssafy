@@ -180,11 +180,12 @@ public class FontServiceImpl implements FontService {
     }
 
     @Override
-    public Long registWaitInfo(String fontName, User user) {
+    public Long registWaitInfo(String fontName, User user, String fontDescription) {
         WaitCreate waitCreate = WaitCreate.builder()
                 .waitCreateName(fontName)
                 .waitCreateState(0)
                 .userSeq(user.getUserSeq())
+                .waitDescription(fontDescription)
                 .build();
         if(!checkFontName(fontName).isUsable()){
             return -1L;
@@ -242,7 +243,7 @@ public class FontServiceImpl implements FontService {
 
         }
 
-        if(registWaitInfo(fontName,user)==-1) return -1L;
+        if(registWaitInfo(fontName,user,fontDescription)==-1) return -1L;
         //fast API fontSeq 전달하기
         requestCreateFont.requestToFastAPI(fontDescription,fontName,user);
         return 0L;
