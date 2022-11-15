@@ -46,7 +46,7 @@
             height: 42px;
             line-height: 42px;
             background-color: #ffc6d8;
-            color: white;
+            color: black;
             border-radius: 10px;
         }
     }
@@ -75,7 +75,7 @@
             height: 42px;
             line-height: 42px;
             background-color: #ffc6d8;
-            color: white;
+            color: black;
             border-radius: 10px;
         }
     }
@@ -90,7 +90,7 @@
         height: 38px;
         line-height: 38px;
         background-color: #ffc6d8;
-        color: white;
+        color: black;
         border-radius: 10px;
     }
     &__Create{
@@ -102,20 +102,23 @@
         height: 38px;
         line-height: 38px;
         background-color: #ffc6d8;
-        color: white;
+        color: black;
         border-radius: 10px;
     }
 }
 .Modal{
-    z-index: 10;
+    z-index: 1;
     width: 400px;
-    height: 430px;
+    height: 400px;
     position: absolute;
     top:50%;
     left:50%;
     transform: translate(-50%,-50%);
-    background-color: #f7faff;
     border-radius: 8px;
+    background-color: #f4f1e0;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3),
+    0 4px 6px 5px rgba(0, 0, 0, 0.6);
+
     &__Body{
         margin:3%;
         display: flex;
@@ -143,7 +146,7 @@
                 height: 38px;
                 line-height: 38px;
                 background-color: #ffc6d8;
-                color: white;
+                color: black;
                 border-radius: 10px;
             }
             &__Make{
@@ -155,7 +158,7 @@
                 height: 38px;
                 line-height: 38px;
                 background-color: #ffc6d8;
-                color: white;
+                color: black;
                 border-radius: 10px;
             }
         }
