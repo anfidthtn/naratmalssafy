@@ -127,7 +127,11 @@ const MainPage = () => {
           만들어봐!
         </div>
         <div className="main_introduce_info_box">
-          <Grid container spacing={3}>
+          <Grid
+            container
+            spacing={3}
+            sx={{ marginTop: "200px", marginBottom: "200px" }}
+          >
             <Grid xs={12} sm={6} md={3} item>
               <div className="main_introduce_info">
                 <div className="main_introduce_info_img">
