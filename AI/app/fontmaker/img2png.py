@@ -1,15 +1,21 @@
 import numpy as np
 from PIL import Image
 import os
+import shutil
 
 def img2png(font_gen, nowDir, fontname, common_han):
     def bold(x):
         if x != 255:
             return max(255 - (255 - x) * 3, 0)
         return x
-
+    
     bfunc = np.vectorize(bold)
-
+    
+    files = os.listdir(os.path.join(nowDir, 'CVS', 'bold'))
+    for file in files:
+        if not os.path.exists(os.path.join(nowDir, 'FONT', fontname, 'img', file)):
+            shutil.copy(os.path.join(nowDir, 'CVS', 'bold', file), os.path.join(nowDir, 'FONT', fontname, 'img', file))
+    
     for i in range(len(font_gen)):
         try:
             img = Image.fromarray(np.uint8(abs(font_gen[i])))
