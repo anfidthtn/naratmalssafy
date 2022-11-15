@@ -77,7 +77,7 @@ const FontSearchItem = ({ idx, fontData, fontEditorText }) => {
             <span style={{ fontSize: "10px", fontFamily: "GongGothicMedium" }}>
               Designed By{" "}
             </span>
-            <span style={{ fontWeight: "bold", fontSize: "16px" }}>
+            <span style={{ fontSize: "1.2rem", fontWeight: "bold" }}>
               {fontData.creator?.location +
                 "_" +
                 fontData.creator?.name +

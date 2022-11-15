@@ -24,7 +24,7 @@ import font_img_5 from "../assets/font_img/5.png";
 const MainPage = () => {
   const isMobile720 = useMediaQuery("(max-width:720px)");
   const navigate = useNavigate();
-  const CARDS = 10;
+  const CARDS = 5;
   const MAX_VISIBILITY = 3;
 
   const Card = ({ index }) => {
@@ -52,7 +52,13 @@ const MainPage = () => {
 
     return (
       <div className="card">
-        <img src={current_font_img} alt="" width="100%" />
+        <img
+          src={current_font_img}
+          alt=""
+          width="100%"
+          height={"100%"}
+          style={{ borderRadius: "1rem" }}
+        />
       </div>
     );
   };
