@@ -67,7 +67,7 @@ def read_root(data : Item):
     engine = database.create_engine(database.MYSQL_URL)
     session = database.Session(engine, autoflush=False)
     
-    db_file = models_.TFile(file_original_name=data.fontName + '.ttf', file_saved_name=nameHash, file_saved_path=ttfURL, woff_saved_path=woffURL)
+    db_file = models_.TFile(file_original_name=data.fontName + '.ttf', file_saved_name='font_' + nameHash, file_saved_path=ttfURL, woff_saved_path=woffURL)
     db_user = session.query(models_.TUser).filter(models_.TUser.user_seq == data.userSeq).first()
     session.add(db_file)
     session.flush()
