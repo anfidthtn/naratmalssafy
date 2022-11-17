@@ -259,7 +259,7 @@ const FontDetailPage = () => {
       },
       data: {
         fontDescription: oneLineText,
-        fontName: fontData.fontFamilyName,
+        fontName: fontData.fontName,
       },
     })
       .then(() => {

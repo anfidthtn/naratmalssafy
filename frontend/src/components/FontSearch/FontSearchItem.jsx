@@ -34,7 +34,6 @@ const FontSearchItem = ({ idx, fontData, fontEditorText }) => {
       .catch(function (error) {
         // error occurred
       });
-
     fontDataDiv.style.fontFamily = fontData.fontFamilyName;
     // fontDataDiv.style.fontFamily = "지홍체";
     fontDataTextArea.style.fontFamily = fontData.fontFamilyName;
