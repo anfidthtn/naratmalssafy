@@ -235,7 +235,7 @@ const FontSearchPage = () => {
               >
                 <MenuItem value={"fontRegDate,desc"}>최신순</MenuItem>
                 <MenuItem value={"fontRegDate,asc"}>오래된 순</MenuItem>
-                <MenuItem value={"fontFavCount,desc"}>즐겨찾기 순</MenuItem>
+                <MenuItem value={"fontFavCount,desc"}>인기 순</MenuItem>
                 <MenuItem value={"fontDownloadCount,desc"}>
                   다운로드 순
                 </MenuItem>
@@ -263,7 +263,7 @@ const FontSearchPage = () => {
               id="fontFavCount,desc"
               onClick={clickSearchOption}
             >
-              즐겨찾기 순
+              인기 순
             </li>
             <li
               className="font_search_opt_name"
