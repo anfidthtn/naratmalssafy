@@ -40,7 +40,7 @@ const Modal = ({setModalOpen, userinfo}) => {
         .then(res => {
             console.log(res)
             swal({
-                text: "패들릿이 성공적으로 생성되었습니다.",
+                text: "낙서가 성공적으로 생성되었습니다.",
                 icon: "success",
                 button: "확인",
               }).then(() => {
@@ -50,7 +50,7 @@ const Modal = ({setModalOpen, userinfo}) => {
         .catch(err => {
             console.log(err)
             swal({
-                text: "패들릿 정보를 확인하세요!",
+                text: "낙서 정보를 확인하세요!",
                 icon: "error",
                 button: "확인",
               }).then(() => {
@@ -82,7 +82,7 @@ const Modal = ({setModalOpen, userinfo}) => {
         <div className='Modal'>
             <div className='Modal__Body'>
             <div className='Modal__Top'>
-                <div className='Modal__Top__Title'>패들릿 생성</div>
+                <div className='Modal__Top__Title'>낙서 생성</div>
                 <div className='Modal__Top__Button'>
                     <div className='Modal__Top__Button__Make' onClick={createPost}>생성</div>
                     <div className='Modal__Top__Button__Close' onClick={closeModal}>닫기</div>
