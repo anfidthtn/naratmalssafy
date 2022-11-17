@@ -38,6 +38,11 @@ def custom_img(PATH):
     size = max(img.shape)
     tmp = np.where(img!=255) # 흰색 아닌 부분의 위치들 저장
     # print("tmp",tmp)
+    try:
+      min(tmp[0])
+      min(tmp[1])
+    except:
+      tmp = img
     ws,we,hs,he = max(min(tmp[0]-5),0), min(max(tmp[0]+5),size), max(min(tmp[1])-5,0), min(max(tmp[1]+5),size)
     img = img[ws:we,hs:he] # 완전 일부 떼어오기?
 
