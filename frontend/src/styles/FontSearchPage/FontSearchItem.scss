@@ -36,6 +36,11 @@
     box-sizing: border-box;
   }
 
+  & .textarea::placeholder {
+    color: black;
+    font-size: 1.85rem;
+  }
+
   & .info_box {
     border: 1px solid gray;
     border-bottom-left-radius: 10px;

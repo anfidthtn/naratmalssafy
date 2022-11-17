@@ -20,11 +20,12 @@ import font_img_2 from "../assets/font_img/2.png";
 import font_img_3 from "../assets/font_img/3.png";
 import font_img_4 from "../assets/font_img/4.png";
 import font_img_5 from "../assets/font_img/5.png";
+import font_img_6 from "../assets/font_img/6.png";
 
 const MainPage = () => {
   const isMobile720 = useMediaQuery("(max-width:720px)");
   const navigate = useNavigate();
-  const CARDS = 5;
+  const CARDS = 6;
   const MAX_VISIBILITY = 3;
 
   const Card = ({ index }) => {
@@ -44,6 +45,9 @@ const MainPage = () => {
         break;
       case 5:
         current_font_img = font_img_5;
+        break;
+      case 6:
+        current_font_img = font_img_6;
         break;
       default:
         current_font_img = font_img_1;
