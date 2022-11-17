@@ -87,12 +87,12 @@ const FontSearchPage = () => {
   const enterClick = (e) => {
     //검색 조건 받아오는 aixos 서버 통신
     if (e.key === "Enter" || e.type === "click") {
-      setPage(0);
+      setPage(1);
       axios({
         method: "GET",
         url: `/api/font`,
         params: {
-          page: 0,
+          page: 1,
           size: 20,
           flag: searchCondition,
           keyword: searchText,
@@ -130,12 +130,12 @@ const FontSearchPage = () => {
       }
     }
 
-    setPage(0);
+    setPage(1);
     axios({
       method: "GET",
       url: `/api/font`,
       params: {
-        page: 0,
+        page: 1,
         size: 20,
         flag: searchCondition,
         keyword: searchText,
