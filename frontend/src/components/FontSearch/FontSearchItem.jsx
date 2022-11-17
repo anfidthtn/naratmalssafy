@@ -5,7 +5,7 @@ import { FiDownload } from "react-icons/fi";
 import { useNavigate } from "react-router-dom";
 
 const FontSearchItem = ({ idx, fontData, fontEditorText }) => {
-  const [subFontEditorText, setSubFontEditorText] = useState(fontEditorText);
+  const [subFontEditorText, setSubFontEditorText] = useState("");
 
   const navigate = useNavigate();
 
@@ -48,6 +48,7 @@ const FontSearchItem = ({ idx, fontData, fontEditorText }) => {
           id={`fontData_textarea_${idx}`}
           className="textarea"
           value={subFontEditorText}
+          placeholder={fontData.description}
           onChange={(e) => {
             setSubFontEditorText(e.target.value);
           }}

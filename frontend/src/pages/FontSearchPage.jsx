@@ -17,9 +17,7 @@ const FontSearchPage = () => {
   const [searchOption, setSearchOption] = useState("fontRegDate,desc");
   const [fontData, setFontData] = useState([]);
 
-  const [fontEditorText, setFontEditorText] = useState(
-    "폰트 이름을 클릭하시면 상세페이지로 이동합니다."
-  );
+  const [fontEditorText, setFontEditorText] = useState("");
 
   // 무한 스크롤
   const [page, setPage] = useState(0);
@@ -282,7 +280,7 @@ const FontSearchPage = () => {
           </span>
           <input
             type="text"
-            placeholder="원하는 글자를 입력하세요"
+            placeholder="원하는 글자를 입력해보세요"
             value={fontEditorText}
             onChange={(e) => {
               setFontEditorText(e.target.value);
