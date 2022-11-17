@@ -81,7 +81,7 @@ const PostDaejeon = () => {
     return(
         <div className="Post">
             <div className="Post__Title">
-                <div className="Post__Title__Title">대전 패들릿</div>
+                <div className="Post__Title__Title">대전 낙서장</div>
                 <div className="Post__Title__Content">싸피와의 추억을 동기들과 나누어 보아요.</div>
                 <div className="Post__Title__Content1">
                     <div>아쉬웠던 기억, 후련한 기억, 공유하고 싶은 말을 남겨주세요!</div>
@@ -105,7 +105,7 @@ const PostDaejeon = () => {
                 <div className="Post__FontEmpty">
                     <div className="Post__FontEmpty__Title">안녕하세요, {userinfo.userLocation}_{userinfo.userName}_{userinfo.userNickname}님!!!</div>
                     <div className="Post__FontEmpty__Content">아직 회원님만의 폰트가 없어요  ˃̣̣̥᷄⌓˂̣̣̥᷅ </div>
-                    <div className="Post__FontEmpty__Content">패들릿 작성전 폰트제작을 해보아요 !!!</div>
+                    <div className="Post__FontEmpty__Content">낙서장 작성전 폰트제작을 해보아요 !!!</div>
                     <div className="Post__FontEmpty__Button"onClick={()=> navigate('/make-font')}>폰트제작하기</div>
                     <div className="Post__FontEmpty__Button"onClick={()=> navigate('/search')}>폰트보러가기</div>
                 </div>
@@ -115,9 +115,9 @@ const PostDaejeon = () => {
                 { ispostinfoempty && 
                 <div className="Post__PostEmpty">
                     <div className="Post__FontEmpty__Title">안녕하세요, {userinfo.userLocation}_{userinfo.userName}_{userinfo.userNickname}님</div>
-                    <div className="Post__FontEmpty__Content">아직 대전 패들릿이 비어있어요!!!</div>
-                    <div className="Post__FontEmpty__Content">가장 먼저 대전 패들릿에 글을 남겨 보아요 ˃́▿˂̀ </div>
-                    <div className="Post__FontEmpty__Button" onClick={showModal}>첫 패들릿 남기기</div>
+                    <div className="Post__FontEmpty__Content">아직 대전 낙서장이 비어있어요!!!</div>
+                    <div className="Post__FontEmpty__Content">가장 먼저 대전 낙서장에 글을 남겨 보아요 ˃́▿˂̀ </div>
+                    <div className="Post__FontEmpty__Button" onClick={showModal}>첫 낙서장 남기기</div>
                 </div>
                 }
                 { !ispostinfoempty &&

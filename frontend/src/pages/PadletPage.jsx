@@ -39,9 +39,9 @@ const PadletPage = () => {
     return(
         <div className='Padlet'>
             <div className='Padlet__Top'>
-                <div className='Padlet__Top__Title'>싸피 패들릿 페이지 입니다!</div>
-                <div className='Padlet__Top__Content'>아이콘을 클릭하여 각 지역의 패들릿으로 입장하세요.</div>
-                <div className='Padlet__Top__Content'>패들릿을 작성하여 싸피에서의 추억을 공유해 보세요.</div>
+                <div className='Padlet__Top__Title'>싸피 낙서장 입니다!</div>
+                <div className='Padlet__Top__Content'>아이콘을 클릭하여 각 지역의 낙서장으로 입장하세요.</div>
+                <div className='Padlet__Top__Content'>낙서장을 작성하여 싸피에서의 추억을 공유해 보세요.</div>
                 <div className='Padlet__Top__Content'>자신만의 폰트로 손으로 직접 적은 듯한 느낌을 받아보세요!</div>
             </div>
             <div className='Padlet__main'>
