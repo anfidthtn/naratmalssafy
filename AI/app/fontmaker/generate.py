@@ -130,9 +130,9 @@ class FontMaker():
 
         # Trainstep
         # self.progress_bar = tqdm(range(self.train_dataloader.__len__()*epochs))
+        before_train_loss = 100000.0
+        train_straight = 0
         for epoch in range(epochs):
-            if epoch % 5 == 0:
-                logger.info(str(epoch) + '/' + str(epochs) + " : " + self.fontname)
             self.model.train()
             total_loss = 0
             
@@ -155,6 +155,14 @@ class FontMaker():
                 #     self.progress_bar.update(1)
                     total_loss += loss.sum()
                 # print(epoch,total_loss.item())
+            logger.info(str(epoch) + '/' + str(epochs) + " : " + self.fontname + " " + str(total_loss.item()))
+            if total_loss.item() <= before_train_loss:
+                before_train_loss = total_loss.item()
+                train_straight = 0
+            else:
+                train_straight += 1
+                if train_straight > 4:
+                    break
         return self.model, self.dataloader
 
     def generate(self, model,
