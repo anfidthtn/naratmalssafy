@@ -26,7 +26,7 @@ const KakaoRedirectHandler = () => {
         ) {
           localStorage.setItem("token", res.data.loginResult);
           localStorage.setItem("email", res.data.email);
-          // navigate("/");
+          navigate("/");
         } else if (res.data.loginResult !== "") {
           window.location.href = "/signup?userEmail=" + res.data.loginResult;
         }
