@@ -26,7 +26,7 @@ const KakaoRedirectHandler = () => {
         ) {
           localStorage.setItem("token", res.data.loginResult);
           localStorage.setItem("email", res.data.email);
-          navigate("/");
+          // navigate("/");
         } else if (res.data.loginResult !== "") {
           window.location.href = "/signup?userEmail=" + res.data.loginResult;
         }
@@ -53,6 +53,11 @@ const KakaoRedirectHandler = () => {
       />
       <div className="Loading__Content">
         로그인중 입니다.......
+      </div>
+      <div className="Loading__Bottom">
+        <div>이메일 수집 동의를 하지 않았다면</div>
+        <div>카카오톡 설정 → 카카오 계정 → 로그인 관리 → 현재 로그인 정보 관리 → 연결된 서비스 관리 → 외부 서비스</div>
+        <div>에서 나랏말 싸피 연결을 해제한 후 다시 로그인 해 주세요. </div> 
       </div>
     </div>
   ) 
