@@ -54,6 +54,7 @@ public class PadletServiceImpl implements PadletService{
                     .userName(p.getUser().getUserName())
                     .userLocation(p.getUser().getUserLocation())
                     .userNickname(p.getUser().getUserNickname())
+                    .fontFamilyName(p.getFont().getFontDownloadFile().getFileSavedName())
                     .build();
             resList.add(item);
         }
