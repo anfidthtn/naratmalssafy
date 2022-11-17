@@ -20,7 +20,7 @@ const FontSearchPage = () => {
   const [fontEditorText, setFontEditorText] = useState("");
 
   // 무한 스크롤
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(false);
   const [ref, inView] = useInView();
 
@@ -59,11 +59,7 @@ const FontSearchPage = () => {
     })
       .then((res) => {
         setFontData((prevState) => {
-          if (prevState.toString() !== res.data.fonts.toString()) {
-            return [...prevState, ...res.data.fonts];
-          } else {
-            return prevState;
-          }
+          return [...prevState, ...res.data.fonts];
         });
       })
       .catch((err) => {
