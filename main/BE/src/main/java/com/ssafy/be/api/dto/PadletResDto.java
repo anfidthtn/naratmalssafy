@@ -16,6 +16,7 @@ public class PadletResDto {
     String color;
     //------폰트 정보
     String fontName;
+    String fontFamilyName;
     String fontPath;
     Long fontSeq;
     //------작성자 정보
