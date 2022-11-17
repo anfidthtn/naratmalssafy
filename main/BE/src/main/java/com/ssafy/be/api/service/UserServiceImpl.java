@@ -119,7 +119,7 @@ public class UserServiceImpl implements UserService {
                     .description(temp.getFontDescription())
                     .fontDownloadPath(temp.getFontDownloadFile().getFileSavedPath())
                     .fontName(temp.getFontName())
-                    .fontFamilyName(temp.getFontName())
+                    .fontFamilyName(temp.getFontDownloadFile().getFileSavedName())
                     .webFontPath(temp.getFontDownloadFile().getWoffSavedPath())
                     .favCount(temp.getFontFavCount())
                     .fontSeq(temp.getFontSeq())
@@ -141,7 +141,7 @@ public class UserServiceImpl implements UserService {
                     .description(temp.getFontDescription())
                     .fontDownloadPath(temp.getFontDownloadFile().getFileSavedPath())
                     .fontName(temp.getFontName())
-                    .fontFamilyName(temp.getFontName())
+                    .fontFamilyName(temp.getFontDownloadFile().getFileSavedName())
                     .webFontPath(temp.getFontDownloadFile().getWoffSavedPath())
                     .favCount(temp.getFontFavCount())
                     .fontSeq(temp.getFontSeq())
@@ -163,7 +163,7 @@ public class UserServiceImpl implements UserService {
                     .description(temp.getFontDescription())
                     .fontDownloadPath(temp.getFontDownloadFile().getFileSavedPath())
                     .fontName(temp.getFontName())
-                    .fontFamilyName(temp.getFontName())
+                    .fontFamilyName(temp.getFontDownloadFile().getFileSavedName())
                     .webFontPath(temp.getFontDownloadFile().getWoffSavedPath())
                     .favCount(temp.getFontFavCount())
                     .downloadCount(temp.getFontDownloadCount())
@@ -250,7 +250,7 @@ public class UserServiceImpl implements UserService {
         for(FontDownloadHistory t : downloadFonts){
             String path = t.getDownloadFont().getFontDownloadFile().getWoffSavedPath();
             String name = t.getDownloadFont().getFontName();
-            res.add(GetDownloadFontsRes.builder().fontName(name).fontFamilyName(name).webFontPath(path).build());
+            res.add(GetDownloadFontsRes.builder().fontName(name).fontFamilyName(t.getDownloadFont().getFontDownloadFile().getFileSavedName()).webFontPath(path).build());
         }
         return res;
     }
