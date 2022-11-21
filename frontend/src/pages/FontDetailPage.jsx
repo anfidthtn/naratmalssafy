@@ -246,8 +246,8 @@ const FontDetailPage = () => {
   }
 
   function clickModifyTextButton() {
-    if (oneLineText.length < 5) {
-      alert("최소 5자 이상 입력해주세요!");
+    if (oneLineText.length < 5 || oneLineText.length > 40) {
+      alert("5자 ~ 40자로 입력해주세요!");
       return;
     }
     // 변경사항 서버로 axios 보내기
