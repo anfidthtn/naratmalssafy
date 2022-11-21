@@ -4,7 +4,6 @@ import { useEffect } from "react";
 import axios from "axios";
 
 const WaitingFont = ({ fontData }) => {
-  //console.log(fontData)
   useEffect(() => {
     const token = localStorage.getItem("token");
     axios({
@@ -37,7 +36,7 @@ const WaitingFont = ({ fontData }) => {
       <div className="info_box">
         <div className="font_info">
           <div className="font_first_row_box">
-            <div className="font_name">{fontData.fontName}</div>
+            <div className="font_name">{fontData.fontName}체</div>
             <div className="font_favorite_download_info">
               <div className="favorite_info"></div>
               <div className="download_info"></div>

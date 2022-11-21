@@ -128,7 +128,6 @@ const handleEdit = () => {
         'userName' : name,
         'userNickname' : nickname
     }
-    console.log(userInfo)
     axios({
         url: '/api/user',
         method: 'PUT',
@@ -139,7 +138,6 @@ const handleEdit = () => {
         data: userInfo
     })
     .then(res => {
-        console.log(res)
         swal({
             text: "정보가 수정되었습니다!",
             icon: "success",

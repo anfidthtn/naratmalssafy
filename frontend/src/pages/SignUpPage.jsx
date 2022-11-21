@@ -53,7 +53,6 @@ const SignUpPage = () => {
             'userName' : name,
             'userNickname' : nickname
         }
-        console.log(userInfo)
         axios({
             url: '/api/user',
             method: 'POST',
@@ -61,7 +60,6 @@ const SignUpPage = () => {
             data: userInfo
         })
         .then(res => {
-            console.log(res)
             localStorage.setItem('token', res.data.loginResult)
             swal({
                 text: "환영합니다 회원님!!",
@@ -81,14 +79,12 @@ const SignUpPage = () => {
     
     // 닉넴 중복 체크 ##############################################################################
     const handleNicknameCheck=()=>{
-        console.log(nickname)
         axios({
             url: `/api/user/checknickname/${nickname}`,
             method: 'GET',
             headers: {'Content-Type':'application/json'}
         })
         .then(res => {
-            console.log(res.data)
             if (res.data === true){
                 setSignup(res.data)
                 swal({
@@ -105,7 +101,6 @@ const SignUpPage = () => {
                     button: "확인",
                   })
             }
-            console.log(signup)
         })
         .catch(err => 
             console.log(err)

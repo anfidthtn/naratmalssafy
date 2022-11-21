@@ -39,7 +39,6 @@ const Modal = ({setModalOpen, userinfo }) => {
             }
         })
         .then(res => {
-            console.log(res)
             swal({
                 text: "낙서 성공적으로 생성되었습니다.",
                 icon: "success",
@@ -63,20 +62,16 @@ const Modal = ({setModalOpen, userinfo }) => {
     
     const handlefont = (e) => {
         setFont(e.target.value)
-        console.log(font)
     }
 
     const handlecontent = (e) => {
         setContent(e.target.value)
-        console.log(content)
     }
     const handletitle = (e) => {
         setTitle(e.target.value)
-        console.log(content)
     }
     const handlecolor = (e) => {
         setColor(e.target.value)
-        console.log(color)
     }
 
     return(
@@ -102,7 +97,7 @@ const Modal = ({setModalOpen, userinfo }) => {
                 onChange={handlefont}
                 >
                     {myFonts.map((data) =>
-                        <MenuItem value={data.fontSeq}>{data.fontName}</MenuItem>    
+                        <MenuItem value={data.fontSeq}>{data.fontName}체</MenuItem>    
                     )}
                 </Select>
             </FormControl>
