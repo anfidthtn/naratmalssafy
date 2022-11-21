@@ -9,7 +9,6 @@ const MyFont = ({ idx, fontData }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log(fontData)
     const fontDataDiv = document.getElementById(`my_${idx}`);
     const fontDataTextArea = document.getElementById(
       `my_textarea_${idx}`
@@ -45,7 +44,7 @@ const MyFont = ({ idx, fontData }) => {
             }}>
           <div className="font_info">
             <div className="font_first_row_box">
-              <div className="font_name">{fontData.fontName}</div>
+              <div className="font_name">{fontData.fontName}체</div>
               <div className="font_favorite_download_info">
                 <div className="favorite_info">
                   <span className="icon">{BsFillStarFill()}</span>

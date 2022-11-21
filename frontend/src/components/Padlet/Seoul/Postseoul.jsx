@@ -57,7 +57,6 @@ const PostSeoul = () => {
         })
         .then(res => {
             setPostinfo(res.data.padletList)
-            console.log(res.data.padletList.length)
             if(res.data.padletList.length === 0){
                 setIspostinfoempty(true)
             }
