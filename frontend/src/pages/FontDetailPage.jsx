@@ -246,8 +246,8 @@ const FontDetailPage = () => {
   }
 
   function clickModifyTextButton() {
-    if (oneLineText.length < 5) {
-      alert("최소 5자 이상 입력해주세요!");
+    if (oneLineText.length < 5 || oneLineText.length > 40) {
+      alert("5자 ~ 40자로 입력해주세요!");
       return;
     }
     // 변경사항 서버로 axios 보내기
@@ -359,7 +359,7 @@ const FontDetailPage = () => {
       <link rel="stylesheet" type="text/css" href={fontData.webFontPath} />
       <div className="first_row_box">
         <div className="font_info_box">
-          <div className="font_name">{fontData.fontName}</div>
+          <div className="font_name">{fontData.fontName + "체"}</div>
           <div className="font_user">
             <span style={{ fontFamily: "GongGothicMedium" }}>Designed By</span>{" "}
             <span style={{ fontSize: "2.0rem" }}>

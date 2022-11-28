@@ -41,7 +41,6 @@ const PostDaejeon = () => {
             setUserinfo(res.data)
             if (res.data.myFonts.length === 0) {
                 setIsfontinfoempty(true)
-                console.log('여왔다')
             }
             else{
                 setIsfontinfoempty(false)

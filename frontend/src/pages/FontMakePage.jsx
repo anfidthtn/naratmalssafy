@@ -173,8 +173,8 @@ const FontMakePage = () => {
         return;
       }
 
-      if (introduction.length < 5) {
-        alert("폰트 소개는 최소 5자 이상 입력해주세요!");
+      if (introduction.length < 5 || introduction.length > 40) {
+        alert("폰트 소개는 5~40자로 입력해주세요!");
         setCurrentStep(currentStep);
         return;
       }
